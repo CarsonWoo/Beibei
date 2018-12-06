@@ -1,0 +1,44 @@
+<view class='container' wx:if="{{isShowChooser}}" style='opacity:0.5' bindtap='onHideChooser'>
+  <block wx:for="{{plan_list}}">
+    <view class='plan-item' style='margin-left:20rpx;' bindtap='onShowChooser' id="{{index}}">
+      <text class='plan-name'>{{item.plan}}</text>
+      <text class='plan-word-count'>{{item.word_number}}单词</text>
+    </view>
+  </block>
+
+</view>
+<view class='container' wx:else >
+  <block wx:for="{{plan_list}}">
+    <view class='plan-item' style='margin-left:20rpx;' bindtap='onShowChooser' id="{{index}}">
+      <text class='plan-name'>{{item.plan}}</text>
+      <text class='plan-word-count'>{{item.word_number}}单词</text>
+    </view>
+  </block>
+
+</view>
+
+<view class='plan-chooser-container' style='visibility:invisible' wx:if="{{isShowChooser}}">
+  <view class='confirm-button'>
+    <text bindtap='onPlanConfirmTap'>确定</text>
+  </view>
+  <view class='plan-detail-container'>
+    <text style='font-size:30rpx;color:black'>{{plan_name}}计划完成时间：<text style='color:#ff8094;font-weight:normal;'>{{finish_date}}</text></text>
+    <text style='font-size:24rpx;color:#d2d2d2'>每天{{daily_word_number}}个单词，计划{{days}}天完成</text>
+  </view>
+  <view class='picker-label'>
+    <view>完成天数</view>
+    <view>每天背单词</view>
+  </view>
+  <picker-view indicator-class='indicator-class' style='width: 100%; height: 400rpx; background-color: #d2f3ed;color: #5ee1c9' value="{{value}}" bindchange='onChooserChange'>
+    <picker-view-column>
+      <view wx:for="{{plan_days}}" style='line-height:70rpx'>{{item.days}}
+        <text style='font-size:24rpx'>天</text>
+      </view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{plan_days}}" style='line-height:70rpx'>{{item.daily_word_number}}
+        <text style='font-size:24rpx'>单词</text>
+      </view>
+    </picker-view-column>
+  </picker-view>
+</view>

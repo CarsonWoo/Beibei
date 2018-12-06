@@ -1,0 +1,50 @@
+<view class='container'>
+  <image class='bg-image' src='/images/bg_prize.png' mode='widthFix' />
+  <view class='content-container'>
+    <view class='main-container'>
+
+      <view class='prize-info-container'>
+        <view class='prize-info-text'>
+          <text class='prize-title'>本期奖品</text>
+          <text class='prize-name'>{{prize}}</text>
+        </view>
+        <image src='{{prize_pic}}'></image>
+      </view>
+
+      <view class='result-container'>
+
+        <view class='result-header'>
+          <view class='line'></view>
+          <text>获奖名单</text>
+          <view class='line'></view>
+        </view>
+        <view class='result'>
+          <view class='userinfo'>
+            <image src='{{winner_1_portrait}}'></image>
+            <text>{{winner_1_name}}</text>
+          </view>
+          <view class='userinfo'>
+            <image src='{{winner_2_portrait}}'></image>
+            <text>{{winner_2_name}}</text>
+          </view>
+          <view class='userinfo'>
+            <image src='{{winner_3_portrait}}'></image>
+            <text>{{winner_3_name}}</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class='tips'>中奖的小伙伴快关注"背呗背单词"公众号，回复"中奖"与我们联系吧！</view>
+
+    <form report-submit='true' bindsubmit='onPostChance'>
+      <button class='join-button-container' bindtap='onJoinEvent' form-type='submit' style='color:white'>
+        马上参与今日活动
+      </button>
+    </form>
+
+  </view>
+
+
+</view>
