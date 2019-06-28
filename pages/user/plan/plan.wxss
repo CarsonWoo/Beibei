@@ -58,14 +58,13 @@ page {
 
 .indicator-class {
   height: 70rpx;
-  /* background-color: #d2f3ed; */
-  color: #5ee1c0;
+  /* background-color: #d2f3ed; *//* color: #5ee1c0; */
 }
 
 .confirm-button {
   height: 80rpx;
   font-size: 30rpx;
-  color: #5ee1c9;
+  color: #ff8094;
   background-color: #f8fbfb;
   text-align: end;
   padding-right: 25rpx;
@@ -90,5 +89,4 @@ page {
   width: 50%;
   height: 70rpx;
   line-height: 70rpx;
-
 }

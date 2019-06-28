@@ -14,8 +14,10 @@ Page({
    */
   onLoad: function(options) {
     var level = parseInt(options.level)
+    var flag = parseInt(options.flag)
     this.setData({
-      level: level
+      level: level,
+      flag: flag
     })
     this.loadData()
   },
@@ -161,11 +163,15 @@ Page({
       var pages = getCurrentPages()
       var beforePage = pages[0]
       // console.log(pages)
-      if (this.data.level == 0) {
-        beforePage.onStartTap()
-      } else if (this.data.level == 1) {
-        beforePage.onShareAppMessage()
-      } 
+      if (this.data.flag == 1) {
+        if (this.data.level == 0) {
+          beforePage.onStartTap()
+        } else if (this.data.level == 1) {
+          beforePage.onShareAppMessage()
+        } 
+      } else {
+        beforePage.onPlanTap()
+      }
     }
     
   },

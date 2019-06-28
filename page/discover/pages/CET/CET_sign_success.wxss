@@ -1,0 +1,57 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg-img {
+  position: absolute;
+  width: 100%;
+}
+
+canvas {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 5rpx;
+}
+
+.download-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 805rpx;
+  justify-content: flex-end;
+  margin-right: 55rpx;
+  width: 80%;
+  z-index: 9999;
+}
+
+.download-container text {
+  font-size: 22rpx;
+  color: white;
+  font-family: fantasy;
+}
+
+.flex-tmp-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  z-index: 9999;
+  margin-top: 220rpx;
+}
+
+.student-number {
+  text-align: center;
+  letter-spacing: 8rpx;
+  border-radius: 30rpx;
+  border: solid 1px #3a47ca;
+  color: #3a47ca;
+  font-size: 50rpx;
+  font-weight: bold;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+}

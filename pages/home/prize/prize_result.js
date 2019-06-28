@@ -70,7 +70,7 @@ Page({
               },
               success: (res) => {
                 console.log(res.data)
-                console.log("test point")
+                // console.log("test point")
                 var token = res.data.data
                 // console.log(token)
                 // console.log(this)
@@ -105,6 +105,7 @@ Page({
         'token': token
       },
       success: (res) => {
+        console.log(res)
         if (res.data.status == 200) {
           var data = res.data.data
           var winner_list = data.winner_list
@@ -125,7 +126,7 @@ Page({
 
   onJoinEvent: function(event) {
     wx.reLaunch({
-      url: '../home',
+      url: '../home?action=onStartTap',
     })
   },
 
@@ -152,6 +153,18 @@ Page({
       fail: (res) => {
         console.log(res)
       }
+    })
+  },
+
+  onRuleTap: function(event) {
+    this.setData({
+      isShowDialog: true
+    })
+  },
+
+  onCloseDialog: function(event) {
+    this.setData({
+      isShowDialog: false
     })
   },
 

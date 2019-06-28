@@ -1,0 +1,49 @@
+<view class='content'> 
+
+
+  <view class='view-top'>
+
+    <text class='text-invite'>邀请获得</text>
+  
+    <text class='text-reward'><text class='.text-reward-number'>{{total_reward}}</text>元</text>
+  
+  </view>
+
+  <view class='bcview-my-invite-body-top'></view>
+
+
+  <view class='bcview-my-invite-head'></view>
+
+  <text class='text-my-invite'>我邀请的人</text>
+
+  <scroll-view class='scroll' scroll-y="true"  style="height: 760rpx;">
+
+  <view class='bcview-my-invite-body' >
+
+    <block wx:for="{{invite_list}}" wx:for-item = 'item' wx:if="{{is_have_invitition==true}}">
+
+    <view class='invite-user'>
+
+    <image src='{{item.portrait}}' class='image-user-avatar'></image>
+
+    <text class='text-user-name'>{{item.username}}<text>·······································</text></text>
+
+    <view class='bcview-user-state'>
+    
+    <view class='text-user-state'>{{item.msg}}<view  class='text-user-reward'>{{item.number}}</view ></view>
+
+    </view>
+
+    <!-- <view class='bcview-mask-point'></view> -->
+    
+    </view>
+
+    </block>
+  
+  </view>
+
+</scroll-view>
+</view>
+<cover-view class='image_no_invite'  wx:if="{{is_have_invitition == false}}">
+<cover-image src='/images/img_no_invite.png'></cover-image>
+</cover-view>

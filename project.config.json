@@ -4,20 +4,23 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.4.1",
+	"libVersion": "2.6.2",
 	"appid": "wx915c7b2ebc140ee6",
-	"projectname": "%E8%83%8C%E5%91%97%E8%83%8C%E5%8D%95%E8%AF%8D",
+	"projectname": "%E8%83%8C%E5%91%97%E8%83%8C%E5%8D%95%E8%AF%8D1.2.8",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -27,13 +30,111 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 13,
+			"list": [
+				{
+					"id": -1,
+					"name": "抽奖结果",
+					"pathName": "page/home/pages/prize/prize_result",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请排行榜",
+					"pathName": "page/discover/pages/WordChallenge/InvitationRank/InvitationRank",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "我的邀请",
+					"pathName": "page/discover/pages/WordChallenge/MyInvitation/MyInvitation",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "助力",
+					"pathName": "page/tabBar/discover/discover",
+					"query": "user_id=289&series_id=13",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "助力页面",
+					"pathName": "page/discover/pages/book/book_sign_assist",
+					"query": "user_id=289&series_id=13",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "打卡",
+					"pathName": "page/home/pages/sign/sign",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "打卡排行榜",
+					"pathName": "page/discover/pages/WordChallenge/PunchRank/PunchRank",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "CET_sign_success",
+					"pathName": "page/discover/pages/CET/CET_sign_success",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "CET_teacher",
+					"pathName": "page/discover/pages/CET/CET_teacher",
+					"query": ""
+				},
+				{
+					"id": 10,
+					"name": "cet_sign_up",
+					"pathName": "page/discover/pages/CET/CET_sign_up",
+					"query": "inviter=203"
+				},
+				{
+					"id": -1,
+					"name": "booksignup",
+					"pathName": "page/discover/pages/book/book_sign_up",
+					"query": ""
+				},
+				{
+					"id": 12,
+					"name": "navi",
+					"pathName": "page/tabBar/home/home",
+					"query": "action=onBookTap"
+				},
+				{
+					"id": -1,
+					"name": "单词挑战报名",
+					"pathName": "page/discover/pages/WordChallenge/SignUp/SignUp",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "单词挑战规则",
+					"pathName": "page/discover/pages/WordChallenge/Rule/Rule",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }

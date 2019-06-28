@@ -158,15 +158,20 @@ Page({
             wx.removeStorageSync('currentPointer')
             wx.removeStorageSync('realPointer')
           }
-          var pages = getCurrentPages()
-          var beforePage = pages[pages.length - 2]
-          beforePage.loadData(token)
+          // var pages = getCurrentPages()
+          // var beforePage = pages[pages.length - 2]
+          // beforePage.loadData(token)
           this.setData({
             isShowChooser: false,
             value: [2, 2]
           })
-          wx.navigateBack({
-            
+          wx.reLaunch({
+            url: '../../home/home?action=' + 'onStartTap',
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
           })
         }
       },

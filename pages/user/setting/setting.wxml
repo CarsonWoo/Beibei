@@ -6,7 +6,7 @@
 
 
   <view class='advice-container'>
-    <text style='font-size:35rpx;color:#373f3d'>意见反馈</text>
+    <text style='font-size:32rpx;color:#373f3d'>意见反馈</text>
     <text style='display:block;font-size:28rpx;color:#e3ebe9;margin-top:10rpx;'>您愿意将背呗背单词推荐给好友使用吗？</text>
     <view class='advice-input-container'>
       <textarea placeholder='请输入意见或建议' bindinput='AreaInputListener' bindtap='onFocusArea' focus='{{focus_area}}'></textarea>

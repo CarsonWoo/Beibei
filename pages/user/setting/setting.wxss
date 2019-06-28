@@ -13,7 +13,7 @@ page {
 }
 
 .notification-container text {
-  font-size: 35rpx;
+  font-size: 32rpx;
   color: #373f3d;
   line-height: 100rpx;
   margin-left: 30rpx;
@@ -96,15 +96,16 @@ page {
 }
 
 .contact-input-container text {
-  font-size: 35rpx;
+  font-size: 32rpx;
   color: #373f3d;
   line-height: 100rpx;
   margin-left: 30rpx;
+  width: 145rpx;
 }
 
 .contact-input-container input {
   background-color: white;
-  font-size: 35rpx;
+  font-size: 32rpx;
   text-align: start;
   padding-left: 40rpx;
   height: 100rpx;

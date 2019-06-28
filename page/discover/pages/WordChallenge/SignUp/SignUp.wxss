@@ -1,0 +1,335 @@
+/* pages/WordChallenge/SignUp/SignUp.wxss */
+
+.content{  
+
+  height: 15220rpx;  
+
+  display: flex;  
+
+  flex-direction: column;  
+
+  background-color: #161F41;
+
+}
+
+.content-ios{  
+
+  height: 15220rpx;  
+
+  display: flex;  
+
+  flex-direction: column;  
+
+  background-color: #161F41;
+
+}
+
+.ChanllengeHeader{
+
+  display: flex;
+
+  flex-direction: column;
+
+  width:100%;
+
+  height: 1100rpx;
+
+  background-size:100%;
+
+  -moz-background-size:100%;  
+
+  background-repeat: no-repeat;
+
+  background-image: url('https://file.ourbeibei.com/l_e/common/Challenge01.png');
+
+}
+
+.ChanllengeHeader-ios{
+
+  display: flex;
+
+  flex-direction: column;
+
+  width:100%;
+
+  height: 1100rpx;
+
+  background-size:100%;
+
+  -moz-background-size:100%;  
+
+  background-repeat: no-repeat;
+
+  background-image: url('https://file.ourbeibei.com/l_e/common/Challenge01.png');
+
+}
+
+.ChanllengeBody{
+
+  width: 100%;
+
+  height: 366rpx;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background-size:100% ;
+
+  -moz-background-size:100% ;   
+
+  background-repeat: no-repeat;
+
+  background-image: url('https://file.ourbeibei.com/l_e/common/ChallengeBody.png');
+
+}
+
+.ChanllengeBody-ios{
+
+  width: 100%;
+
+  height: 366rpx;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background-size:100% ;
+
+  -moz-background-size:100% ;   
+
+  background-repeat: no-repeat;
+
+  background-image: url('https://file.ourbeibei.com/l_e/common/ChallengeBody_ios.png');
+
+}
+
+.challengeimage{
+
+  width: 100%;
+
+}
+
+
+.text-period{
+
+  margin-left: 56rpx;
+
+  margin-top: 269rpx;
+
+  font-weight: 900; 
+
+  font-size: 36rpx;
+
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+  color: #090F46;
+
+}
+
+.text-st-time{
+
+  margin-left: 30rpx;
+
+  margin-top: 74rpx;
+
+  font-weight: 900;
+
+  font-size: 22rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: white;
+
+}
+
+.text-et-time{
+
+  margin-left: 30rpx;
+
+  font-weight: 900;
+
+  font-size: 22rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: white;
+
+}
+
+.text-people-top{
+
+  margin-left: 30rpx;
+
+  margin-top:38rpx;
+
+  font-weight: 700;
+
+  font-size: 30rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #f6faf9;
+
+}
+
+.text-people-number-top{
+
+  color:#EBD75A;
+
+}
+
+.text-people-bottom{
+
+  margin-left: 36rpx;
+
+  margin-top:40rpx;
+
+  font-weight: 700;
+
+  font-size: 38rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #f6faf9;
+
+}
+
+.text-people-number-bottom{
+
+  font-size: 66rpx;
+
+  color:#EBD75A;
+
+}
+
+.white-bcview{
+  position: absolute;
+
+  display: flex;
+
+  flex-direction: row;
+
+  top:14935rpx;
+
+  left: 570rpx;
+
+  bottom: 210rpx;
+
+  width: 182rpx;
+
+  height: 60rpx;
+
+  border-top-left-radius: 28px;
+
+  border-bottom-left-radius: 28px;
+
+  background-color: #f6faf9;
+  
+}
+
+.text-rule{
+
+  /* position: fixed; */
+
+  margin-top: 8rpx ;
+
+  margin-left: 35rpx;
+
+  font-weight: 400;
+
+  font-size: 33rpx;
+
+  text-decoration:underline; 
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #161F41;
+
+}
+
+.text-mark{
+
+  margin-left: 232rpx;
+
+  margin-top: 32rpx ;
+
+  font-weight: 450;
+
+  font-size: 25rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #f6faf9;
+
+}
+
+.image-start-challenge{
+
+  position: fixed;
+
+  width:100%;
+
+  bottom:0rpx;
+}
+
+/* ios报名 */
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 30, 30, 0.9);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* display: block; */
+  width: 100%;
+  height: 100%;
+}
+
+.img-introduction{
+  width:95%;
+}
+
+.button-cancel{
+  margin-top: 30rpx ;
+  font-weight: 600;
+  font-size: 45rpx;
+  font-family:Arial, Helvetica, sans-serif;
+  color: #f6faf9;
+}
+
+
+
+/* 旧的引导途径 */
+.fill-img {
+  width: 600rpx;
+}
+
+.first-img {
+  width: 160rpx;
+  /* height: 180rpx; */
+  margin-left: 300rpx;
+}
+
+.cancel-button {
+  width: 200rpx;
+  font-size: 26rpx;
+  height: 45rpx;
+  border: solid 1rpx white;
+  border-radius: 20rpx;
+  text-align: center;
+  line-height: 45rpx;
+  color: white;
+  margin-top: 30rpx;
+}

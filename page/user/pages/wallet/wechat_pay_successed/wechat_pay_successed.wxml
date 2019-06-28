@@ -1,0 +1,16 @@
+<!--pages/user/wallet/wechat_pay_successed/wechat_pay_successed.wxml-->
+<view class='content'>
+
+  <view class='bcview'>
+
+  <view class='bcview-QR'><image class='image-JiaNan'  bindtap="previewImage" src='{{imageData}}'></image></view>
+  
+  <image class='image-dowmload' src='/images/download_fish.png' catchtap='saveImg'></image>
+
+  <text class='text-add-JiaNan'>喏，这是客服小姐姐的微信号，\n快快添加取钱吧~~</text>  
+  
+  </view>
+
+
+
+</view>

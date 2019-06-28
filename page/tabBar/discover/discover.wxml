@@ -1,0 +1,160 @@
+<!--pages/discover/discover.wxml-->
+<view class='container'>
+  <!-- <view class='daily-card-container'>
+  </view> -->
+  <view class='book-list' wx:if="{{is_reading == 2}}">
+    <view style='position:absolute;left:20rpx;display:flex;align-items:true' wx:if="{{is_reading == 2}}">
+      <text class='book-list-text'>Day</text>
+      <text style='font-size:42rpx;color:white;margin-left:5rpx'>{{begin_day}}</text>
+    </view>
+    <view style='position:absolute;right:40rpx;display:flex;flex-direction:row;align-items:center' catchtap='onBookListTap' wx:if="{{readBookInfo != undefined}}">
+      <image src='/images/ic_book_list.png'></image>
+      <text class='book-list-text'>我的书单</text>
+    </view>
+  </view>
+  <!-- 当用户没有报名课程以及用户报名了助力课程但是还没有助力完成时 -->
+  <view class='book-sign-container' wx:if="{{is_reading == 0 || is_reading == 3}}" catchtap='onSignUpTap'>
+    <view class='light-shadow'></view>
+    <view class='bg-circle-1'></view>
+    <view class='bg-circle-2'></view>
+    <view class='bg-circle-3'></view>
+    <view class='reading-info-container'>
+      <text class='label-reading'>语境阅读</text>
+      <text class='label-reading-slogan'>阅读外国名著·提升词汇量</text>
+      <text class='label-reading-sign-number'>{{enrollment == -1 ? '正在预约中' : '已有' + enrollment + '人报名'}}</text>
+      <view class='reading-sign-up-button'>
+        点击报名
+        <canvas canvas-id='ic_sign_up'></canvas>
+      </view>
+    </view>
+    <image class='reading-image' src='/images/ic_read_group.png'></image>
+  </view>
+
+  <block wx:else>
+    <!-- 当用户报名了课程但课程还没开始，显示老师栏 -->
+    <view wx:if="{{is_reading == 1}}" class='book-sign-container' catchtap='onConsultTap'>
+      <view class='light-shadow'></view>
+      <view class='bg-circle-solid-1'></view>
+      <view class='bg-circle-solid-2'></view>
+      <view class='bg-circle-solid-3'></view>
+      <view class='decoration-circle huge'></view>
+      <view class='decoration-circle normal'></view>
+      <view class='decoration-circle mini'></view>
+      <view class='teacher-container'>
+        <view style='position:relative;width:100%;height:100%'>
+          <image src='/images/ic_sign_1.png'></image>
+          <text style='position:absolute;right:38rpx;top:70rpx'>咨询老师</text>
+        </view>
+      </view>
+      <view class='reading-info-container' style='margin-left:20rpx;'>
+        <text class='normal-text' style='margin-top:20rpx;'>报名成功！</text>
+        <view>
+          <text class='normal-text'>距离开班还有</text>
+          <text class='huge-text'>{{rest_day}}</text>
+          <text class='normal-text' style='border-radius:50%;border-color:#d7b879;border-width:1px;border-style:solid;padding-left:8rpx;padding-right:8rpx;'>天</text>
+        </view>
+        <text class='mini-text'>敬请期待...</text>
+      </view>
+    </view>
+    <!-- 当用户报名了课程且课程开始了，显示课程学习栏 -->
+    <view wx:else class='reading-progress-container'>
+      <view class='progress-container' catchtap='showBookInfo'>
+        <image src='{{readBookInfo.book_pic != null ? readBookInfo.book_pic : ""}}'></image>
+        <view class='title-chapter-container'>
+          <text class='title'>{{readBookInfo.book_name != null ? readBookInfo.book_name : need_to_read_book.book_name}}</text>
+          <text class='chapter'>Chapter {{readBookInfo.chapter_order != null ? readBookInfo.chapter_order : '1'}}</text>
+        </view>
+        <view class='progress-sub-container'>
+          <text>全书已读{{reading_progress}}%</text>
+          <view class='progress'>
+            <view class='line'></view>
+            <view style='width:{{user_read_chapter * 100 / need_to_read_chapter}}%;background-color:#383d50;border-radius:9px;height:17rpx;z-index:100'></view>
+          </view>
+        </view>
+      </view>
+      <!-- <view class='reading-sign-tips' wx:if='{{!(readBookInfo.book_id == need_to_read_book.book_id && readBookInfo.chapter_id == need_to_read_book.chapter_id)}}'>阅读{{need_to_read_book.book_name}}到第{{need_to_read_book.chapter_order}}章即可领取今日红包</view> -->
+
+      <button class='normal-button solid' wx:if="{{level == 0 && !is_today_book_finished && !is_today_sign_book_finished}}" catchtap='onStartReading' data-level='0'>开始阅读</button>
+      <button class='normal-button solid' wx:elif="{{level == 0 && is_today_sign_book_finished}}" catchtap='showPicture'>
+        <image src='/images/ic_mini_red_packet.png'></image>
+        <text>分享返学费</text> </button>
+      <view class='double-button-container' wx:elif="{{level == 0 && is_today_book_finished && !(readBookInfo.book_id == need_to_read_book.book_id && readBookInfo.chapter_id == need_to_read_book.chapter_id)}}">
+        <view class='mid-button fill' data-level='2' catchtap='onStartReading'>再次阅读</view>
+        <view class='mid-button solid' catchtap='onStartReading' data-level='0'>阅读下一章</view>
+      </view>
+      <button class='normal-button solid' wx:else catchtap='onStartReading' data-level='2'>
+        再次阅读
+      </button>
+
+      <view class='consult-container' catchtap='onConsultTap'>
+        <image src='/images/ic_consult.png'></image>
+        <text>咨询老师</text>
+      </view>
+    </view>
+
+  </block>
+
+
+  <swiper previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange'>
+    <block wx:for="{{card_list}}">
+      <swiper-item>
+        <view class='icon'>
+          <image class='icon-download-image' src='/images/ic_download.png' catchtap='onDownloadTap' data-url='{{item.daily_pic}}'></image>
+          <image class='icon-image' src='{{item.daily_pic}}'></image>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- <ad unit-id="adunit-a8e6b7e4a651af7b" style="margin-bottom:36rpx;"></ad> -->
+  <view class='dialog' catchtouchmove='stopPageScroll' wx:if="{{isShowDialog}}">
+    <block wx:if="{{showInfo}}">
+      <view class='book-dialog-container' animation="{{animDialog}}">
+        <view style='display:flex;flex-direction:row;align-items:center;z-index: 9999;width:100%;margin-top:52rpx;justify-content:center'>
+          <image src='{{book_info_pic}}'></image>
+          <view style='display:flex;flex-direction:column;margin-left:40rpx;z-index: 9999;'>
+            <view class='book-dialog-title'>{{book_info_name}}</view>
+            <view class='book-dialog-author'>作者：{{book_info_author}}</view>
+          </view>
+        </view>
+        <view style='margin-top:60rpx;font-size:40rpx;color:#222c38;z-index: 9999;margin-left:45rpx'>简介</view>
+        <view style='font-size:24rpx;word-break:break-all;text-overflow:wrap; flex-wrap: wrap;color:#222c38;margin-top:20rpx;z-index: 9999;width:100%;display:flex;justify-content:center'>
+          <text style='margin-left:40rpx;margin-right:40rpx;line-height:34rpx;'>{{book_info_introduction}}</text>
+        </view>
+
+      </view>
+      <image class='close-img' src='/images/ic_close.png' catchtap='onCloseDialog'></image>
+    </block>
+    <!-- <block wx:elif="{{showRedPacket}}">
+      <view style='width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center'>
+        <block wx:if="{{isPacked}}">
+          <image class='bg-red-packet' src='/images/bg_red_packet_packed.png' mode='widthFix'></image>
+          <view style='display:flex;flex-direction:column;align-items:center;position:absolute;top:340rpx;text-align:center;width:100%'>
+            <text style='font-size:20rpx;color:#95865d;'>背呗背单词\n发您一个红包</text>
+            <view class='money-text'>{{read_class_red_packet}}</view>
+            <view style='font-size:22rpx;color:#ea3641;margin-top:26rpx;'>已存入零钱，可用于发红包</view>
+            <view style='font-size:20rpx;color:#ea3641;margin-top:80rpx;' catchtap='onMoneyTap'>查看我的红包记录</view>
+          </view>
+          <image src='/images/ic_close.png' class='close-img' style='margin-top:5rpx;' catchtap='onCloseDialog'></image>
+        </block>
+        <block wx:else>
+          <image class='bg-red-packet' src='/images/bg_red_packet_unpack.png' mode='widthFix' style='margin-top:50rpx;'></image>
+          <view style='display:flex;justify-content:center;position:absolute;top:750rpx;width:100%;'>
+            <view class='pack-button' catchtap='onPacketOn'>
+              <text>立即拆开</text>
+            </view>
+          </view>
+        </block>
+      </view>
+
+    </block> -->
+    <block wx:elif="{{showAssistSuccess}}">
+      <image class='image-SupportSuccess' src='/images/SupportSuccess.png' catchtap='onCloseDialog'></image>
+    </block>
+    <block wx:elif="{{showDownloadImage}}">
+      <view class='download-img-container'>
+        <image class='sign-image' mode='widthFix' src='{{"https://file.ourbeibei.com/l_e/static/images/book_sign_day_" + begin_day + ".jpg"}}'></image>
+      </view>
+      <view class='download-text'>{{download_success ? "下载成功" : "分享卡片下载中..."}}</view>
+    </block>
+  </view>
+</view>

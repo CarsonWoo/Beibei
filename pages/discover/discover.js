@@ -258,6 +258,11 @@ Page({
       isMiddleClick: true,
       isShowDialog: true
     })
+    setTimeout(this.onCloseDialog, 1300)
+  },
+
+  stopPageScroll: function(e) {
+
   },
 
   /**

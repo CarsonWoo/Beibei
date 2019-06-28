@@ -43,15 +43,13 @@ Page({
 
           for (let j = 0; j < old_list.length; j++) {
             old_list[j]['sentence'] = this.parseSentence(old_list[j].word, old_list[j].sentence)
-            console.log(old_list[j].sentence)
+            // console.log(old_list[j].sentence)
           }
 
           for (let i = 0; i < new_list.length; i++) {
             new_list[i]['level'] = 0
             new_list[i]['sentence'] = this.parseSentence(new_list[i].word, new_list[i].sentence)
           }
-
-          
 
           var word_list = []
           word_list = word_list.concat(old_list)
@@ -65,6 +63,12 @@ Page({
           })
 
           this.initialize()
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '网络开了小差噢...',
+            showCancel: false
+          })
         }
 
       },
@@ -119,7 +123,7 @@ Page({
               }
             }
             if (target != word) {
-              if (target.endsWith(".") || target.endsWith(",") || target.endsWith("!") || target.endsWith(";") || target.endsWith("?") || target.endsWith("-")) {
+              if (target.endsWith(".") || target.endsWith(",") || target.endsWith("!") || target.endsWith(";") || target.endsWith("?") || target.endsWith("-") || target.endsWith("——")) {
                 target = target.substring(0, target.length - 1)
               }
               mSentence = mSentence.split(target)[0] + "<span style='color:#5ee2c9;font-size:1.3rem'>" + target + "</span>" + mSentence.split(target)[1]
@@ -161,6 +165,12 @@ Page({
         end = "-" + end
         target = target.substring(0, target.length - 1)
       }
+      if (target.indexOf("——") != -1) {
+        if (target.split("——").length == 2) {
+          end = "——" + target.split("——")[1] + end
+          target = target.split("——")[0]
+        } 
+      }
 
       if (split.length > 2) {
         var length = start.length + target.length + end.length
@@ -197,13 +207,22 @@ Page({
       console.log("no storage")
       this.loadData()
     } else {
+      let progress_text = ''
+      if (currentPointer < old_list.length) {
+        progress_text = '正在复习旧单词'
+      } else if (currentPointer < old_list.length + new_list.length) {
+        progress_text = '正在学习新单词'
+      } else {
+        progress_text = '正在复习新单词'
+      }
       this.setData({
         new_list: new_list,
         old_list: old_list,
         word_list: word_list,
         pass_list: pass_list,
         currentPointer: currentPointer,
-        realPointer: realPointer
+        realPointer: realPointer,
+        progress_text: progress_text
       })
       this.initialize()
     }
@@ -225,9 +244,18 @@ Page({
   },
 
   refreshList: function(word_list, wordType) {
+    let progress_text = ''
+    if (this.data.currentPointer < this.data.old_list.length) {
+      progress_text = '正在复习旧单词'
+    } else if (this.data.currentPointer < this.data.old_list.length + this.data.new_list.length) {
+      progress_text = '正在学习新单词'
+    } else {
+      progress_text = '正在复习新单词'
+    }
+    // console.log(this.data.word_list)
     this.onSoundClick()
     this.setData({
-      animationData: null
+      animationData: ''
     })
     if (word_list.length < 4) {
       console.log("length is minier than 4")
@@ -294,7 +322,8 @@ Page({
         img_path_second: finalList[1],
         img_path_third: finalList[2],
         img_path_fourth: finalList[3],
-        correctAnswer: index + 1
+        correctAnswer: index + 1,
+        progress_text: progress_text
       })
     } else {
       this.setData({
@@ -302,7 +331,8 @@ Page({
         text_path_second: finalList[1],
         text_path_third: finalList[2],
         text_path_fourth: finalList[3],
-        correctAnswer: index + 1
+        correctAnswer: index + 1,
+        progress_text: progress_text
       })
     }
 
@@ -320,11 +350,11 @@ Page({
     // console.log(this.data.selectPos)
     if (id == this.data.correctAnswer) {
       this.setAnimation()
-      
+
       audio.src = '/voice/correct.mp3'
-      
+
       if (this.data.currentPointer < this.data.totalSize) {
-        
+
         setTimeout(this.onGraphSuccess, 1000)
       } else {
         this.setData({
@@ -336,21 +366,25 @@ Page({
       }
     } else {
       audio.src = '/voice/wrong.mp3',
-      this.onGraphFail()
+        this.onGraphFail()
     }
     audio.play()
   },
 
   setAnimation: function() {
     var wordType = this.data.wordType
-    
+
     if (wordType == 'TYPE_GRAPH') {
-      this.animation.rotateY(180).step({ duration: 400 })
-      this.animation.rotateY(0).step({ duration: 400 })
+      this.animation.rotateY(180).step({
+        duration: 400
+      })
+      this.animation.rotateY(0).step({
+        duration: 400
+      })
     } else {
       console.log(wordType)
-      this.animation.rotateX(180).step({duration: 400})
-      this.animation.rotateX(0).step({duration:400})
+      // this.animation.rotateX(180).step({duration: 400})
+      // this.animation.rotateX(0).step({duration:400})
     }
     // animation.rotateX(270, 360).step({ duration: 400})
 
@@ -453,6 +487,17 @@ Page({
       realPointer -= this.data.new_list.length
     }
 
+    if (currentPointer == this.data.totalSize - this.data.new_list.length * 2) {
+      this.setData({
+        showReviewToast: true
+      })
+      setTimeout(() => {
+        this.setData({
+          showReviewToast: false
+        })
+      }, 1000)
+    }
+
     if (currentPointer == this.data.totalSize - this.data.new_list.length) {
       //判断知道已经进入复习释义
       this.setData({
@@ -524,6 +569,16 @@ Page({
           url: 'word_detail/word_detail?wrongCount=' + this.data.wrongCount + "&word_id=" + this.data.word_list[this.data.realPointer].id,
         })
       } else {
+        if (this.data.currentPointer < this.data.old_list.length) {
+          //旧单词复习 level + 1
+          let word_list = this.data.word_list
+          let obj = word_list[this.data.realPointer]
+          obj.level = obj.level + 1
+          word_list[this.data.realPointer] = obj
+          this.setData({
+            word_list: word_list
+          })
+        }
         this.toRefresh()
       }
     } else {
@@ -534,8 +589,13 @@ Page({
           url: 'word_detail/word_detail?wrongCount=' + this.data.wrongCount + "&word_id=" + this.data.word_list[this.data.realPointer].id,
         })
       } else {
+        let word_list = this.data.word_list
+        let obj = word_list[this.data.realPointer]
+        obj.level = obj.level + 1
+        word_list[this.data.realPointer] = obj
         this.setData({
-          wordType: 'TYPE_GRAPH'
+          wordType: 'TYPE_GRAPH',
+          word_list: word_list
         })
         this.toRefresh()
       }
@@ -710,6 +770,17 @@ Page({
         if (currentPointer < totalSize - new_list.length) {
           //新单词图册复习
           console.log("新单词图册复习")
+          if (currentPointer == old_list.length + new_list.length) {
+            this.setData({
+              showReviewToast: true
+            })
+            setTimeout(() => {
+              this.setData({
+                showReviewToast: false
+              })
+            }, 1000)
+          }
+          
           obj.level = 5
           pass_list.push(obj)
           let totalSize = this.data.totalSize - 2
@@ -819,6 +890,7 @@ Page({
     }
     var listStr = list.join(',')
     listStr = '[' + listStr + ']'
+    // console.log(listStr)
     wx.request({
       url: app.globalData.HOST + '/home/liquidation_word.do',
       method: 'POST',
@@ -850,7 +922,7 @@ Page({
     wx.removeStorageSync('realPointer')
   },
 
-  onSentenceTap: function(event) {  
+  onSentenceTap: function(event) {
     var audioCtx = this.audioCtx
     if (audioCtx) {
       audioCtx.stop()
@@ -894,7 +966,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    
+
   },
 
   /**
@@ -909,12 +981,24 @@ Page({
    */
   onUnload: function() {
     if (!this.data.requestClear) {
-      wx.setStorageSync('word_list', this.data.word_list)
-      wx.setStorageSync('new_list', this.data.new_list)
-      wx.setStorageSync('old_list', this.data.old_list)
-      wx.setStorageSync('pass_list', this.data.pass_list)
-      wx.setStorageSync('currentPointer', this.data.currentPointer)
-      wx.setStorageSync('realPointer', this.data.realPointer)
+      if (this.data.word_list.length > 0 || this.data.pass_list.length > 0) {
+        console.log("in")
+        wx.setStorageSync('word_list', this.data.word_list)
+        wx.setStorageSync('new_list', this.data.new_list)
+        wx.setStorageSync('old_list', this.data.old_list)
+        wx.setStorageSync('pass_list', this.data.pass_list)
+        wx.setStorageSync('currentPointer', this.data.currentPointer)
+        wx.setStorageSync('realPointer', this.data.realPointer)
+      } else {
+        if (wx.getStorageSync('word_list') != undefined) {
+          wx.removeStorageSync('word_list')
+          wx.removeStorageSync('new_list')
+          wx.removeStorageSync('old_list')
+          wx.removeStorageSync('pass_list')
+          wx.removeStorageSync('currentPointer')
+          wx.removeStorageSync('realPointer')
+        }
+      }
     }
     if (this.audioCtx) {
       this.audioCtx.destroy()

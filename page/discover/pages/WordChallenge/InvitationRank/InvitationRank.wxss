@@ -1,0 +1,603 @@
+
+.content{
+
+  position: fixed;
+
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;  
+
+  flex-direction: column;  
+
+  background-color: #d5fff9;
+
+}
+
+.image-leaderboard{
+
+  width: 100%;
+
+  height: 337.5px;
+
+}
+
+
+
+.text-rule{
+
+  /* position: absolute; */
+
+  margin-left: 610rpx;
+
+  /* margin-top: 965rpx; */
+
+    margin-top: 16rpx;
+
+  text-decoration:underline;
+
+  font-weight: 500;
+
+  font-size: 26rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #727272;
+}
+
+.bcimage-head{
+
+  /* position: absolute; */
+
+  margin-left: 25rpx;
+
+  /* margin-top: 200rpx ; */
+
+  margin-top: -140rpx ;
+
+  display: flex;
+
+  flex-direction: row;
+
+  width: 700rpx;
+
+  height: 120rpx;
+
+  border-radius: 8px;
+
+  background-color: #ffffff;
+
+  box-shadow: 0.5px 0.5px 0.5px 0.5px #c6c6c6;
+/* 
+  border-width: 10rpx;
+
+  border-color: #000000; */
+
+}
+
+.scroll{
+
+  /* position: absolute; */
+
+  /* margin-left: 0rpx; */
+
+  /* margin-top: 323rpx ; */
+
+  margin-top: 2rpx ;
+
+  border-radius: 8px;
+
+}
+
+/*隐藏滚动条*/
+
+::-webkit-scrollbar{
+
+width: 0;
+
+height: 0;
+
+color: transparent;
+
+}
+
+.bcview-scroll{
+
+  /* position: absolute; */
+
+  margin-left: 25rpx;
+
+  /* margin-top: 0rpx ; */
+
+  width: 700rpx;
+
+  /* height: 2435rpx; */
+
+  border-radius: 8px;
+
+  background-color: #ffffff;
+
+}
+
+
+/* 蒙板 */
+.view-mask{
+
+  /* position: fixed;   
+
+  left: 25rpx;
+
+  top: 900rpx; */
+
+  margin-top: -50rpx;
+
+  margin-left: 25rpx;
+
+  width: 700rpx;
+
+  height: 45rpx;
+
+  box-shadow: 0px 0px 10px 0px white;
+
+  background-color: white;
+
+  border-radius: 10px;
+
+  border-width: 0rpx;
+
+}
+
+
+/* 我的排名*/
+.text-my-rank{
+
+  /* position:absolute;
+
+  right: 630rpx; */
+
+  margin-left: 20rpx;
+
+  margin-top: 40rpx;
+
+  font-weight: 100;
+
+  font-size: 30rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #2c3031;
+
+}
+
+/* 我的头像*/
+.image-my-avatar{
+
+  /* position: absolute; */
+
+  /* margin-left: 98rpx; */
+
+  margin-left: 20rpx;
+
+  margin-top: 25rpx;
+
+  width: 66rpx;
+
+  height: 66rpx;
+
+  border-radius: 50%;
+
+}
+
+/* 我的名字*/
+.text-my-name{
+
+  /* position: absolute;
+
+  margin-left: 175rpx; */
+
+  margin-left: 25rpx;
+
+  margin-top: 25rpx;
+
+  font-weight: 700;
+
+  font-size: 30rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #2c3031;
+
+}
+
+/* 我的邀请按钮*/
+.text-my-invite{
+
+  /* position: absolute;
+
+  margin-left: 175rpx; */
+
+  margin-left: -60rpx;
+
+  margin-top: 70rpx;
+
+  font-weight: 300;
+
+  font-size: 25rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #8a8c8b;
+
+}
+
+/* 我的奖金*/
+.text-my-reward{
+
+  /* position:relative;
+
+  margin-right: 15rpx; */
+
+  margin-left: 90rpx;
+
+  margin-top: 25rpx;
+
+  display: flex;
+
+  flex-direction:row-reverse;
+
+  font-weight: 500;
+
+  font-size: 31rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+  
+
+  color: #ff535e;
+
+}
+
+.text-my-reward-number{
+
+  font-size: 55rpx;
+
+}
+
+
+
+.view-user{
+
+  /* position:relative;
+
+  margin-left: 0rpx;
+
+  margin-top: 0rpx; */
+
+  display: flex;
+
+  flex-direction: row;
+
+  width: 700rpx;
+
+  height: 80rpx;
+
+  overflow: hidden;
+
+  /* text-overflow: ellipsis; */
+  
+  white-space: nowrap;
+
+}
+
+
+.text-user-rank{
+
+  /* position: absolute; */
+
+  margin-left: 40rpx;
+
+  margin-top: 25rpx;
+
+  font-weight: 350;
+
+  font-size: 28rpx;
+
+}
+
+.image-user-avatar{
+
+  /* position: absolute;
+
+  margin-left: 80rpx;
+
+  margin-top: 15rpx; */
+  
+  margin-left: 20rpx;
+
+  margin-top: 20rpx;
+
+  width: 43rpx;
+
+  height: 43rpx;
+
+  border-radius: 50%;
+
+}
+
+.text-user-name{
+
+  /* position: absolute; */
+
+  /* margin-left: 150rpx; */
+
+  margin-left: 20rpx;
+
+  margin-top: 25rpx;
+
+  width:400rpx;
+
+  font-weight: 400;
+
+  font-size: 28rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #2c3031;
+
+  overflow: hidden;
+
+  /* text-overflow: ellipsis; */
+  
+  white-space: nowrap;
+
+}
+
+.bcview-user-reward{
+
+  /* position: absolute;
+
+  top: 15rpx;
+
+  right: 0rpx; */
+
+  margin-top: 20rpx;
+
+  background-color: white;
+
+  width: 220rpx;
+
+  height: 50rpx;
+
+}
+
+.text-user-reward{
+
+  /* position:relative; */
+
+  /* margin-right: 20rpx; */
+
+  margin-right: 30rpx;
+
+  margin-top: 5rpx;
+
+  display: flex;
+
+  flex-direction:row-reverse;
+
+  font-weight: 680;
+
+  font-size: 27rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color:#282e2e;
+
+  
+
+}
+
+.tetx-reward-point{
+
+   color: #2c3031;
+
+}
+
+.text-user-reward-number{
+
+  font-weight: 900;
+
+  color: #ff535e;
+
+}
+
+.view-line1{
+
+  /* position: absolute; */
+
+  /* margin-top: 1030rpx; */
+
+  margin-top: 30rpx;
+
+  margin-left: 110rpx;
+
+  width: 160rpx ;
+
+  height: 2rpx;
+
+  background-color: #8aa4a3;
+
+}
+
+.view-line2{
+
+  /* position: absolute; */
+
+  /* margin-top: 1030rpx; */
+
+  margin-top: -4rpx;
+
+  margin-left: 484rpx;
+
+  width: 160rpx ;
+
+  height: 2rpx;
+
+  background-color: #8aa4a3;
+
+}
+
+
+
+.text-invite{
+
+  /* position: absolute; */
+
+  /* margin-top: 1015rpx; */
+
+  margin-top: -18rpx;
+
+  margin-left: 280rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  color: #203234;
+
+}
+
+
+
+.button_wechat{
+
+  /* position: absolute; */
+
+  margin-left: 435rpx;
+
+  /* margin-top: 1065rpx; */
+
+  margin-top: -76rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+  color: white
+
+}
+
+.button_pyq{
+
+  /* position: absolute; */
+
+  margin-left: 240rpx;
+
+  /* margin-top: 1065rpx; */
+
+  margin-top: -76rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+  color: white
+
+}
+
+.image-pyq{
+
+  /* position: absolute; */
+
+  margin-left: 240rpx;
+
+  /* margin-top: 1065rpx; */
+
+  margin-top: 16rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+}
+
+.image-wechat{
+
+  /* position: absolute; */
+
+  margin-left: 435rpx;
+
+  /* margin-top: 1065rpx; */
+
+  margin-top: -76rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+}
+
+.text-pyq{
+
+
+  /* position: absolute; */
+
+  margin-left: 242rpx;
+
+  /* margin-top: 1146rpx; */
+
+  margin-top: 10rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #203234;
+
+}
+
+.text-wechat{
+
+  /* position: absolute; */
+
+  margin-left: 450rpx;
+
+  /* margin-top: 1146rpx; */
+
+  margin-top: -35rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #203234;
+
+}
+
+
+
+.imgurl{
+
+position: fixed;
+
+width: 50%;
+
+height: 50%;
+
+top: 0rpx;
+
+left:0rpx;
+
+}
+
+
+
+.canvas-box{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 999999rpx;
+  }

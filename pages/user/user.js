@@ -11,9 +11,10 @@ Page({
     isShowDialog: false,
     longpress: false,
     have_plan: [],
+    uploadTest: 0
   },
 
-  onAddPlanTap: function () {
+  onAddPlanTap: function() {
     // console.log("onAddPlanTap");
     wx.navigateTo({
       url: 'plan/plan',
@@ -23,14 +24,18 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.loadData()
-    if (app.globalData.userInfo) {
+  onLoad: function(options) {
+    if (app.globalData.userInfo != undefined && app.globalData.userInfo != null) {
       this.setData({
         user_portrait: app.globalData.userInfo.avatarUrl,
         nickName: app.globalData.userInfo.nickName,
       })
+    } else {
+      this.setData({
+        isShowAuthSetting: true
+      })
     }
+    this.loadData()
   },
 
   loadData: function(token) {
@@ -67,7 +72,7 @@ Page({
             this.getToken()
           }
         }
-        
+
       },
       fail: (res) => {
         console.log("fail")
@@ -103,14 +108,14 @@ Page({
     })
   },
 
-  onSettingTap: function (event) {
+  onSettingTap: function(event) {
     console.log('onsetting')
     wx.navigateTo({
       url: 'setting/setting',
     })
   },
 
-  onEditPlan: function (event) {
+  onEditPlan: function(event) {
     // console.log("onLongPress")
     console.log(event)
     let plan = event.currentTarget.dataset.plan
@@ -133,14 +138,14 @@ Page({
     })
   },
 
-  onCancelDialog: function (event) {
+  onCancelDialog: function(event) {
     this.setData({
       isShowDialog: false,
       longpress: false,
     })
   },
 
-  onConfirmEditDialog: function (event) {
+  onConfirmEditDialog: function(event) {
     // var id = event.currentTarget.id
     var alert_type = this.data.alert_type
     var idx = event.currentTarget.dataset.plan
@@ -183,18 +188,22 @@ Page({
     })
   },
 
-  onChangePlan: function (event) {
+  onChangePlan: function(event) {
     let plan = event.currentTarget.dataset.plan
     let selectedPlan = this.data.selectedPlan
     var alert_type = 0
     if (plan == selectedPlan) {
-      alert_type = 1
+      // alert_type = 1
+      wx.navigateTo({
+        url: '../home/word_list/word_list',
+      })
+    } else {
+      this.setData({
+        tmpSelected: event.currentTarget.id,
+        alert_type: alert_type,
+        isShowDialog: true,
+      })
     }
-    this.setData({
-      tmpSelected: event.currentTarget.id,
-      alert_type: alert_type,
-      isShowDialog: true,
-    })
   },
 
   onConfirmChange: function(event) {
@@ -208,7 +217,7 @@ Page({
       longpress: false,
     })
     if (alert_type == 1) {
-      
+
     } else {
       //执行更改计划
       var HOST = app.globalData.HOST
@@ -231,6 +240,20 @@ Page({
               duration: 800
             })
             this.loadData()
+            var has_storage = wx.getStorageSync('currentPointer')
+            if (has_storage) {
+              wx.removeStorageSync('new_list')
+              wx.removeStorageSync('old_list')
+              wx.removeStorageSync('word_list')
+              wx.removeStorageSync('pass_list')
+              wx.removeStorageSync('currentPointer')
+              wx.removeStorageSync('realPointer')
+            }
+            var pages = getCurrentPages()
+            console.log(pages)
+            // var firstPage = pages[0]
+            // console.log(firstPage)
+            // firstPage.loadData(app.globalData.token)
           }
         },
         fail: (res) => {
@@ -240,38 +263,103 @@ Page({
     }
   },
 
+  onShowAuthDialog: function(e) {
+    if (app.globalData.userInfo == undefined || app.globalData.userInfo == null) {
+      this.setData({
+        isShowAuthSetting: true
+      })
+    }
+
+  },
+
+  onCloseAuthDialog: function(e) {
+    this.setData({
+      isShowAuthSetting: false
+    })
+  },
+
+  getUserInfo: function(event) {
+    console.log(event)
+    if (event.detail.userInfo) {
+      app.globalData.userInfo = event.detail.userInfo
+      this.setData({
+        user_portrait: app.globalData.userInfo.avatarUrl,
+        nickName: app.globalData.userInfo.nickName,
+      })
+      this.uploadUserInfo()
+      this.onCloseAuthDialog()
+      // this.getToken()
+    } else {
+      // wx.showModal({
+      //   title: '授权失败',
+      //   content: '未授权会影响进入小程序噢~',
+      //   showCancel: false,
+      //   confirmText: '重新授权',
+      // })
+    }
+  },
+
+  uploadUserInfo: function() {
+    wx.request({
+      url: app.globalData.HOST + '/user/wx_upload_portrait_username.do',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'token': app.globalData.token
+      },
+      data: {
+        username: this.data.nickName,
+        portrait: this.data.user_portrait
+      },
+      success: (res) => {
+        console.log(res)
+        if (res.data.status != 200) {
+          if (this.data.uploadTest < 2) {
+            this.setData({
+              uploadTest: this.uploadTest + 1
+            })
+            this.uploadUserInfo()
+          }
+        }
+      },
+      fail: (res) => {
+
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     this.loadData()
     setTimeout(this.stopRefresh, 500)
   },
@@ -283,17 +371,17 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  getToken: function () {
+  getToken: function() {
 
     wx.login({
       success: (res) => {
@@ -370,4 +458,8 @@ Page({
       }
     })
   },
+
+  stopPageScroll: function(e) {
+
+  }
 })

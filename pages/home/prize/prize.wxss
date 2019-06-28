@@ -4,7 +4,7 @@ page {
 }
 
 .bg-image {
-  height: 600rpx;
+  /* height: 600rpx; */
   position: absolute;
   /* float: left; */
   width: 100%;
@@ -26,7 +26,7 @@ page {
   border-radius: 8px;
   box-shadow: 0 4px 3px #e8e8e8;
   background-color: white;
-  padding-bottom: 45rpx;
+  padding-bottom: 35rpx;
 }
 
 .prize-info-container {
@@ -61,9 +61,9 @@ page {
 }
 
 .prize-info-container image {
-  width: 168rpx;
-  height: 168rpx;
-  margin-left: 20rpx;
+  width: 158rpx;
+  height: 158rpx;
+  margin-left: 30rpx;
   border-radius:8px;
 }
 
@@ -72,22 +72,22 @@ page {
   flex-direction: row;
   font-size: 30rpx;
   justify-content: center;
-  margin-top: 60rpx;
+  margin-top: 40rpx;
 }
 
 .join-button-container {
   background-color: #5ee1c9;
   box-shadow: 0 3px 2px #a4ddd3;
   align-items: center;
-  margin: 70rpx 30rpx 0 30rpx;
+  margin: 50rpx 40rpx 0 40rpx;
   border-radius: 25px;
   text-align: center;
-  height: 85rpx;
+  height: 75rpx;
 }
 
 .join-button-container text {
-  font-size: 40rpx;
-  line-height: 85rpx;
+  font-size: 36rpx;
+  line-height: 75rpx;
   color: white;
 }
 
@@ -143,7 +143,7 @@ page {
 
 .content-container {
   position: fixed;
-  top: 360rpx;
+  top: 460rpx;
   margin-left: 25rpx;
   margin-right: 25rpx;
   display: block;
@@ -151,16 +151,19 @@ page {
 
 .rule-container {
   position: fixed;
-  right: -15rpx;
-  top: 10rpx;
-  background-color: #707274;
-  width: 130rpx;
-  border-radius: 12px;
-  height: 42rpx;
+  background-color: #3333334d;
+  /* width: 130rpx; */
+  border-radius: 5px;
+  justify-content: center;
+  /* height: 42rpx; */
   color: white;
-  font-size: 24rpx;
-  line-height: 42rpx;
+  font-size: 22rpx;
+  left: 150rpx;
+  /* line-height: 42rpx; */
   padding-left: 25rpx;
+  padding-right: 25rpx;
+  padding-top: 15rpx;
+  padding-bottom: 15rpx;
 }
 
 .dialog-container {

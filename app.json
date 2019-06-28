@@ -1,20 +1,9 @@
 {
   "pages": [
-    "pages/home/home",
-    "pages/home/sign/sign",
-    "pages/home/feed/feed",
-    "pages/home/word_list/word_list",
-    "pages/home/prize/prize",
-    "pages/home/word/word_detail/word_detail",
-    "pages/home/word/word",
-    "pages/user/plan/plan",
-    "pages/user/setting/setting",
-    "pages/user/user",
-    "pages/discover/discover",
-    "pages/index/index",
-    "pages/home/word/word_detail/edit_note/edit_note",
-    "pages/discover/web/web",
-    "pages/home/prize/prize_result"
+    "page/tabBar/home/home",
+    "page/tabBar/user/user",
+    "page/tabBar/discover/discover",
+    "page/tabBar/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -26,23 +15,73 @@
     "selectedColor": "#5ee1c9",
     "list": [
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "page/tabBar/home/home",
         "text": "首页",
         "iconPath": "images/home_unselected.png",
         "selectedIconPath": "images/home_selected.png"
       },
       {
-        "pagePath": "pages/discover/discover",
+        "pagePath": "page/tabBar/discover/discover",
         "text": "发现",
         "iconPath": "images/discover_unselected.png",
         "selectedIconPath": "images/discover_selected.png"
       },
       {
-        "pagePath": "pages/user/user",
+        "pagePath": "page/tabBar/user/user",
         "text": "我的",
         "iconPath": "images/user_unselected.png",
         "selectedIconPath": "images/user_selected.png"
       }
     ]
-  }
+  },
+  "subpackages": [
+    {
+      "root": "page/home/",
+      "pages": [
+        "pages/sign/sign",
+        "pages/sign/sign_history",
+        "pages/feed/feed",
+        "pages/word_list/word_list",
+        "pages/prize/prize",
+        "pages/word/word_detail/word_detail",
+        "pages/word/word",
+        "pages/word/word_detail/edit_note/edit_note",
+        "pages/prize/prize_result"
+      ]
+    },
+    {
+      "root": "page/discover/",
+      "pages": [
+        "pages/book/book_sign_assist",
+        "pages/book/book_sign_up",
+        "pages/book/reading/new_word",
+        "pages/book/reading/reading",
+        "pages/book_list/book_list",
+        "pages/teacher/teacher",
+        "pages/WordChallenge/SignUp/SignUp",
+        "pages/WordChallenge/Rule/Rule",
+        "pages/WordChallenge/InvitationRank/InvitationRank",
+        "pages/WordChallenge/MyInvitation/MyInvitation",
+        "pages/WordChallenge/PunchRank/PunchRank",
+        "pages/WordChallenge/WaitingChallenge/WaitingChallenge",
+        "pages/CET/CET_sign_up",
+        "pages/CET/CET_sign_success",
+        "pages/CET/CET_teacher"
+      ]
+    },
+    {
+      "root": "page/user/",
+      "pages": [
+        "pages/plan/plan",
+        "pages/setting/setting",
+        "pages/wallet/BillDetail/BillDetail",
+        "pages/wallet/wallet",
+        "pages/wallet/alipay/alipay",
+        "pages/wallet/alipay_successed/alipay_successed",
+        "pages/wallet/wechat_pay/wechat_pay",
+        "pages/wallet/wechat_pay_successed/wechat_pay_successed"
+      ]
+    }
+  ],
+  "sitemapLocation": "sitemap.json"
 }

@@ -1,0 +1,79 @@
+<view class='container'>
+  <view class='play-container' style='background-color: {{is_night_on ? "#3d4049" : "white"}}; box-shadow: {{is_night_on ? "0px 3rpx 16rpx 0px rgba(54, 57, 67, 0.4)" : "0px 2rpx 60rpx 0rpx #e0e0e0"}}'>
+    <view class='progress-container'>
+      <view class='progress'>
+        <slider backgroundColor='#eeeeee' activeColor='#5ee1c9' block-size='12' block-color='#ffffff' bindchange='onSliderChange' value='{{slider_value}}'></slider>
+      </view>
+      <view class='time-container'>
+        {{currentTime}}/{{duration}}
+      </view>
+    </view>
+
+    <view class='control-container'>
+      <image class='play-button' src='{{is_playing ? "/images/ic_pause.png" : "/images/ic_play.png"}}' catchtap='onPlayTap'></image>
+      <!-- <view class='control' style='background-color: {{is_night_on ? "#3d4049" : "#ffffff"}}'>慢</view> -->
+      <view class='control' style='background-color: {{is_night_on ? "#3d4049" : "#ffffff"}}' catchtap='onSizeTap'>{{is_big_size ? "36" : "28"}}</view>
+      <image class='night-button' src='{{is_night_on ? "/images/ic_night.png" : "/images/ic_night_un.png"}}' catchtap='onNightTap'></image>
+    </view>
+  </view>
+  <view class='content-container' style='background-color: {{is_night_on ? "#363943" : "#f8f8f8"}}' id='content'>
+    <block wx:for="{{book_content}}">
+      <rich-text class='{{is_big_size ? "big-size" : "normal-size"}} {{is_night_on ? "night-mode" : "day-mode"}}' nodes='{{item.en}}'></rich-text>
+      <rich-text class='{{is_big_size ? "big-size" : "normal-size"}} {{is_night_on ? "night-mode" : "day-mode"}}' wx:if="{{is_translate}}" nodes="{{item.cn}}"></rich-text>
+    </block>
+  </view>
+  <view class='button-container' style='background-color: {{is_night_on ? "#363943" : "#f8f8f8"}}'>
+    <!-- 从新学单词页或发现页进来 -->
+    <block wx:if="{{fromPage == 'new_word' || fromPage == 'discover'}}">
+      <!-- 当天阅读章节 -->
+      <block wx:if="{{isCurrentChapter == 'true'}}">
+        <!-- 当天未打卡且从新学单词进入 -->
+        <view class='sign-button' wx:if="{{is_sign_current == false && fromPage == 'new_word'}}">
+          <image src='/images/ic_double_packet.png'></image>
+          <button catchtap='showPicture' data-imgtype='1' data-needsign='true'>分享返学费</button>
+        </view>
+        <!-- 当天已打卡或者从再次阅读进入 -->
+        <button class='share-button' wx:else catchtap='showPicture' data-imgtype='0' data-needsign='false'>
+          <image src='/images/ic_share_main.png'></image>
+          分享
+        </button>
+      </block>
+      <!-- 非当天章节？要阅读下一章 -->
+      <view class='double-button-container' wx:else>
+        <button class='share-button' catchtap='showPicture' data-imgtype='1' data-needsign='false'>
+          <image src='/images/ic_share_main.png'></image>
+          分享
+        </button>
+        <view class='next-solid-button' catchtap='onReadNext'>阅读下一章</view>
+      </view>
+    </block>
+    <!-- 从我的书单进入 -->
+    <block wx:else>
+      <!-- 本书的第一章 -->
+      <view class='double-button-container' wx:if='{{isCurrentChapter == "true" && isFirstChapter == "true"}}'></view>
+      <block wx:else>
+        <view class='next-button' wx:if="{{isCurrentChapter == 'true' || end_chapter_id == chapter_id}}" catchtap='changeReading' data-type='former'>上一章</view>
+        <view class='next-button' wx:elif="{{isFirstChapter == 'true'}}" catchtap='changeReading' data-type='latter'>下一章</view>
+        <view class='double-button-container' wx:else>
+          <view class='next-button' style='margin-left:15rpx;margin-right:15rpx' catchtap='changeReading' data-type='former'>上一章</view>
+          <view class='next-button' style='margin-left:15rpx;margin-right:15rpx' catchtap='changeReading' data-type='latter'>下一章</view>
+        </view>
+      </block>
+
+    </block>
+  </view>
+  <view class='translation-button' style='background-color: {{is_translate ? "#5ee1c9" : is_night_on ? "#868a95" : "white"}}; color: {{is_night_on ? "#363943" : "#999d9e"}}' catchtap='onTranslationTap'>译</view>
+
+  <!-- <view class='mask' wx:if="{{isShowDialog}}" catchtouchmove='stopPageScroll'>
+    <cover-view class='money-dialog-container'>
+      <cover-image src='/images/ic_dialog_download.png'></cover-image>
+      <cover-view class='money-dialog-text'>本章阅读完成咯~快去分享领红包吧~</cover-view>
+    </cover-view>
+  </view> -->
+</view>
+<view class='mask' wx:if="{{showDownloadImage}}">
+  <view class='download-img-container'>
+    <image class='sign-image' mode='widthFix' src='{{m_download_img}}'></image>
+  </view>
+  <view class='download-text'>{{download_success ? "下载成功" : "分享卡片下载中..."}}</view>
+</view>

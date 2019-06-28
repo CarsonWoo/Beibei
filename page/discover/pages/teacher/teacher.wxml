@@ -1,0 +1,60 @@
+<view class='container'>
+  <view class='course-container'>
+    <view class='course-name'>
+      <view class='square normal'></view>
+      <view class='square mini' style='margin-right:15rpx;'></view>
+      <text>课程信息</text>
+      <view class='square mini' style='margin-left:15rpx;'></view>
+      <view class='square normal'></view>
+    </view>
+    <view class='course-info-container'>
+      <text>{{class_name}}</text>
+      <text>开课时间:{{st}}</text>
+      <text>结班时间:{{et}}</text>
+    </view>
+    <view class='teacher-info-container'>
+      <text style='font-size:30rpx;'>添加老师为微信好友</text>
+      <text style='font-size:24rpx'>实时为你答疑解惑，老师拉群带你认识一帮优秀的小伙伴~</text>
+      <text style='font-size:24rpx;'>添加请备注报名课程的名称哟（^U^）丿~</text>
+      <image class='QR-code' src='{{image_teacher}}'></image>
+      <view class='save-container' catchtap='downloadImage'>
+        <canvas canvas-id='download_image'></canvas>
+        <text>保存二维码</text>
+      </view>
+    </view>
+  </view>
+
+  <view class='rule-container'>
+    <view class='rule-label'>规则详情</view>
+    <view class='rule'>
+      <text class='rule-title'>· 谁可以参加返现活动？</text>
+      <text class='rule-content'>每一位报名语境阅读的用户都可以参加。</text>
+    </view>
+    <view class='rule'>
+      <text class='rule-title'>· 可以不参加返现活动</text>
+      <text class='rule-content'>打卡赢奖金活动为自愿参与，不参与不影响正常阅读
+课程哦！</text>
+    </view>
+    <view class='rule'>
+      <text class='rule-title'>· 怎样才是“成功打卡”？</text>
+      <text class='rule-content'>完成当日阅读内容，点击“打卡领红包”，\n分享到微信群，即为“成功打卡”；</text>
+    </view>
+    <view class='rule'>
+      <text class='rule-title'>· 打卡有什么奖励？</text>
+      <text class='rule-content'>每天完成打卡都会获得一个现金红包，红包总额\n等于学费金额。</text>
+    </view>
+    <view class='rule'>
+      <text class='rule-title'>· 打卡时间有限制吗？</text>
+      <text class='rule-content'>打卡只限当天，\n即北京时间00：00 ~ 23：59.\n如超时，则视为隔天的打卡。</text>
+    </view>
+    <view class='rule'>
+      <text class='rule-title'>· 没有按时打卡怎么办？</text>
+      <text class='rule-content'>没有按时打卡也可以对更新的课程进行阅读，\n但是不能领取红包。</text>
+    </view>
+    <view class='rule'>
+      <text class='rule-title'>· 看完的章节可以回看吗？</text>
+      <text class='rule-content'>可以噢~点击“我的书单”可以对所有章节进行回看。</text>
+    </view>
+    <view class='rule-base'>最终解释权归背呗背单词所有</view>
+  </view>
+</view>

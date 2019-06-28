@@ -21,6 +21,7 @@ Page({
     })
     this.setData({
       selectedPage: event.currentTarget.id,
+      word_list: []
     })
 
     // console.log(event.currentTarget.id)

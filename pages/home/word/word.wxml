@@ -1,6 +1,9 @@
 <view class='container'>
   <!-- <text class='header-container-left'></text> -->
-  <view class='header-container-right' catchtap='onPassTap'>Pass</view>
+  <view class='header-container-right' >
+    <text style='text-align:start;color:#b8b8b8;'>{{progress_text}}</text>
+    <text style='text-align:end;text-decoration: underline;float:right' catchtap='onPassTap'>Pass</text>
+  </view>
 
   <view class='progress-container'>
     <view class='progress' style='width:{{progressPercentage}}%'></view>
@@ -129,3 +132,6 @@
 <view class='sound-container' bindtap='onSoundClick'>
   <image src='/images/word_play_sound.png'></image>
 </view>
+
+
+<!-- <cover-view class='toast' wx:if="{{showReviewToast}}">下面开始复习噢~</cover-view> -->

@@ -1,0 +1,387 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.background-container {
+  /* background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%; */
+  width: 100%;
+  height: 933rpx;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  background-image: url('https://file.ourbeibei.com/l_e/common/bg_reading_header.png');
+  /* align-items: center; *//* position: relative; *//* position: absolute; */
+}
+
+/* .background-container image {
+  width: 100%;
+  height: 750rpx;
+} */
+
+/* .background-container canvas {
+  position: absolute;
+  width: 520rpx;
+  height: 100rpx;
+  bottom: 50rpx;
+  left: 50%;
+  margin-left: -260rpx;
+} */
+
+.label-container {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  width: 100%;
+  justify-content: center;
+}
+
+.label {
+  padding: 30rpx 30rpx 0rpx 30rpx;
+  text-align: center;
+  font-size: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.baseline {
+  background-color: #ffed53;
+  border-radius: 5px;
+  height: 8rpx;
+  width: 80%;
+  margin-top: 20rpx;
+}
+
+.select {
+  color: #3b3845;
+  font-weight: bold;
+}
+
+.normal {
+  color: #999d9e;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.info-container image {
+  width: 100%;
+}
+
+.last-image-container {
+  width: 100%;
+  position: relative;
+  padding-bottom: 300rpx;
+  background-color: white;
+}
+
+.last-image-container image {
+  width: 100%;
+}
+
+.info-sign-people-text {
+  width: 100%;
+  /* display: flex;
+  flex-direction: column; */
+  position: absolute;
+  bottom: 150rpx;
+  text-align: center;
+}
+
+.info-sign-people-text text {
+  color: #3b3845;
+  text-shadow: 0px 7rpx 12rpx 0px #00d1ab;
+}
+
+.huge-text {
+  font-size: 78rpx;
+}
+
+.normal-text {
+  font-size: 32rpx;
+  letter-spacing: 4rpx;
+  font-family: fantasy;
+  /* font-weight: bold; */
+}
+
+.detail-container {
+  background-color: #d7fff0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 200rpx;
+}
+
+.header-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 30rpx;
+  color: #999d9e;
+  margin-top: 90rpx;
+  margin-bottom: 10rpx;
+}
+
+.header-label text {
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+}
+
+.line {
+  height: 1px;
+  background-color: #999d9e;
+  width: 200rpx;
+}
+
+.book-container {
+  width: 600rpx;
+  border-radius: 20rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 11px 12px 0px rgba(0, 209, 171, 0.21);
+  overflow: hidden;
+  margin-top: 50rpx;
+}
+
+.list-title-container {
+  display: flex;
+  align-items: center;
+  background-color: #5ee1c9;
+  height: 110rpx;
+  width: 100%;
+  text-align: start;
+  position: relative;
+}
+
+.list-title {
+  font-size: 32rpx;
+  color: white;
+  margin-left: 12rpx;
+  /* text-shadow: 1px 0px 1px white; */
+}
+
+.list-word-demand {
+  font-size: 20rpx;
+  /* margin-left: 10rpx; */
+  color: white;
+  margin-top: 10rpx;
+}
+
+.selection-column-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 14rpx;
+  right: 14rpx;
+  /* justify-content: flex-end; */
+  /* width: 100%; */
+  align-items: flex-end;
+}
+
+.selection {
+  width: 95rpx;
+  height: 40rpx;
+  color: white;
+  font-size: 22rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* text-align: center; */
+  justify-content: center;
+  /* position: absolute; */
+  border-radius: 20rpx;
+  border: solid 1px #fff;
+  /* right: 14rpx;
+  top: 14rpx; */
+}
+
+.selected {
+  border: none;
+  background-color: #30b199;
+}
+
+.book-content-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20rpx;
+  margin-top: 20rpx;
+}
+
+.book-title-container {
+  color: #2a353a;
+  font-size: 24rpx;
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 40rpx; */
+  position: absolute;
+  left: 30rpx;
+  top: 15rpx;
+}
+
+.book-title {
+  margin-top: 10rpx;
+  /* margin-bottom: 10rpx; */
+}
+
+.book-image-container {
+  position: relative;
+  height: 200rpx;
+  padding-bottom: 25rpx;
+  margin-top: 20rpx;
+}
+
+.book-image-container image {
+  width: 142rpx;
+  height: 185rpx;
+  border-radius: 10rpx;
+  position: absolute;
+  /* right: 20rpx; *//* margin-right: 40rpx; */
+}
+
+.bottom-button-container {
+  position: fixed;
+  width: 100%;
+  height: 96rpx;
+  bottom: 0;
+  background-color: #d7fff0;
+  z-index: 1000;
+}
+
+.appoint-button {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-size: 32rpx;
+  height: 100%;
+  /* line-height: 96rpx; */
+}
+
+.sign-people {
+  font-size: 20rpx;
+}
+
+.pink {
+  background-color: #ff8596;
+}
+
+.gray {
+  background-color: #999;
+}
+
+.darker-gray {
+  background-color: #66676a;
+}
+
+.sign-button-container {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  height: 100%;
+  width: 100%;
+  /* line-height: 96rpx; */
+}
+
+.origin-pay-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 32rpx;
+  width: 250rpx;
+  text-align: center;
+}
+
+.discount-pay-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 32rpx;
+  text-align: center;
+  width: 499rpx;
+  margin-left: 1rpx;
+}
+
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(100, 100, 100, 0.7);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* display: block; */
+  width: 100%;
+  height: 100%;
+}
+
+.fill-img {
+  width: 600rpx;
+}
+
+.first-img {
+  width: 160rpx;
+  /* height: 180rpx; */
+  margin-left: 300rpx;
+}
+
+.cancel-button {
+  width: 200rpx;
+  font-size: 26rpx;
+  height: 45rpx;
+  border: solid 1rpx white;
+  border-radius: 20rpx;
+  text-align: center;
+  line-height: 45rpx;
+  color: white;
+  margin-top: 30rpx;
+}
+
+.period {
+  display: flex;
+  flex-direction: row;
+  font-size: 32rpx;
+  color: white;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 810rpx;
+  margin-left: 50rpx;
+  letter-spacing: 2px;
+}
+
+.period image {
+  width: 44rpx;
+  height: 44rpx;
+  margin-left: -22rpx;
+  margin-top: -20rpx;
+}
+
+.st {
+  margin-top: 10rpx;
+  font-size: 27rpx;
+  font-family: 'Courier New', Courier, monospace;
+  margin-left: 50rpx;
+  color: white;
+}

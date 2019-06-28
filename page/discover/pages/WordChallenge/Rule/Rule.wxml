@@ -1,0 +1,33 @@
+<view class='new-container'>
+
+<view class='rule-container'>
+
+<image class='image_text_rule'  src='https://file.ourbeibei.com/l_e/common/challenge_rule_text.png' mode='widthFix'></image>
+
+</view>
+
+</view>
+
+<!-- 旧规则详情 -->
+<!-- <view class='container'>
+<image class='rule-image-container' src='{{rule_image}}' mode='widthFix'></image>
+<view class='text-rule-head'>接受挑战赢奖励</view>
+
+<view class='rule-content'>
+
+<text class = 'text-start'>Hello,同学们~\n欢迎加入本次单词挑战！\n阅读一下内容了解挑战规则吧！</text>
+
+<text class='text-q1'><text class='text-q'><text class= 'text-point'>·</text>怎样才是“完成当天挑战”？</text>\n完成当天的单词学习，并打卡到微信群，\n即为“完成当天挑战”</text>
+
+<text class='text-q2'><text class='text-q'><text class= 'text-point'>·</text>怎样才是“挑战成功”</text>\n在挑战计划内，有28天完成当天挑战，即为“挑战成功”</text>
+
+<text class='text-q3'><text class='text-q'><text class= 'text-point'>·</text>挑战成功有什么奖励？</text>\n1.拿回自己的挑战金\n2.与其他优胜者瓜分剩余的挑战金\n3.奖励金将在挑战结束第二天进行发放</text>
+
+<text class='text-q4'><text class='text-q'><text class= 'text-point'>·</text>挑战时间有限制吗？</text>\n挑战只限当日背单词，\n即北京时间00:00~23:59\n如超时，则视为第二天的挑战\n30天计划不可提前完成</text>
+
+<text class='text-q5'><text class='text-q'><text class= 'text-point'>·</text>邀请好友挑战会获得什么奖金呢？</text>\n1.每邀请一个好友，并且好友挑战成功，就会获得一份\n与好友挑战获得的奖励金金额相同的红包作为奖励，\n上不封顶\n2.不要求必须参与邀请好友所参加的挑战</text>
+
+<text class = 'text-end'>最终解释权归背呗背单词所有</text>
+
+</view>
+</view> -->

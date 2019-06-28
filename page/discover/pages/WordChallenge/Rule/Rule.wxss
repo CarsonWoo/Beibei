@@ -1,0 +1,282 @@
+/* pages/WordChallenge/Rule/Rule.wxss */
+
+page{background-color:#d5fff9;}
+
+.new-container{
+
+  width: 100%;
+
+  height: 1550rpx;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background-size:100% ;
+
+  -moz-background-size:100% ;   
+
+  background-repeat: no-repeat;
+
+  background-image: url('https://file.ourbeibei.com/l_e/common/challenge_rule_bgbgimage.png');
+
+}
+
+.rule-container{
+
+  width: 100%;
+
+  height: 1550rpx;
+
+  display: flex;
+
+  margin-top:200rpx;
+
+  flex-direction: column;
+
+  background-size:100% ;
+
+  -moz-background-size:100% ;   
+
+  background-repeat: no-repeat;
+
+  background-image: url('https://file.ourbeibei.com/l_e/common/challenge_rule_bgimage.png');
+
+}
+
+.image_text_rule{
+
+  width: 90%;
+
+  margin-top: 30rpx;
+
+  margin-left: 30rpx;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 旧规则详情 */
+
+.container{
+
+  width: 100%;
+
+  height: 1403rpx;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+.image_rule{
+
+  top:0rpx;
+
+  width:100%;
+
+}
+
+.rule-image-container{
+
+  width: 94%;
+
+  margin-left: 3%;
+
+  margin-top: 40rpx;
+
+}
+
+.text-rule-head{
+
+  margin-left: 355rpx;
+
+  margin-top: -105rpx;
+
+  margin-bottom: 50rpx;
+
+  font-weight: 800;
+
+  font-size: 40rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: white;
+
+}
+
+.rule-content{
+
+  margin-left: 5%;
+
+  margin-top: -18rpx;
+
+  width: 90%;
+
+  height: 1200rpx;
+
+  background-color: white;
+
+  border-radius: 20rpx;
+
+  box-shadow:0px 0px 5px 3px #a9f5e1;
+
+  -webkit-box-shadow:0px 0px 5px 3px #a9f5e1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  text-align: left;
+}
+
+.text-start{
+
+  margin-left: 70rpx;
+
+  margin-top: 45rpx;
+
+  line-height:40rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #6b7176;
+}
+
+.text-point{
+
+    font-size: 35rpx;
+
+}
+
+.text-q{
+
+    margin-left: -20rpx;
+
+    font-size: 26rpx;
+
+    font-weight: 900;
+
+    color: #2a353a;
+
+ }
+
+ .text-q1{
+
+  margin-left: 70rpx;
+
+  margin-top: 30rpx;
+
+  line-height:40rpx;
+
+  font-weight: 500;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #535353;
+
+ }
+
+  .text-q2{
+
+  margin-left: 70rpx;
+
+  margin-top: 30rpx;
+
+  line-height:40rpx;
+
+  font-weight: 500;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #535353;
+
+ }
+
+  .text-q3{
+
+  margin-left: 70rpx;
+
+  margin-top: 30rpx;
+
+  line-height:40rpx;
+
+  font-weight: 500;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #535353;
+
+ }
+
+  .text-q4{
+
+  margin-left: 70rpx;
+
+  margin-top: 30rpx;
+
+  line-height:40rpx;
+
+  font-weight: 500;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #535353;
+
+ }
+
+  .text-q5{
+
+  margin-left: 70rpx;
+
+  margin-top: 30rpx;
+
+  line-height:40rpx;
+
+  font-weight: 500;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #535353;
+
+ }
+
+.text-end{
+
+  margin-left: 180rpx;
+
+  margin-top: 50rpx;
+
+  font-weight: 500;
+
+  font-size: 22rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #636668;
+
+}

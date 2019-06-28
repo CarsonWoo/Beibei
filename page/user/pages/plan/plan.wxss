@@ -1,0 +1,140 @@
+.container {
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  /* opacity: 0.2; */
+  overflow: scroll;
+  z-index: 1000;
+}
+
+page {
+  background-color: #f8f8f8;
+}
+
+.plan-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 100%; */
+  margin-left: 10rpx;
+}
+
+.plan-item {
+  width: 218rpx;
+  height: 261rpx;
+  margin: 40rpx 13rpx 7rpx 10rpx;
+  align-items: center;
+  box-shadow: 1.5px 2px 1px #ececec;
+  border-radius: 10rpx;
+  display: inline-block;
+  background-color: white;
+  border-color: rgb(240, 240, 240);
+  border-style: solid;
+  border-width: 1rpx;
+}
+
+.plan-name {
+  max-height: 60rpx;
+  font-size: 24rpx;
+  text-align: center;
+  align-items: center;
+  /* white-space: pre-line; */
+  margin-top: 64rpx;
+  /* line-height: 2rpx; */
+  display: block;
+  /* font-weight: bold; */
+  text-shadow: 1rpx 0px 0px;
+}
+
+.plan-word-count {
+  font-size: 20rpx;
+  text-align: center;
+  display: block;
+  margin-top: 60rpx;
+  color: #c0c0c0;
+}
+
+.plan-chooser-container {
+  width: 100%;
+  background-color: white;
+  position: fixed;
+  overflow: hidden;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  text-align: center;
+  font-size: 34rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.indicator-class {
+  height: 70rpx;
+  /* background-color: #d2f3ed; *//* color: #5ee1c0; */
+}
+
+.confirm-button {
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #ff8094;
+  background-color: #f8fbfb;
+  text-align: end;
+  padding-right: 25rpx;
+  line-height: 80rpx;
+}
+
+.plan-detail-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.picker-label {
+  display: flex;
+  flex-direction: row;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+.picker-label view {
+  width: 50%;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+
+.type-container {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  background-color: white;
+  padding-top: 10rpx;
+  padding-bottom: 20rpx;
+  flex-wrap: wrap;
+}
+
+.type-container-item {
+  width: 100rpx;
+  height: 50rpx;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border-color: #5ee1c9;
+  border-width: 1rpx;
+  border-style: solid;
+  margin-left: 26rpx;
+  margin-right: 18rpx;
+  color: #5ee1c9;
+  margin-top: 20rpx;
+}
+
+.type-container-item text {
+  text-align: center;
+  align-items: center;
+  font-size: 26rpx;
+  line-height: 48rpx;
+}
+
+.type-selected {
+  color: white;
+  background-color: #5ee1c9;
+}

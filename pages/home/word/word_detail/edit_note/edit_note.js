@@ -33,8 +33,12 @@ Page({
       },
       success: (res) => {
         if (res.data.status == 200) {
+          let value = res.data.data
+          if (value == '暂时未添加笔记!') {
+            value = ''
+          }
           this.setData({
-            value: res.data.data
+            value: value
           })
         }
       },

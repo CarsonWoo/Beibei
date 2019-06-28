@@ -426,8 +426,10 @@ Page({
 
     this.videoCtx = wx.createVideoContext('my_video')
 
+  },
 
-    var canvasCtx = wx.createCanvasContext('selector_id')
+  onShowDialog: function (event) {
+    let canvasCtx = wx.createCanvasContext('selector_id')
 
     canvasCtx.setFillStyle("#5ee1c9")
 
@@ -442,10 +444,7 @@ Page({
     canvasCtx.fill()
 
     canvasCtx.draw()
-
-  },
-
-  onShowDialog: function (event) {
+    
     this.setData({
       isShowDialog: true,
     })
@@ -492,6 +491,9 @@ Page({
         fullScreen: false
       })
     }
+  },
+
+  stopPageScroll () {
   },
   /**
    * 生命周期函数--监听页面显示

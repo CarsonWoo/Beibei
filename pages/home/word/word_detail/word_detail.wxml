@@ -1,4 +1,4 @@
-<view class='container' style='opacity:{{isShowDialog?"0.2":"1"}}'>
+<view class='container' style='opacity:{{isShowDialog?"0.2":"1"}};'>
   <text style='display:absolute;text-decoration:underline;font-size:28rpx;position:absolute;right:20rpx;margin-top:20rpx;color:#888;' bindtap='onPassTap'>Pass</text>
 
   <view class='word-info-container' bindtap='onPronunciationTap'>
@@ -77,7 +77,7 @@
     <video id='my_video' src='{{video_url}}' poster='{{video_poster}}' autoplay='true' controls='true' bindended='onVideoEnd' bindtimeupdate='onVideoUpdate' bindfullscreenchange='onFullScreenChange' custom-cache="{{false}}">
     </video>
 
-    <cover-view class='subtitle-container' style="margin-top:{{fullScreen?'55rpx':'0rpx'}}">
+    <cover-view class='subtitle-container' style="margin-top:{{fullScreen?'95rpx':'0rpx'}}">
       <cover-view class='subtitle-en'>{{en}}</cover-view>
       <cover-view class='subtitle-cn'>{{cn}}</cover-view>
     </cover-view>
@@ -87,10 +87,12 @@
 
 </view>
 
-<view class='edit-dialog-container' wx:if="{{isShowDialog}}">
-  <image src='/images/ic_close_gray.png' bindtap='onCloseDialog'></image>
-  <view class='edit-dialog'>
-    <view style='display:flex;flex-direction:row;' catchtap='onShowChoice'>
+<view class='edit-dialog-container' wx:if="{{isShowDialog}}" catchtouchmove='stopPageScroll'>
+  <!-- <view class='mask' catchtouchmove='stopPageScroll'></view> -->
+
+  <view class='edit-dialog' >
+    <image src='/images/ic_close_gray.png' catchtap='onCloseDialog'></image>
+    <view style='display:flex;flex-direction:row;' bindtap='onShowChoice'>
       <text class='selected-text'>{{edit_choice}}</text>
       <canvas canvas-id='selector_id'></canvas>
     </view>
@@ -103,7 +105,7 @@
       <view style='height:360rpx;'></view>
     </view>
 
-    <textarea wx:else auto-focus='true' placeholder='请输入修改的内容' bindinput='bindTextAreaBlur' value='{{text_area_text}}'></textarea>
+    <textarea wx:else auto-focus='true' placeholder='请输入修改的内容' bindinput='bindTextAreaBlur' value='{{text_area_text}}' fixed='true'></textarea>
     <view class='submit-container' catchtap='onSubmitTap'>提交</view>
 
   </view>

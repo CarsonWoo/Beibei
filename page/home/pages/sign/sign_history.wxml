@@ -1,0 +1,81 @@
+<view class='container'>
+  <view class='title'>
+    <image src='/images/bg_sign.png'></image>
+    <text wx:if="{{word_challenge_status != 2}}">诺~这是你的打卡记录~</text>
+    <text wx:if="{{word_challenge_status == 2}}">你已经完成挑战{{challenge_insist_day}}天啦~</text>
+  </view>
+
+  <swiper previous-margin='80rpx' next-margin='80rpx' current='11' bindchange='onSwiperChange'>
+    <block wx:for='{{calendar_list}}' wx:for-item="monthList" wx:for-index="idx">
+      <swiper-item>
+        <view class='calendar-container {{swiperIndex == idx ? "active" : "quiet"}}'>
+          <view class='calendar-month-year'>{{monthList.month}} {{monthList.year}}</view>
+          <view class='calendar-week-container'>
+            <text>MON</text>
+            <text>TUE</text>
+            <text>WED</text>
+            <text>THU</text>
+            <text>FRI</text>
+            <text>SAT</text>
+            <text>SUN</text>
+          </view>
+          <block wx:for="{{monthList.weekList}}">
+            <view class='calendar-day-container'>
+              <block wx:for="{{item}}">
+                <text wx:if="{{item != '*'}}">{{item}}</text>
+                <view wx:else class='image-container'>
+                  <image src='/images/ic_sign_{{index + 1}}.png'></image>
+                </view>
+              </block>
+            </view>
+          </block>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
+
+  <!-- <view>
+
+  <view class='view-line1'></view>
+
+  <view class='view-line2'></view>
+
+  <text class='text-invite'>分享给好友</text>
+
+  <image class='image-pyq' src='/images/pyq.png'></image>
+
+  <image class='image-wechat' src='/images/wechat.png'></image>
+
+  <button class='button_pyq' bindtap='shareTopyq' form-type='submit'style="opacity:{{0}}"  ></button>
+
+  <button class='button_wechat' disabled="{{disabled}}" open-type='share' form-type='submit'style="opacity:{{0}}"  ></button>
+
+  <text class='text-pyq'>朋友圈</text>
+
+  <text class='text-wechat'>微信</text>
+  
+  </view> -->
+
+
+
+  <!-- <button class='button' catchtap='onFeedScroll' catchtap='shareTopyq'>分享我的学习成就</button>
+  <cover-image src='/images/fish_plan.png' class='my-cover-image'></cover-image> -->
+
+  <view class='bottom-button-container'>
+
+    <button class='button-feeds' catchtap='onFeedScroll'>阅读学习干货
+    <image class='image-to-feeds' src='/images/to_feeds.png'></image>
+    </button>
+    <button class='button-share-pyq' catchtap='shareTopyq'>分享到朋友圈
+    <image class='image-share-pyq' src='/images/pyq.png'></image>
+    </button>
+  </view>
+
+
+</view>
+
+<!-- 生成朋友圈分享图片 -->
+<view class="canvas-box">
+  <canvas canvas-id="myCanvas" style="width:100%;height:{{screenHeight}}px;"></canvas>
+</view>
