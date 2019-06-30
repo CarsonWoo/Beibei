@@ -741,3 +741,184 @@ swiper {
   font-family: PingFang-SC-Regular;
   margin-top: 20rpx;
 }
+
+/* 运营0.3 */
+.partnership {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20rpx;
+}
+
+.partnership-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90%;
+  background-color: #363943;
+}
+
+.partnership-label-small-image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.partnership-label-text {
+  margin-left: 20rpx;
+  color: white;
+  font-size: 30rpx;
+}
+
+.partnership-icon-container {
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  justify-content: flex-end;
+  width: 52%;
+}
+
+.partnership-icon-container image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.partnership-like-toast {
+  width: 150px;
+  height: 30px;
+  position: absolute;
+  bottom: -60rpx;
+  right: 70rpx;
+  z-index: 9999;
+  animation: toastmove 0.8s;
+}
+
+@keyframes toastmove {
+  from {scale: 0;}
+  to {scale: 1;}
+}
+
+.partnership-lighten-toast {
+  width: 150px;
+  height: 30px;
+  position: absolute;
+  bottom: -60rpx;
+  right: -10rpx;
+  z-index: 9999;
+  animation: toastmove 0.8s;
+}
+
+.partnership-card-container {
+  width: 90%;
+  margin-top: 20rpx;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: white;
+}
+
+.partnership-base-image {
+  width: 100%;
+  height: 650rpx;
+  border-radius: 10rpx;
+  background-color: #a2c7f7;
+}
+
+.partnership-card-container cover-image {
+  position: absolute;
+  right: 15rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  top: 590rpx;
+  /* box-shadow: 0 50rpx 0 rgba(0, rgb(228, 228, 228), rgb(167, 167, 255), 0.8); */
+}
+
+.partnership-userinfo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+}
+
+.black {
+  color: #232323;
+}
+
+.partnership-normal-text {
+  font-size: 30rpx;
+}
+
+.partnership-userinfo-container image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.partnership-sub-normal-text {
+  font-size: 26rpx;
+}
+
+.light-gray {
+  color: rgba(201, 201, 201, 0.911);
+}
+
+.gray {
+  color: gray;
+}
+
+.partnership-tag-container {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20rpx;
+}
+
+.tag {
+  width: 150rpx;
+  height: 40rpx;
+  font-size: 26rpx;
+  color: #323231;
+  margin-right: 20rpx;
+  text-align: center;
+  line-height: 40rpx;
+  margin-bottom: 40rpx;
+  border-radius: 20rpx;
+}
+
+.blue-bg {
+  background-color: #c7dffd;
+  box-shadow: 0 6rpx 5rpx rgba(199, 215, 253, 0.5);
+}
+
+.light-blut-bg {
+  background-color: #acdaf0;
+  box-shadow: 0 6rpx 5rpx rgba(172, 218, 240, 0.5);
+}
+
+.light-pink-bg {
+  background-color: #ffdfef;
+  box-shadow: 0 6rpx 5rpx rgba(255, 218, 239, 0.5);
+}
+
+.label-fixed {
+  position: fixed;
+  top: 0;
+  padding-top: 5rpx;
+  padding-bottom: 5rpx;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.label-fixed-icon-container {
+  width: 46.7%;
+}

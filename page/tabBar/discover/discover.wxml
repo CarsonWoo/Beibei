@@ -94,6 +94,37 @@
 
   </block>
 
+  <view class='partnership' wx:if="{{partner_level}}">
+    <!-- 标题栏 -->
+    <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
+      <image class='partnership-label-small-image' src='/images/label_partnership.png'></image>
+      <text class='partnership-label-text'>我想和你一起背单词</text>
+      <view class='partnership-icon-container {{label_should_fixed ? "label-fixed-icon-container" : ""}}'>
+        <image style='margin-right:30rpx' src='{{ic_soundless_like}}'></image>
+        <image src='{{ic_lighten}}'></image>
+        <canvas class='partnership-like-toast' canvas-id='partnership_toast_like' wx:if="{{showLikeToast}}" catchtap='closeLikeToastTap'></canvas>
+        <canvas class='partnership-lighten-toast' canvas-id='partnership_toast_lighten' wx:if="{{showLightenToast}}" catchtap='closeLightenToastTap'></canvas>
+      </view>
+    </view>
+    <!-- 卡片 -->
+    <view class='partnership-card-container'>
+      <image class='partnership-base-image'></image>
+      <cover-image style="margin-right:130rpx" src='{{ic_like}}'></cover-image>
+      <cover-image src='{{ic_super_like}}'></cover-image>
+      <view class='partnership-userinfo-container'>
+        <text class='black partnership-normal-text'>左撇子杰克</text>
+        <image src='{{ic_gender}}'></image>
+        <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁 · 广东外语外贸大学</text>
+      </view>
+      <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
+      <view class='partnership-tag-container'>
+        <view class='tag blue-bg'>好好学习</view>
+        <view class='tag light-blut-bg'>乐观</view>
+        <view class='tag light-pink-bg'>幽默风趣</view>
+      </view>
+    </view>
+
+  </view>
 
   <swiper previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange'>
     <block wx:for="{{card_list}}">

@@ -26,6 +26,14 @@ Page({
     // isPacked: true,
     // showRedPacket: true,
     // isShowDialog: true
+    partner_level: 1,
+    showLikeToast: true,
+    // showLightenToast: true,
+    ic_soundless_like: 'https://file.ourbeibei.com/l_e/static/images/ic_soundless_like.png',
+    ic_lighten: 'https://file.ourbeibei.com/l_e/static/images/ic_lighten.png',
+    ic_gender: 'https://file.ourbeibei.com/l_e/static/images/ic_min_male.png',
+    ic_like: 'https://file.ourbeibei.com/l_e/static/images/ic_partnership_like.png',
+    ic_super_like: 'https://file.ourbeibei.com/l_e/static/images/ic_partnership_super_like.png'
   },
 
   /**
@@ -206,6 +214,18 @@ Page({
               this.onStartReading(e)
             }
           }
+
+          // 运营0.3
+          var query = wx.createSelectorQuery()
+          query.select('#partnership_label').boundingClientRect()
+          query.selectViewport().scrollOffset()
+          query.exec((res) => {
+            console.log(res[0].top)
+            this.setData({
+              label_origin_height: res[0].top
+            })
+          })
+
         } else if (res.data.status == 400 && res.data.msg == '身份认证错误！') {
           this.getToken()
         }
@@ -448,6 +468,59 @@ Page({
     canvas.lineTo(2, 2)
     canvas.fill()
     canvas.draw()
+
+    var toastLike = wx.createCanvasContext('partnership_toast_like')
+    toastLike.beginPath()
+    toastLike.setFillStyle("rgba(0, 0, 0, 0.5)")
+    // toast.setStrokeStyle("#000000")
+    toastLike.moveTo(130, 1)
+    toastLike.lineTo(125, 5)
+    toastLike.lineTo(3, 5)
+    toastLike.quadraticCurveTo(1, 5, 1, 7)
+    toastLike.lineTo(1, 27)
+    toastLike.quadraticCurveTo(1, 29, 3, 29)
+    toastLike.lineTo(147, 29)
+    toastLike.quadraticCurveTo(149, 29, 149, 27)
+    toastLike.lineTo(149, 7)
+    toastLike.quadraticCurveTo(149, 3, 147, 5)
+    toastLike.lineTo(135, 5)
+    toastLike.lineTo(130, 1)
+    toastLike.fill()
+    toastLike.beginPath()
+    toastLike.setFillStyle("white")
+    toastLike.setFontSize(12)
+
+    toastLike.fillText("看看有谁偷偷喜欢你", 20, 21)
+
+    // toast.stroke()
+    toastLike.draw()
+
+    var toastLighten = wx.createCanvasContext('partnership_toast_lighten')
+    toastLighten.beginPath()
+    toastLighten.setFillStyle("rgba(0, 0, 0, 0.5)")
+    // toast.setStrokeStyle("#000000")
+    toastLighten.moveTo(130, 1)
+    toastLighten.lineTo(125, 5)
+    toastLighten.lineTo(3, 5)
+    toastLighten.quadraticCurveTo(1, 5, 1, 7)
+    toastLighten.lineTo(1, 27)
+    toastLighten.quadraticCurveTo(1, 29, 3, 29)
+    toastLighten.lineTo(147, 29)
+    toastLighten.quadraticCurveTo(149, 29, 149, 27)
+    toastLighten.lineTo(149, 7)
+    toastLighten.quadraticCurveTo(149, 3, 147, 5)
+    toastLighten.lineTo(135, 5)
+    toastLighten.lineTo(130, 1)
+    toastLighten.fill()
+
+    toastLighten.beginPath()
+    toastLighten.setFillStyle("white")
+    toastLighten.setFontSize(12)
+
+    toastLighten.fillText("10倍曝光，匹配飙升", 20, 21)
+
+    // toast.stroke()
+    toastLighten.draw()
   },
 
   // onShowDialog: function(event) {
@@ -964,6 +1037,30 @@ Page({
     })
   },
 
+  closeLikeToastTap: function(e) {
+    this.setData({
+      showLikeToast: false,
+      showLightenToast: true
+    })
+  },
+
+  closeLightenToastTap: function(e) {
+    this.setData({
+      showLightenToast: false
+    })
+  },
+
+  onPageScroll: function(e) {
+    if (e.scrollTop >= this.data.label_origin_height + 5) {
+      this.setData({
+        label_should_fixed: true
+      })
+    } else {
+      this.setData({
+        label_should_fixed: false
+      })
+    }
+  },
 
   /**
    * 页面上拉触底事件的处理函数
