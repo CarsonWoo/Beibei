@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    location:0,
   },
 
   onLikeTap: function (event) {
@@ -139,14 +139,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
     var id = options.id
-
+    var location = options.location
     this.setData({
       id: id
     })
-    console.log(id)
+    if (location != null && location != undefined) {
+      this.setData({
+        location: location
+      })
+    }
     this.loadData()
-    
   },
 
   loadData: function() {
@@ -183,6 +189,15 @@ Page({
         console.log(res)
       }
     })
+    var location = this.data.location
+    if (location != null && location != undefined) {
+      setTimeout(() => {
+        wx.pageScrollTo({
+          scrollTop: location,
+          duration: 500
+        })
+      }, 300)
+    }
   },
 
   /**
@@ -196,6 +211,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
   },
 
   /**
@@ -226,24 +242,28 @@ Page({
 
   },
 
+  // 监听页面滑动
+  onPageScroll: function (e) {
+    // console.log(e.scrollTop)
+    var location = e.scrollTop
+    this.setData({
+      location: location,
+    })
+  },
+
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-
+  onShareAppMessage: function (e) {
     var share_imgs = app.globalData.share_imgs
     var share_texts = app.globalData.share_texts
     var choose_number = parseInt(Math.random() * share_imgs.length, 10)
     var share_img = share_imgs[choose_number]
     var share_text = share_texts[choose_number]
-
     return {
-
       title: this.data.title,
-      path: 'page/tabBar/home/home',
+      path: 'page/tabBar/home/home?action=onFeedsTap'+'&feed_id=' + this.data.id + '&feed_location=' + this.data.location,
       // imageUrl: share_img,
     }
-
   }
 })

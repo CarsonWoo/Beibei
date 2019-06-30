@@ -74,3 +74,8 @@ page {
   font-size: 40rpx;
   line-height: 135rpx;
 }
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}

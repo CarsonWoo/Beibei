@@ -153,7 +153,7 @@
 
   <view class='welfare-container'>
     <view class='welfare-item' catchtap='onMoneyTap'>
-      <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
+      <image class='welfare-img' src='/images/ic_home_game.png'></image>
       <text>单词挑战</text>
     </view>
 
@@ -162,10 +162,16 @@
       <text>语境阅读</text>
     </view>
 
-    <view class='welfare-item' catchtap='onGameTap'>
+    <!-- <view class='welfare-item' catchtap='onGameTap'>
       <image class='welfare-img' src='/images/ic_home_game.png'></image>
       <text>小游戏</text>
+    </view> -->
+
+    <view class='welfare-item' catchtap='onPrizeTap'>
+      <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
+      <text>赢奖品</text>
     </view>
+
   </view>
 
   <!-- <view class='prize-container'>
@@ -211,13 +217,18 @@
 
   </view> -->
 
-  <view class='teacher-welfare' catchtap='onCetTap'>
+  <!-- <view class='teacher-welfare' catchtap='onCetTap'>
     <image src='/images/banner_home_teacher.png'></image>
-  </view>
+  </view> -->
+
+  <button class='teacher-welfare' open-type="contact">
+    <image src='/images/banner_home_customer_service.png'></image>
+  </button>
+
 
   <view>
     <block wx:for="{{feeds}}">
-      <!-- <ad unit-id="adunit-a8e6b7e4a651af7b" wx:if="{{index % 3 == 0 && index > 0}}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad> -->
+      <ad unit-id="adunit-a8e6b7e4a651af7b" wx:if="{{index == 2 }}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
       <view class='feeds-container' bindtap='onFeedsClick' data-id='{{item.id}}'>
 
         <image class='feeds-content-src' mode='widthFix' src='{{item.pic}}'></image>
@@ -258,8 +269,8 @@
       <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 3}}" src='/images/banner_prize.png' catchtap='onPrizeTap'></image>
       <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 4}}" src='/images/banner_class.png' catchtap='onCetTap'></image>
       <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 0}}" src='/images/banner_game.png' catchtap='onGameTap'></image>
+      <ad unit-id="adunit-a8e6b7e4a651af7b"  wx:if="{{index % 5 == 0 && index != 0}}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
     </block>
-
   </view>
 </view>
 

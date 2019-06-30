@@ -4,7 +4,7 @@
     <text class='text-period'>第{{periods}}期</text>
     <text class='text-st-time'>{{st}}</text>
     <text class='text-et-time'>{{et}}</text>
-    <text class='text-people-top'><text class='text-people-number-top'>{{people}}</text>人已参加挑战</text> 
+    <text class='text-people-top'><text class='text-people-number-top'>{{people}}</text>人已参加挑战</text>
   </view>
   <image src="https://file.ourbeibei.com/l_e/common/Challenge02.png" mode="widthFix" class='challengeimage'>
   </image>

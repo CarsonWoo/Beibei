@@ -57,21 +57,17 @@
   
   </view> -->
 
-
-
   <!-- <button class='button' catchtap='onFeedScroll' catchtap='shareTopyq'>分享我的学习成就</button>
   <cover-image src='/images/fish_plan.png' class='my-cover-image'></cover-image> -->
 
   <view class='bottom-button-container'>
-
     <button class='button-feeds' catchtap='onFeedScroll'>阅读学习干货
     <image class='image-to-feeds' src='/images/to_feeds.png'></image>
     </button>
-    <button class='button-share-pyq' catchtap='shareTopyq'>分享到朋友圈
+    <!-- <button class='button-share-pyq' catchtap='shareTopyq'>分享到朋友圈
     <image class='image-share-pyq' src='/images/pyq.png'></image>
-    </button>
+    </button> -->
   </view>
-
 
 </view>
 

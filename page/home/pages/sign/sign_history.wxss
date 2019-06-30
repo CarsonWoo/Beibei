@@ -176,7 +176,8 @@ swiper-item {
   border-radius: 45rpx;
   border-width: 5rpx;
   box-shadow: 0 0 2px #E1ECED;
-  width: 45%;
+  /* width: 45%; */
+  width: 80%;
 }
 
 .button-share-pyq{

@@ -7,8 +7,8 @@ Page({
    */
   data: {
     imageData: 'https://file.ourbeibei.com/l_e/common/JiaNan.png',
-    input_text: '',
-    text_area_text: ''
+    inpuit_text: '',
+    text_area_text:''
   },
 
   /**
@@ -51,10 +51,9 @@ Page({
         data: {
           advice: area,
           level: this.data.select,
-          contact: input
+          contact:input
         },
         success: (res) => {
-          console.log(res)
           if (res.data.status == 200) {
             wx.showToast({
               title: '提交成功',

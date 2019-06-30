@@ -51,12 +51,12 @@
         <view class='list-title-container'>
           <view style='height: 33rpx;width: 5rpx;background-color: white;margin-left: 40rpx'></view>
           <view class='list-title'>{{key.list_title}}</view>
-
+          
           <view class='selection-column-container'>
-            <view class='selection {{select == index ? "selected" : ""}}'>{{select == index ? "已选" : "选择"}}</view>
-            <view class='list-word-demand'>词汇量要求{{key.demand}}</view>
+          <view class='selection {{select == index ? "selected" : ""}}'>{{select == index ? "已选" : "选择"}}</view>
+          <view class='list-word-demand'>词汇量要求{{key.demand}}</view>
           </view>
-
+          
         </view>
         <view class='book-content-container'>
           <view class='book-title-container'>

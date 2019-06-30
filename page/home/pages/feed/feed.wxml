@@ -14,6 +14,7 @@
       <image wx:else mode='widthFix' src='{{item.pic}}'></image>
     </block>
   </view>
+   <ad unit-id="adunit-a8e6b7e4a651af7b" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
   <view class='button-container' bindtap='onLikeTap' animation="{{animation}}">
     <text>赞</text>
     <!-- <text style='font-size:22rpx'>{{likes}}</text> -->

@@ -88,9 +88,21 @@ Page({
     }
 
     let action = options.action
+    let feed_id = options.feed_id
+    let feed_location = options.feed_location
     if (action != undefined && action != null) {
       this.setData({
         action: action
+      })
+    }
+    if (feed_id != undefined && feed_id != null) {
+      this.setData({
+        feed_id: feed_id
+      })
+    }
+    if (feed_location != undefined && feed_location != null) {
+      this.setData({
+        feed_location: feed_location
       })
     }
 
@@ -115,62 +127,6 @@ Page({
           isShowMask: true
         })
       }
-    }
-
-    //本人免死金牌是否领取成功
-    if (method == 'medallion_success') {
-      console.log("免死金牌领取成功")
-      var medallion_success = true
-      this.setData({
-        medallion_success: true
-      })
-
-      wx.request({
-        url: app.globalData.HOST + "/home/home_page_info.do",
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'token': token
-        },
-        success: (res) => {
-          // console.log(res.data)
-          var data = res.data
-          if (data.status == 200) {
-            let word_challenge_status = data.data.word_challenge_status
-            this.setData({
-              word_challenge_status: word_challenge_status
-            })
-            if (this.data.word_challenge_status == 2) {
-
-              wx.navigateTo({
-                url: '../../discover/pages/WordChallenge/PunchRank/PunchRank?medallion_success=' + '1',
-              })
-
-              // ////应对ios支付举报
-              // wx.getSystemInfo({
-              //   success: function(res) {
-              //     that.setData({
-              //       systemInfo: res,
-              //     })
-              //     if (res.platform == "ios") {
-              //       wx.navigateTo({
-              //         url: '../home/home',
-              //       })
-              //     } else if (res.platform == "android") {
-              //       wx.navigateTo({
-              //         url: '../../discover/pages/WordChallenge/PunchRank/PunchRank?medallion_success=' + '1',
-              //       })
-              //     }
-              //   }
-              // })
-
-            }
-          }
-        },
-        fail: (res) => {
-          console.log(res)
-        }
-      })
     }
     //本人的挑战红包状态
     if (method == 'challenge_success_red_packet') {
@@ -201,79 +157,6 @@ Page({
         })
       }
     }
-
-
-    // //应对ios支付举报
-    // if (use_medallion_id != undefined && medallion_flag != undefined && word_challenge_contestants_id != undefined) {
-    //   wx.getSystemInfo({
-    //     success: function (res) {
-    //       that.setData({
-    //         systemInfo: res,
-    //       })
-    //       if (res.platform == "android") {
-    //         //免死金牌助力
-    //         wx.request({
-    //           url: HOST + '/various/medallion_help.do',
-    //           method: 'POST',
-    //           header: {
-    //             'content-type': 'application/x-www-form-urlencoded',
-    //             token: token,
-    //           },
-    //           data: {
-    //             user_id: use_medallion_id,
-    //             flag: medallion_flag,
-    //             word_challenge_contestants_id: word_challenge_contestants_id,
-    //           },
-    //           success: (res) => {
-    //             if (res.data.status == 200) {
-    //               this.setData({
-    //                 isShowSupportSuccess: true,
-    //                 isShowMask: true
-    //               })
-    //               console.log("助力成功")
-    //             }
-    //           },
-    //           fail: (res) => {
-    //             console.log(res)
-    //           }
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
-
-
-    // 原先的方法
-    if (use_medallion_id != undefined && medallion_flag != undefined && word_challenge_contestants_id != undefined) {
-      //免死金牌助力
-      wx.request({
-        url: HOST + '/various/medallion_help.do',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          token: token,
-        },
-        data: {
-          user_id: use_medallion_id,
-          flag: medallion_flag,
-          word_challenge_contestants_id: word_challenge_contestants_id,
-        },
-        success: (res) => {
-          if (res.data.status == 200) {
-            this.setData({
-              isShowSupportSuccess: true,
-              isShowMask: true
-            })
-            console.log("助力成功")
-          }
-        },
-        fail: (res) => {
-          console.log(res)
-        }
-      })
-
-    }
-
     //从打卡页跳到首页隐藏弹窗
     if (options.isHide == 100) {
       this.setData({
@@ -422,6 +305,14 @@ Page({
     })
   },
 
+  onFeedsTap: function () {
+    var feed_id = this.data.feed_id
+    var feed_location = this.data.feed_location
+    wx.navigateTo({
+      url: '../../home/pages/feed/feed?id=' + feed_id + '&location=' + feed_location,
+    })
+  },
+
   loadData: function(token) {
     //添加访问发现页并记录is_reading状态
     wx.request({
@@ -516,7 +407,6 @@ Page({
                       app.globalData.userInfo = res.userInfo
                     }
                   })
-
                 } else {
                   console.log('scope disable')
                   // this.fadeInDialog()
@@ -600,7 +490,6 @@ Page({
               })
             }
           }
-
           if (whether_invite_challenge_success == 1) {
             this.setData({
               isShowInviteRedPackView: true,
@@ -728,6 +617,9 @@ Page({
                     })
                   }, 500)
                   break
+                case 'onFeedsTap':
+                  this.onFeedsTap()
+                  break
                 case 'onBookTap':
                   this.onBookTap()
                   break
@@ -746,15 +638,25 @@ Page({
             }
           } else {
             // 引导没有计划的用户去选择词汇背诵
-            this.onPlanTap()
+            var options = app.globalData.onload_options
+            var medallion_flag = options.flag;
+            var use_medallion_id = options.use_medallion_id;
+            //点击助力链接进来的用户加2s延迟来显示助力成功的提示
+            if (medallion_flag != undefined && use_medallion_id!=undefined){
+              var that = this
+              setTimeout(function () {
+                that.onPlanTap()
+              }, 2000);
+            }
+            else{
+              this.onPlanTap()
+            }
           }
-
         } else {
           if (data.status == 400 && data.msg == '身份认证错误！') {
             this.getToken()
           }
         }
-
       },
       fail: (res) => {
         console.log(res)
@@ -906,6 +808,141 @@ Page({
         }
       })
     }
+
+    var medallion_flag = options.flag;
+    var use_medallion_id = options.use_medallion_id;
+    var word_challenge_contestants_id = options.word_challenge_contestants_id;
+    var method = options.method
+    //本人免死金牌是否领取成功
+    if (method == 'medallion_success') {
+      console.log("免死金牌领取成功")
+      var medallion_success = true
+      this.setData({
+        medallion_success: true
+      })
+      wx.request({
+        url: app.globalData.HOST + "/home/home_page_info.do",
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'token': token
+        },
+        success: (res) => {
+          // console.log(res.data)
+          var data = res.data
+          if (data.status == 200) {
+            let word_challenge_status = data.data.word_challenge_status
+            this.setData({
+              word_challenge_status: word_challenge_status
+            })
+            if (this.data.word_challenge_status == 2) {
+
+              wx.navigateTo({
+                url: '../../discover/pages/WordChallenge/PunchRank/PunchRank?medallion_success=' + '1',
+              })
+
+              // ////应对ios支付举报
+              // wx.getSystemInfo({
+              //   success: function(res) {
+              //     that.setData({
+              //       systemInfo: res,
+              //     })
+              //     if (res.platform == "ios") {
+              //       wx.navigateTo({
+              //         url: '../home/home',
+              //       })
+              //     } else if (res.platform == "android") {
+              //       wx.navigateTo({
+              //         url: '../../discover/pages/WordChallenge/PunchRank/PunchRank?medallion_success=' + '1',
+              //       })
+              //     }
+              //   }
+              // })
+
+            }
+          }
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+    }
+    // //应对ios支付举报
+    // if (use_medallion_id != undefined && medallion_flag != undefined && word_challenge_contestants_id != undefined) {
+    //   wx.getSystemInfo({
+    //     success: function (res) {
+    //       that.setData({
+    //         systemInfo: res,
+    //       })
+    //       if (res.platform == "android") {
+    //         //免死金牌助力
+    //         wx.request({
+    //           url: HOST + '/various/medallion_help.do',
+    //           method: 'POST',
+    //           header: {
+    //             'content-type': 'application/x-www-form-urlencoded',
+    //             token: token,
+    //           },
+    //           data: {
+    //             user_id: use_medallion_id,
+    //             flag: medallion_flag,
+    //             word_challenge_contestants_id: word_challenge_contestants_id,
+    //           },
+    //           success: (res) => {
+    //             if (res.data.status == 200) {
+    //               this.setData({
+    //                 isShowSupportSuccess: true,
+    //                 isShowMask: true
+    //               })
+    //               console.log("助力成功")
+    //             }
+    //           },
+    //           fail: (res) => {
+    //             console.log(res)
+    //           }
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+
+    // 原先的方法
+    if (use_medallion_id != undefined && medallion_flag != undefined && word_challenge_contestants_id != undefined) {
+      //免死金牌助力
+      wx.request({
+        url: app.globalData.HOST  + '/various/medallion_help.do',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          token: token,
+        },
+        data: {
+          user_id: use_medallion_id,
+          flag: medallion_flag,
+          word_challenge_contestants_id: word_challenge_contestants_id,
+        },
+        success: (res) => {
+          if (res.data.status == 200) {
+            this.setData({
+              isShowSupportSuccess: true,
+              isShowMask: true
+            })
+            console.log("助力成功")
+          }
+          else{
+            console.log("助力已完成")
+            wx.showToast({
+              title: '助力已完成',
+              icon: 'none'
+            })
+          }
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+    }
+
   },
 
   getToken: function() {
