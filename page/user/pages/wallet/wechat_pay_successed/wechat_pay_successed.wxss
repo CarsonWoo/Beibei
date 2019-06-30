@@ -1,0 +1,106 @@
+/* pages/user/wallet/wechat_pay_successed/wechat_pay_successed.wxss */
+
+
+.content{
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  background-color: #dbfff8;
+
+  width: 100vw;
+
+  height: 100vh;
+
+}
+
+.bcview{
+
+  display: flex;
+
+  flex-direction: column;
+
+  position: fixed;
+
+  margin-top: 100rpx;
+
+  width: 650rpx;
+
+  height: 880rpx;
+
+  background-color: white;
+
+  text-align: center;
+
+  align-items: center;
+
+  border-radius: 10rpx;
+
+}
+
+
+
+.bcview-QR{
+
+  display: flex;
+
+  flex-direction: column;
+
+  position: fixed;
+
+  margin-top: 135rpx;
+
+  width: 308rpx;
+
+  height: 308rpx;
+
+  background-color: #bff3e9;
+
+  align-items: center;
+
+  border-radius: 10rpx;
+
+}
+
+.image-JiaNan{
+
+  margin-top: 30rpx;
+
+  width: 257rpx;
+
+  height: 257rpx;
+
+}
+
+
+
+.image-dowmload{
+
+  margin-top: 500rpx;
+
+  width: 300rpx;
+
+  height: 65rpx;
+
+}
+
+.text-add-JiaNan{
+
+  position: fixed;
+
+  text-align: center;
+  
+  margin-top: 660rpx;
+
+  font-weight: 550;
+
+  font-size:35rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #575757;
+
+}

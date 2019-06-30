@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.background-img {
+  width: 100%;
+}
+
+.label-text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 30rpx;
+  color: #6b7176;
+  font-size: 32rpx;
+}
+
+.portrait-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 50rpx;
+  width: 100%;
+  justify-content: center;
+}
+
+.portrait {
+  position: relative;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.portrait image {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  border: dashed 2rpx #ec8e8e;
+  background-color: #eee;
+}
+
+.portrait text {
+  font-size: 46rpx;
+  position: absolute;
+  top: 50%;
+  margin-top: -36rpx;
+  left: 50%;
+  margin-left: -12rpx;
+  color: #ec8e8e;
+  text-shadow: 1rpx 0 1rpx #ec8e8e;
+}
+
+.button-container {
+  width: 584rpx;
+  height: 94rpx;
+  background-image: linear-gradient(90deg, #ff7592 0%, #ff8d87 100%), linear-gradient(#ff8293, #ff8293);
+  background-blend-mode: normal, normal;
+  border-radius: 46rpx;
+  font-size: 40rpx;
+  color: white;
+  margin-top: 66rpx;
+}
+
+.underline {
+  margin-top: 46rpx;
+  font-size: 28rpx;
+  color: #ababab;
+  text-decoration: underline;
+}

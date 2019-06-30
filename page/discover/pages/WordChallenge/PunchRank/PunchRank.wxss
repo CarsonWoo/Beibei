@@ -1,0 +1,771 @@
+
+page{background-color:#d5fff9;}
+
+.content{
+
+  /* position: fixed; */
+
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;  
+
+  flex-direction: column;  
+
+  /* background-color: #d5fff9; */
+
+}
+
+.view-leaderboard{
+  z-index: 100;
+}
+
+.image-leaderboard{
+
+  position: absolute;
+
+  margin-left: 20rpx;
+
+  margin-top: 80rpx ;
+
+  width: 95%;
+
+}
+
+.text-rule{
+
+  position: absolute;
+
+  margin-left: 610rpx;
+
+  margin-top: 965rpx;
+
+  text-decoration:underline;
+
+  font-weight: 500;
+
+  font-size: 26rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #727272;
+
+
+}
+/* 我的排名*/
+.text-my-rank{
+
+  position:absolute;
+
+  margin-left: 88rpx;
+
+  margin-top: 161rpx;
+
+  font-weight: 100;
+
+  font-size: 30rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #ffffff;
+
+}
+
+
+.bcview-my-avatar{
+
+  position: absolute;
+
+  margin-left: 45rpx;
+
+  margin-top: 30rpx;
+
+  width: 120rpx;
+
+  height: 120rpx;
+
+  border-radius: 50%;
+
+  background-color: #ffffff;
+
+  z-index: 200;
+
+}
+
+/* 我的头像*/
+.image-my-avatar{
+
+  /* position: absolute; */
+
+  margin-left: 5rpx;
+
+  margin-top: 5rpx;
+
+  width: 110rpx;
+
+  height: 110rpx;
+
+  border-radius: 50%;
+
+}
+
+/* 我的名字*/
+.text-my-name{
+
+  position: absolute;
+
+  margin-left: 166rpx;
+
+  margin-top: 95rpx;
+
+  font-weight: 700;
+
+  font-size: 30rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #ffffff;
+
+}
+
+.text-my-state{
+
+  position: absolute;
+
+  margin-left: 168rpx;
+
+  margin-top: 140rpx;
+
+  font-weight: 600;
+
+  font-size: 25rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #ffffff;
+
+}
+
+
+.text-my-words{
+
+  position:relative;
+
+  margin-right: 35rpx;
+
+  margin-top: 80rpx;
+
+  display: flex;
+
+  flex-direction:row-reverse;
+
+  font-weight: 600;
+
+  font-size: 30rpx;
+
+  color: #ffffff;
+  
+}
+
+.text-my-words-number{
+
+  font-size: 50rpx;
+  
+}
+
+
+.test-punch-day{
+
+  position:relative;
+
+  margin-right: 38rpx;
+
+  margin-top: 0rpx;
+
+  display: flex;
+
+  flex-direction:row-reverse;
+
+  font-weight: 600;
+
+  font-size: 25rpx;
+
+  color: #fff89d;
+
+}
+
+
+
+.scroll{
+
+  /* position: absolute;
+
+  margin-left: 0rpx; */
+
+  /* margin-top: 208rpx ; */
+
+  margin-top: 25rpx ;
+
+  border-radius: 8px;
+
+}
+
+
+
+/*隐藏滚动条*/
+
+::-webkit-scrollbar{
+
+width: 0;
+
+height: 0;
+
+color: transparent;
+
+}
+
+.bcview-scroll{
+
+  position: absolute;
+
+  margin-left: 25rpx;
+
+  margin-top: 0rpx ;
+
+  width: 700rpx;
+
+  /* height: 4000rpx; */
+
+  border-radius: 8px;
+
+  background-color: #ffffff;
+
+}
+
+
+/* 蒙板 */
+.view-mask{
+
+  position: fixed;   
+
+  left: 25rpx;
+
+  top: 750rpx;
+
+  width: 700rpx;
+
+  height: 80rpx;
+
+  box-shadow: 0px 0px 10px 0px white;
+
+  background-color: white;
+
+  border-radius: 10px;
+
+  border-width: 0rpx;
+
+}
+
+
+
+.view-user{
+
+  /* position:relative;
+
+  margin-left: 0rpx;
+
+  margin-top: 0rpx; */
+
+  display: flex;
+
+  flex-direction: row;
+
+  width: 700rpx;
+
+  height: 80rpx;
+
+  overflow: hidden;
+
+  /* text-overflow: ellipsis; */
+  
+  white-space: nowrap;
+}
+
+
+
+.image-gold{
+
+  position: absolute;
+
+  margin-left: 50rpx;
+
+  margin-top: 25rpx;
+
+  width: 45rpx;
+
+  height: 45rpx;
+
+}
+
+.image-silver{
+
+  position: absolute;
+
+  margin-left: 49rpx;
+
+  margin-top: 100rpx;
+
+  width: 47rpx;
+
+  height: 47rpx;
+
+}
+
+.image-copper{
+
+  position: absolute;
+
+  margin-left: 50rpx;
+
+  margin-top: 180rpx;
+
+  width: 45rpx;
+
+  height: 45rpx;
+
+}
+
+
+.text-user-rank{
+
+  /* position: absolute; */
+
+  margin-left: 40rpx;
+
+  margin-top: 25rpx;
+
+  font-weight: 350;
+
+  font-size: 28rpx;
+
+}
+
+.image-user-avatar{
+
+  /* position: absolute;
+
+  margin-left: 80rpx; */
+
+  margin-left: 20rpx;
+
+  margin-top: 22rpx;
+
+  width: 43rpx;
+
+  height: 43rpx;
+
+  border-radius: 50%;
+
+}
+
+.text-user-name{
+
+  /* position: absolute;
+
+  margin-left: 150rpx; */
+
+  margin-left: 20rpx; 
+
+  margin-top: 25rpx;
+
+  width:360rpx;
+
+  font-weight: 400;
+
+  font-size: 28rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #2c3031;
+
+  overflow: hidden;
+
+  /* text-overflow: ellipsis; */
+  
+  white-space: nowrap;
+
+}
+
+.bcview-user-reward{
+
+  /* position: absolute;
+
+  top: 15rpx;
+
+  right: 0rpx; */
+
+
+  display: flex;
+
+  flex-direction:row-reverse;
+
+  margin-right: 20rpx;
+
+  margin-top: 15rpx;
+
+  background-color: white;
+
+  width: 200rpx;
+
+  height: 45rpx;
+
+
+}
+
+.text-user-reward{
+
+  /* display: flex;
+
+  flex-direction:row-reverse;
+  
+  position:relative;
+
+  margin-right: 0rpx; */
+
+  margin-right: -10rpx;
+
+  margin-top: 5rpx;
+
+  font-weight: 500;
+
+  font-size: 28rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #9f9f9f;
+
+}
+
+.tetx-reward-point{
+
+   color: #2c3031;
+
+}
+
+
+
+.bcview-invite{
+
+  z-index: 1;
+
+  /* position: absolute; */
+
+  margin-left: 80rpx;
+
+  /* margin-top: 845rpx; */
+
+  margin-top: -120rpx;
+
+  width: 642rpx;
+
+  height: 115rpx;
+
+  background-color: white;
+
+}
+
+.image-fish{
+
+  z-index: 300;
+
+  /* position: fixed;
+
+  left: 0rpx;
+
+  top: 830rpx; */
+
+  width: 158rpx;
+
+  height: 136rpx;
+
+}
+
+/* 邀请好友奖金翻倍哦~邀请越多倍数越多 */
+.text-invite-top{
+
+  position:absolute;
+
+  margin-left: 105rpx;
+
+  margin-top: 10rpx;
+
+  font-weight: 666;
+
+  font-size: 29rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #484848;
+}
+
+.image-invite-top-avatar{
+
+  position: absolute;
+
+  margin-left: 115rpx;
+
+  margin-top: 55rpx;
+
+  width: 45rpx;
+
+  height: 45rpx;
+
+  border-radius: 50%;
+
+}
+
+.text-invite-reward{
+
+  position:absolute;
+
+  margin-left: 170rpx;
+
+  margin-top: 57rpx;
+
+  font-weight: 666;
+
+  font-size: 28rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #2d3333;
+
+}
+
+.tetx-invite-reward-number{
+
+  position:relative;
+
+  margin-left: 0rpx;
+
+  margin-top: 0rpx;
+
+  font-weight: 900;
+
+  font-size: 28rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #fa636c;
+
+}
+
+
+.text-invite-right{
+
+  position:absolute;
+
+  text-decoration:underline; 
+
+  margin-left: 420rpx;
+
+  margin-top: 50rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #6a6b6d;
+}
+
+
+
+
+.view-line1{
+
+  position: absolute;
+
+  margin-top: 1030rpx;
+
+  margin-left: 110rpx;
+
+  width: 160rpx ;
+
+  height: 0.1rpx;
+
+  background-color: #8aa4a3;
+
+}
+
+.view-line2{
+
+  position: absolute;
+
+  margin-top: 1030rpx;
+
+  margin-left: 484rpx;
+
+  width: 160rpx ;
+
+  height: 0.1rpx;
+
+  background-color: #8aa4a3;
+
+}
+
+
+/* 邀请好友获得奖励 */
+.text-invite-bottom{
+
+  position: absolute;
+
+  margin-top: 1015rpx;
+
+  margin-left: 280rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  color: #203234;
+
+}
+
+.button_wechat{
+
+  position: absolute;
+
+  margin-left: 435rpx;
+
+  margin-top: 1065rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+  color: white
+}
+
+.button_pyq{
+
+  position: absolute;
+
+  margin-left: 240rpx;
+
+  margin-top: 1065rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+  color: white
+
+}
+
+.image-pyq{
+
+  position: absolute;
+
+  margin-left: 240rpx;
+
+  margin-top: 1065rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+}
+
+.image-wechat{
+
+  position: absolute;
+
+  margin-left: 435rpx;
+
+  margin-top: 1065rpx;
+
+  width: 76rpx;
+
+  height: 76rpx;
+
+}
+
+.text-pyq{
+
+
+  position: absolute;
+
+  margin-left: 242rpx;
+
+  margin-top: 1146rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #203234;
+
+}
+
+.text-wechat{
+
+  position: absolute;
+
+  margin-left: 450rpx;
+
+  margin-top: 1146rpx;
+
+  font-weight: 400;
+
+  font-size: 24rpx;
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: #203234;
+
+}
+
+
+
+.view-AcquireSuccess-mask{
+
+  width: 100%;
+
+  height: 100%;
+
+  background-color: rgba(66, 66, 66, 0.5);
+
+  position: fixed;
+
+  left: 0rpx;
+  
+  top: 0rpx;
+}
+
+
+.image-AcquireSuccess{
+
+  position: fixed;
+
+  width:  375rpx;
+
+  height: 470rpx;
+
+  top:225rpx;
+
+  left:180rpx;
+
+}
+
+
+.canvas-box{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 999999rpx;
+  }

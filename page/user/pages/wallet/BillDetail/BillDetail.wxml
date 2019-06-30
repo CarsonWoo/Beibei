@@ -1,0 +1,17 @@
+<view class='content'>
+
+  <block wx:for="{{billdetail_Data}}" wx:for-item = 'item'>
+
+  <view class='view-challenge-detail'>
+
+    <text class='text-challenge-period'>{{item.statement}}</text>
+
+    <text class='text-challenge-time'>{{item.set_time}}</text>
+
+    <text class='text-challenge-reward'>{{item.bill}}</text>
+  
+  </view>
+
+  </block>
+
+</view>

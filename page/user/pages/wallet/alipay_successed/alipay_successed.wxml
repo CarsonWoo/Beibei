@@ -1,0 +1,9 @@
+<!--pages/user/wallet/alipay_sucessed/alipay_successed.wxml-->
+<view class='content'>
+
+  <image class='image_cash_back_successed' src='/images/cash_back_success.png'></image>
+<text class='text-cash-back'>申请提现成功！</text>
+<text class='text-cash-back-number'>提现金额{{back_cash}}元</text>
+<text class='text-cash-back-remind'>若您的信息正确,\n将会在1-5个工作日内成功提现，\n否则金额会全数返回钱包</text>
+
+</view>

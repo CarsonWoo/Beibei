@@ -1,0 +1,33 @@
+<view class='container'>
+  <block wx:if='{{chapter_list.length > 1 || (chapter_list.length == 1 && chapter_list[0].length != 0)}}'>
+    <block wx:for="{{chapter_list}}" wx:for-item="key">
+      <view class='chapter-word-container'>
+        <view class='chapter-title'>Chapter {{key[0].order}}</view>
+        <block wx:for="{{key}}" wx:for-index='idx'>
+          <view class='word-container' catchtap='onAudioTap' data-audio='{{item.symbol_mp3}}'>
+            <view style='display:flex; flex-direction:row;padding-left:70rpx;align-items:center'>
+              <text class='sequence'>{{idx + 1}}.</text>
+              <text class='new-word'>{{item.word}}</text>
+              <text class='new-word-symbol'>{{item.symbol}}</text>
+            </view>
+            <view style='display:flex; flex-direction:row;padding-left:122rpx;padding-right:45rpx;align-items:center'>
+              <text class='meaning'>{{item.mean}}</text>
+              <image style='width:35rpx;height:35rpx;margin-left:40rpx;' src='/images/play_sound_min.png'></image>
+            </view>
+            <view style='height:1rpx;padding-left:122rpx;margin-top:40rpx;'>
+              <view style='background-color:#f4f6f6;height:100%;width:100%;'></view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </block>
+  <block wx:else>
+    <view style='display:flex;flex-direction:column;align-items:center;width:100%;height:100%;text-align:center;'>
+      <image class='empty-image' src='{{empty_image}}'></image>
+      <text class='empty-text'>{{empty_text}}</text>
+      <!-- {{fromPage == 'discover' ? '该章节没有新单词噢' : chapter_list.length == 1 && chapter_list[0].length == 0 ? '所读章节没有新单词噢~' : '你还没有读过这本书噢，去读吧~'}} -->
+    </view>
+  </block>
+  <view class='bottom-button' wx:if="{{fromPage == 'discover'}}" catchtap='onReading'>进入阅读</view>
+</view>

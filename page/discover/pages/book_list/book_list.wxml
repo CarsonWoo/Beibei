@@ -1,0 +1,28 @@
+<view class='container'>
+  <view class='book-list-container'>
+    <canvas canvas-id='left_arrow' catchtap='onLeftChange' data-current="{{swiperIndex}}"></canvas>
+    <swiper previous-margin='176rpx' next-margin='176rpx' circular='{{book_list.length > 3 ? true : false}}' bindchange='onSwiperChange' current='{{swiperIndex}}'>
+      <block wx:for="{{book_list}}" wx:for-index="idx">
+        <swiper-item>
+          <view class='book-container'>
+            <image class='book {{swiperIndex == idx ? "active" : "quiet"}}' src='{{item[0].pic}}'></image>
+            <text wx:if="{{swiperIndex == idx}}">{{is_reading ? is_finished ? "阅读完成" : "正在阅读" : "未阅读"}}</text>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <canvas canvas-id='right_arrow' catchtap='onRightChange' data-current="{{swiperIndex}}"></canvas>
+  </view>
+  <view class='label-container' catchtap='onNewWordTap'>
+    <canvas canvas-id='ic_word'></canvas>
+    <text>新学单词</text>
+  </view>
+  <view class='chapter-container'>
+    <block wx:for="{{book_list[swiperIndex]}}">
+      <view class='chapter {{index % 3 == 0 ? "first" : ""}} {{item.is_able >= 1 ? "readable" : "unreadable"}}' style='opacity: {{item.is_able == 2 ? "1" : "0.5"}}' catchtap='{{item.is_able == 2  ? "onChapterTap": ""}}' data-chapter='第{{item.chapter_order}}章' data-chapter_id='{{item.id}}' data-iscurrentchapter='{{(item.is_able == 2 && (book_list[swiperIndex][index + 1].is_able == 0 || book_list[swiperIndex][index + 1].is_able == 1)) || book_list[swiperIndex][book_list[swiperIndex].length - 1].is_able == 2}}' data-isfirstchapter='{{index == 0}}'>
+        第{{item.chapter_order}}章
+        <view class='{{item.is_able == 1 ? "readed-label" : "readable-label"}}' wx:if="{{item.is_able > 0}}">{{item.is_able == 1 ? "已更" : "可读"}}</view>
+      </view>
+    </block>
+  </view>
+</view>

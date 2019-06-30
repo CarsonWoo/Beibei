@@ -1,0 +1,120 @@
+
+<view class='content'>
+  <view>
+
+      <view class='view-leaderboard'><image class='image-leaderboard'  src= "{{rank_head}}" mode='widthFix'></image></view>
+
+      <cover-view class='bcview-my-avatar'><cover-image class='image-my-avatar'mode='aspectFit' src= "{{portrait}}"></cover-image></cover-view>
+
+      <text class='text-my-rank'>{{user_rank}}.</text>
+
+      <text class='text-my-name'>{{username}}</text>
+
+      <text class='text-my-state'>{{state}}</text>
+
+      <text class='text-my-words'>已背单词<text class='text-my-words-number'>{{word_number}}</text>个</text>
+
+      <text class='test-punch-day'>已挑战{{insist_day}}天</text>
+
+  </view>
+
+
+  <scroll-view class='scroll' scroll-y="true"  style="height: 620rpx;">
+
+  <view class="bcview-scroll">
+
+  <block wx:for="{{total_rank}}" wx:for-item = 'item'>
+    
+    <view class='view-user'>
+
+      <text class='text-user-rank'>{{item.user_rank}}.</text>
+
+      <!-- <image class='image-user-avatar'mode='aspectFit' src='/images/avatar.png' ></image> -->
+
+      <image class='image-user-avatar'mode='aspectFit' src='{{item.portrait}}' ></image>
+
+      <text class='text-user-name'>{{item.username}}············································································</text>
+
+      <view class='bcview-user-reward'>
+
+      <text class='text-user-reward'>已背单词{{item.word_number}}个</text> 
+
+      </view> 
+  
+    </view>
+
+  </block>
+
+  </view>
+
+  <image wx:if="{{show_gold}}" src='{{img_gold}}' class='image-gold' ></image>
+
+  <image wx:if="{{show_silver}}" src='{{img_silver}}' class='image-silver'></image>
+
+  <image wx:if="{{show_copper}}" src='{{img_copper}}' class='image-copper'></image>
+
+  <view class='view-mask' style="opacity:{{0.5}}"></view>
+
+</scroll-view>
+
+
+
+
+<cover-image src='{{img_fish}}' class='image-fish'> </cover-image>
+
+  <view class='bcview-invite'>
+
+     <text class='text-invite-top'>邀请好友奖金翻倍哦~邀请越多倍数越多</text>
+
+    <image class='image-invite-top-avatar'mode='aspectFit' src= "{{top_invite_portrait}}"></image>
+
+    <text class='text-invite-reward'>邀请获得<text class='tetx-invite-reward-number'>{{top_invite_reward}}元</text></text>
+
+    <text class='text-invite-right' catchtap='ToInviteRank'>查看邀请排行榜</text>
+  
+  </view>
+
+  <text class='text-rule' catchtap='ToRule'> 规则详情 </text>
+
+  <view class='view-line1'></view>
+
+  <view class='view-line2'></view>
+
+  <text class='text-invite-bottom'>邀请好友获得奖励</text>
+
+
+  <image class='image-pyq' src='/images/pyq.png'></image>
+
+  <image class='image-wechat' src='/images/wechat.png'></image>
+
+  <button class='button_pyq' bindtap='shareTopyq' form-type='submit'style="opacity:{{0}}"  ></button>
+
+  <button class='button_wechat' open-type='share' form-type='submit'style="opacity:{{0}}"  ></button>
+
+  <text class='text-pyq'>朋友圈</text>
+
+  <text class='text-wechat'>微信</text>
+
+
+</view>
+
+
+
+
+
+
+
+
+
+<!-- 弹窗 ------------------------------->
+<cover-view class="view-AcquireSuccess-mask" wx:if="{{isShowMask==true}}" catchtouchmove='stopPageScroll' catchtap='OnCloseView'>
+
+  <cover-image wx:if="{{isShowAcquireSuccess==true}}"  class='image-AcquireSuccess' src='/images/AcquireSuccess.png' catchtap='OnCloseView'></cover-image>
+
+</cover-view>
+
+
+
+<view class="canvas-box">
+        <canvas canvas-id="myCanvas" style="width:100%;height:{{screenHeight}}px;"></canvas>
+</view>

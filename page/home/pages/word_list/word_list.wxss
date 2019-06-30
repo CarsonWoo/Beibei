@@ -1,0 +1,94 @@
+page {
+  background-color: #f8f8f8;
+  height: 100%;
+  width: 100%;
+}
+
+.tab-bar-container {
+  width: 100%;
+  height: 70rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.tab-bar-container text {
+  font-size: 30rpx;
+  width: 33.33%;
+  line-height: 70rpx;
+}
+
+.container label {
+  padding-left: 25rpx;
+  font-size: 24rpx;
+  line-height: 50rpx;
+  color: #dddddd;
+}
+
+.word-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.word-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100rpx;
+  background-color: white;
+  padding-left: 30rpx;
+}
+
+.word {
+  font-size: 32rpx;
+  font-weight: bolder;
+  line-height: 100rpx;
+}
+
+.meaning {
+  font-size: 26rpx;
+  color: #b6b6b6;
+  /* text-overflow: ellipsis; */
+  margin-left: 25rpx;
+  display: -webkit-box ;
+ overflow: hidden; /*隐藏溢出的文本  */
+ text-overflow: ellipsis;
+ word-break: break-all;/*自动换行*/
+ -moz-box-orient: vertical; /*从上到下自动排列子元素*/
+ -webkit-box-orient: vertical; 
+ -webkit-line-clamp:2; /*显示的行数*/
+}
+
+.load-more-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  color: #222222;
+  font-size: 28rpx;
+}
+
+.placeholder {
+  width: 100%;
+  height: 960rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder image {
+  width: 308rpx;
+  height: 250rpx;
+}
+
+.placeholder text {
+  font-size: 30rpx;
+  color: #8d8d8d;
+  text-align: center;
+  text-overflow: wrap;
+  width: 350rpx;
+  margin-top: 66rpx;
+}
+

@@ -1,0 +1,19 @@
+<view class='container'>
+
+  <view class='content-container'>
+    <view class='huge-text black bold'>背呗督学老师</view>
+    <image class='portrait' src=''></image>
+    <view class='normal-text black'>Miss Alia</view>
+    <image class='qr-code' src='{{qr_code}}'></image>
+    <view class='download-container' catchtap='downloadImage'>
+      <canvas canvas-id='download_image'></canvas>
+      <text class='min-text gray'>保存二维码</text>
+    </view>
+    <view class='tips-text-container'>
+      <text class='sub-huge-text black bold letter-spacing'>更有各类学习干货</text>
+      <view class='bg-yellow'>
+      </view>
+    </view>
+    <view class='sub-huge-text black bold letter-spacing'>实时推送</view>
+  </view>
+</view>
