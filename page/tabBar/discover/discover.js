@@ -29,11 +29,13 @@ Page({
     partner_level: 1,
     showLikeToast: true,
     // showLightenToast: true,
-    ic_soundless_like: 'https://file.ourbeibei.com/l_e/static/images/ic_soundless_like.png',
-    ic_lighten: 'https://file.ourbeibei.com/l_e/static/images/ic_lighten.png',
-    ic_gender: 'https://file.ourbeibei.com/l_e/static/images/ic_min_male.png',
-    ic_like: 'https://file.ourbeibei.com/l_e/static/images/ic_partnership_like.png',
-    ic_super_like: 'https://file.ourbeibei.com/l_e/static/images/ic_partnership_super_like.png'
+    ic_soundless_like: app.globalData.FTP_ICON_HOST + "secret_like.png",
+    ic_lighten: app.globalData.FTP_ICON_HOST + 'super_lighten.png',
+    ic_gender: app.globalData.FTP_ICON_HOST + 'male.png',
+    ic_like: app.globalData.FTP_ICON_HOST + 'like_unclick.png',
+    ic_super_like: app.globalData.FTP_ICON_HOST + 'super_like_unclick.png',
+    ic_time_reversal: app.globalData.FTP_ICON_HOST + 'time_reversal.png',
+    ic_watch_more: app.globalData.FTP_ICON_HOST + 'watch_more_white.png'
   },
 
   /**

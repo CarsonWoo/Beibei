@@ -59,6 +59,7 @@ App({
     appid: 'wx915c7b2ebc140ee6',
     token: null,
     HOST: 'https://www.ourbeibei.com',
+    FTP_ICON_HOST: 'https://file.ourbeibei.com/l_e/static/mini_program_icons/',
     code: null,
     // HOST: 'http://47.102.152.102:8080',
 

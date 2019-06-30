@@ -94,6 +94,7 @@
 
   </block>
 
+  <!-- 关于运营0.3的基础内容卸载partnership里面 以免混淆 -->
   <view class='partnership' wx:if="{{partner_level}}">
     <!-- 标题栏 -->
     <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
@@ -119,8 +120,53 @@
       <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
       <view class='partnership-tag-container'>
         <view class='tag blue-bg'>好好学习</view>
-        <view class='tag light-blut-bg'>乐观</view>
+        <view class='tag light-blue-bg'>乐观</view>
         <view class='tag light-pink-bg'>幽默风趣</view>
+      </view>
+    </view>
+
+    <!-- 微信公众号引导关注view 只有在今日推荐看完以后才会出现 -->
+    <view class='partnership-wechat-guide-container'>
+      <view class='partnership-wechat-guide-text-container'>
+        <text class='black' style='font-size:28rpx;'>今日的每日推荐已看完，请期待明天的更新...</text>
+        <text class='partnership-min-text lighter-gray' style='margin-top:10rpx'>关注公众号可以第一时间收到更新推送</text>
+      </view>
+      <view class='partnership-wechat-guide-button-container'>
+        <button class='partnership-wechat-guide-follow-button'>去关注</button>
+      </view>
+    </view>
+
+    <!-- 非vip且看完了当日推荐才会出现 -->
+    <view class='guide-open-vip-text'>
+      <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
+      <text>开启VIP,寻觅更多好友</text>
+    </view>
+
+    <view style='width:100%;display:flex;margin-top:60rpx;'>
+      <!-- 时光倒流机 -->
+      <view class='half-width-container'>
+
+        <view class='time-reversal-button'>
+          <image src='{{ic_time_reversal}}'></image>
+          <text class='normal-text'>时光倒流机</text>
+          <text class='partnership-min-text' style='margin-left:5rpx;'>+10</text>
+
+          <!-- 漂浮的用户label 不一定有 详见prd -->
+          <view class='time-reversal-user-float-container'>
+            <image></image>
+            <text>伯舒小姐使用了该功能</text>
+          </view>
+        </view>
+
+
+      </view>
+      <!-- 查看更多卡片 -->
+      <view class='half-width-container'>
+        <view class='watch-more-button'>
+          <image src='{{ic_watch_more}}'></image>
+          <text class='normal-text'>查看更多卡片</text>
+          <text class='partnership-min-text' style='margin-left:5rpx;'>+5</text>
+        </view>
       </view>
     </view>
 
