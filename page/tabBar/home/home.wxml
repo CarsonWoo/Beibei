@@ -1,0 +1,440 @@
+<view class='img-background' style='background-color:{{isShowDialog?"transparent":""}}'></view>
+
+
+<view class="container" style='opacity:{{isShowDialog?"0.5":"1"}}' bindtap='onCloseDialog'>
+  <!-- <view class='header-plan-container' wx:if="{{flag == 1}}">
+    <view class='insist-container'>
+      <text>已坚持<text>{{insist_days}}</text>天啦！小坚持有大收获!</text>
+
+      <image class='image-calendar' catchtap='look_calendar' src='/images/calendar.png'></image>
+
+    </view>
+
+    <view class='progress-container'>
+      <view class='my-canvas' wx:if="{{isShowMask==false}}">
+        <canvas canvas-id='progress-canvas' catchtap='onCanvasTap'></canvas>
+      </view>
+
+
+      <view class='header-empty-container' wx:if="{{isShowMask==true}}">
+        <image class='empty-container-bg'></image>
+        <text class='empty-container-title'>背单词 上背呗</text>
+        <text class='empty-container-slogan'>我们一起背单词</text>
+        <text class='empty-container-join'>Join us</text>
+
+        <view class='gif-container' style='margin-top:260rpx'>
+          <image src='/images/fish.gif'></image>
+        </view>
+        <view bindtap='onPlanTap' class='button-container' style='margin-left:52rpx;'>
+          <text>开始背单词</text>
+        </view>
+      </view>
+
+
+      <view wx:if="{{isShowMask==false}}" class='daily-text-container'>
+        <text style='text-align:right;margin-right:70rpx;'>目标<text>{{plan_number}}</text>个</text>
+        <text style='text-align:left;margin-left:70rpx;'>剩余<text>{{rest_days}}</text>天</text>
+      </view>
+
+    </view>
+    <view class='gif-container' catchtap='onFishTap' wx:if="{{whether_reminder == 0 &&isShowMask==false}}">
+      <image src='/images/fish.gif'></image>
+    </view>
+    <block wx:if="{{level == 0 && !storage &&isShowMask==false}}">
+      <form report-submit='true' bindsubmit='onPostChance' bindtap='onStartTap'>
+        <button class='button-container' form-type='submit' style='color:white'>
+          开始背单词
+        </button>
+      </form>
+    </block>
+    <block wx:elif="{{(storage && (level == 0 || level == 2)&&isShowMask==false) || hold_on == true }}">
+      <view class='button-container' style='background:linear-gradient(to right, #5ee1c9, #3fdfe9)' bindtap='onStartTap'>
+        <text>继续背单词</text>
+      </view>
+    </block>
+    <block wx:elif="{{level == 1 && isShowMask==false}}">
+      <view class='button-container' style='position:relative' catchtap='onShareTap'>
+        <cover-image style='position:absolute;width:60rpx;height:60rpx;top:50%;margin-top:-30rpx;left:50%;margin-left:-280rpx'></cover-image>
+        <form report-submit='true' bindsubmit='onPostChance'>
+          <button class='button-container' style='color:white;background:linear-gradient(to right, #5ee1c9, #3fdfe9);' open-type='share' form-type='submit'>{{word_challenge_status == 2 ? '打卡赢挑战' : '打卡赢礼品'}}</button>
+        </form>
+      </view>
+    </block>
+    <block wx:elif="{{level == 2 && !storage&&isShowMask==false}}">
+      <view class='button-container' bindtap='onStartTap'>
+        <text>再来20个</text>
+      </view>
+    </block>
+    <block wx:else>
+      <view class='button-container' wx:if="{{isShowMask==false}}" style='background-color:#d8d8d8' bindtap='onCompleteTap'>
+        <text>今日任务已完成</text>
+      </view>
+    </block>
+  </view> -->
+
+
+
+  <!-- <view class='header-empty-container' wx:else>
+    <image class='empty-container-bg'></image>
+    <text class='empty-container-title'>背单词 上背呗</text>
+    <text class='empty-container-slogan'>我们一起背单词</text>
+    <text class='empty-container-join'>Join us</text>
+
+    <view class='gif-container' style='margin-top:260rpx'>
+      <image src='/images/fish.gif'></image>
+    </view>
+    <view bindtap='onPlanTap' class='button-container' style='margin-left:52rpx;'>
+      <text>开始背单词</text>
+    </view>
+
+  </view> -->
+
+  <view class='home-header-container' wx:if="{{flag == 1}}">
+    <view class='sign-history' catchtap='look_calendar'>
+      <text>打卡记录</text>
+      <image src='/images/ic_arrow_right.png'></image>
+    </view>
+    <view class='learning-progress-container' catchtap='onProgressTap'>
+      <view class='learning-progress'>
+        <text class='gradient-text'>{{learned_word}}</text>
+        <view class='normal-text'>已学单词</view>
+      </view>
+
+      <view class='divider'></view>
+
+      <view class='learning-progress'>
+        <text class='gradient-text'>{{rest_days}}</text>
+        <view class='normal-text'>剩余天数</view>
+      </view>
+    </view>
+
+    <view class='gif-container' catchtap='onFishTap' wx:if="{{whether_reminder == 0 &&isShowMask==false}}">
+      <image src='{{fish_gif}}'></image>
+    </view>
+    <block wx:if="{{level == 0 && !storage &&isShowMask==false}}">
+      <form report-submit='true' bindsubmit='onPostChance' bindtap='onStartTap'>
+
+        <button class='button-container start' form-type='submit'>
+          开始背单词
+        </button>
+      </form>
+    </block>
+    <block wx:elif="{{(storage && (level == 0 || level == 2)&&isShowMask==false) || hold_on == true }}">
+      <view class='button-container continue' style='' bindtap='onStartTap'>
+        继续背单词
+      </view>
+    </block>
+    <block wx:elif="{{level == 1 && isShowMask==false}}">
+      <view class='button-container' style='position:relative; margin-top:40rpx;' catchtap='onShareTap'>
+        <cover-image style='position:absolute;width:80rpx;height:70rpx;top:50%;margin-top:-40rpx;left:50%;margin-left:-240rpx; z-index:9999' src='{{word_challenge_status == 2 ? "/images/ic_coin.png" : "/images/ic_prize.png"}}'></cover-image>
+        <form report-submit='true' bindsubmit='onPostChance'>
+          <button class='button-container' style='color:white;background:linear-gradient(to right, #5ee1c9, #3fdfe9);font-size:32rpx;' open-type='share' form-type='submit'>{{word_challenge_status == 2 ? '打卡赢挑战' : '打卡赢礼品'}}</button>
+        </form>
+      </view>
+    </block>
+    <block wx:elif="{{level == 2 && !storage&&isShowMask==false}}">
+      <button class='button-container more' bindtap='onStartTap'>
+        再来20个
+      </button>
+    </block>
+    <block wx:else>
+      <view class='button-container finished' wx:if="{{isShowMask==false}}" bindtap='onCompleteTap'>
+        今日任务已完成
+      </view>
+    </block>
+
+  </view>
+
+  <view class='home-plan-container' wx:else>
+    <image class='text-img' src='/images/home_header_text.png'></image>
+    <image class='fish-img' src='/images/ic_3d_fish.png'></image>
+    <button class='button-container start' catchtap='onPlanTap'>开始背单词</button>
+  </view>
+
+  <view class='welfare-container'>
+    <view class='welfare-item' catchtap='onMoneyTap'>
+      <image class='welfare-img' src='/images/ic_home_game.png'></image>
+      <text>单词挑战</text>
+    </view>
+
+    <view class='welfare-item' catchtap='onBookTap'>
+      <image class='welfare-img' src='/images/ic_home_reading.png'></image>
+      <text>语境阅读</text>
+    </view>
+
+    <!-- <view class='welfare-item' catchtap='onGameTap'>
+      <image class='welfare-img' src='/images/ic_home_game.png'></image>
+      <text>小游戏</text>
+    </view> -->
+
+    <view class='welfare-item' catchtap='onPrizeTap'>
+      <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
+      <text>赢奖品</text>
+    </view>
+
+  </view>
+
+  <!-- <view class='prize-container'>
+
+
+    <swiper class='swiper-prize' previous-margin='30rpx' next-margin='30rpx' bindchange='onSwiperChange' circular='true' autoplay='true'>
+      <swiper-item class="{{swiperIndex == 0 ? 'swiper-item-center' : swiperIndex == 1 ? 'swiper-item-left' : 'swiper-item-right'}}">
+
+        <image class='slide-image {{swiperIndex == 0 ? "active" : "quiet"}}' mode='aspectFill' src='/images/banner_reading.png' catchtap='onBookTap'>
+        </image>
+
+
+      </swiper-item>
+
+      <swiper-item class="{{swiperIndex == 1 ? 'swiper-item-center' : swiperIndex == 2 ? 'swiper-item-left' : 'swiper-item-right'}}">
+        <view style='background-color:transparent;position:relative'>
+          <image class='slide-image {{swiperIndex == 1 ? "active" : "quiet"}}' mode='aspectFill' src='/images/banner_challenge.png' catchtap='onMoneyTap'>
+          </image>
+          <view style='position: absolute;bottom:{{swiperIndex == 1 ? "40rpx" : "45rpx"}};left:{{swiperIndex == 1 ? "50rpx": "90rpx"}};display:flex'>
+            <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_4}}'></image>
+            <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_5}}' style='margin-left:-8rpx'></image>
+            <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_6}}' style='margin-left:-8rpx'></image>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item class="{{swiperIndex == 2 ? 'swiper-item-center' : swiperIndex == 0 ? 'swiper-item-left' : 'swiper-item-right'}}">
+        <view style='background-color:transparent;position:relative'>
+          <image class="slide-image {{swiperIndex == 2 ? 'active' : 'quiet'}}" mode='aspectFill' src='/images/banner_prize.png' catchtap='onPrizeTap'>
+          </image>
+          <view style='position: absolute;bottom:{{swiperIndex == 2 ? "40rpx" : "45rpx"}};left:{{swiperIndex == 2 ? "50rpx": "90rpx"}};display:flex'>
+            <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_1}}'></image>
+            <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_2}}' style='margin-left:-8rpx'></image>
+            <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_3}}' style='margin-left:-8rpx'></image>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+    <view class='dots'>
+      <block wx:for="{{tmps}}">
+        <view class='dot {{swiperIndex == index ? "dot-active" : ""}}'></view>
+      </block>
+    </view>
+
+  </view> -->
+
+  <!-- <view class='teacher-welfare' catchtap='onCetTap'>
+    <image src='/images/banner_home_teacher.png'></image>
+  </view> -->
+
+  <button class='teacher-welfare' open-type="contact">
+    <image src='/images/banner_home_customer_service.png'></image>
+  </button>
+
+
+  <view>
+    <block wx:for="{{feeds}}">
+      <ad unit-id="adunit-a8e6b7e4a651af7b" wx:if="{{index == 2 }}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
+      <view class='feeds-container' bindtap='onFeedsClick' data-id='{{item.id}}'>
+
+        <image class='feeds-content-src' mode='widthFix' src='{{item.pic}}'></image>
+
+        <view class='feeds-title-container'>
+          <view class='feeds-title'>
+            <text>{{item.title}}</text>
+          </view>
+          <view class='feeds-tag'>
+            #{{item.kind}}#
+          </view>
+          <view class='feeds-user-container'>
+            <image class='feeds-user-portrait' src='{{item.author_portrait}}'></image>
+            <text style='color:#2a353a;margin-left:10rpx;'>{{item.author_username}}</text>
+            <view class='favour-container' catchtap='onFavourTap' data-likes='{{item.likes}}' data-id='{{item.id}}' data-position='{{index}}'>
+              <image src='{{item.is_favour == 0 ? "/images/ic_unfavour.png" : "/images/ic_favour.png"}}' animation="{{animationIdx == index ? favourAnimation : ''}}"></image>
+              <text style='color:{{item.is_favour == 0 ? "#999d9e" : "#0bc9a1"}}'>{{item.likes}}</text>
+            </view>
+          </view>
+          
+        </view>
+
+        <!-- <view class='author-avatar-name-container'>
+          <image style='border-radius:20rpx' src='{{item.author_portrait}}'></image>
+          <text>{{item.author_username}}</text>
+          <view class='event-container' catchtap='onEventTap'>
+            <image src='/images/comment.png'></image>
+            <text>{{item.comments}}</text>
+            <image src='/images/favour.png'></image>
+            <text>{{item.likes}}</text>
+          </view>
+        </view> -->
+
+      </view>
+      <view class='feeds-divider'></view>
+      <image class='banner-img' wx:if="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 1}}" src='/images/banner_reading.png' catchtap='onBookTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 2}}" src='/images/banner_challenge.png' catchtap='onMoneyTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 3}}" src='/images/banner_prize.png' catchtap='onPrizeTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 4}}" src='/images/banner_class.png' catchtap='onCetTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 0}}" src='/images/banner_game.png' catchtap='onGameTap'></image>
+      <ad unit-id="adunit-a8e6b7e4a651af7b"  wx:if="{{index % 5 == 0 && index != 0}}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
+    </block>
+  </view>
+</view>
+
+<view class='mask' wx:if="{{isShowDialog}}" catchtouchmove='stopPageScroll'>
+  <block wx:if="{{alert_type == 1}}">
+    <cover-view class='money-dialog-container'>
+      <cover-image src='/images/ic_dialog_unreach.png'></cover-image>
+      <cover-view class='money-dialog-text'>背呗正在通宵策划该活动~~</cover-view>
+    </cover-view>
+  </block>
+  <block wx:elif="{{alert_type == 2}}">
+    <cover-view class='dialog-container'>
+      <cover-image src='/images/ic_dialog_download.png'></cover-image>
+      <cover-view class='dialog-container-text' style='margin-top:25rpx;'>下载背呗背单词，</cover-view>
+      <cover-view class='dialog-container-text' style='margin-bottom:25rpx;'>看看其他小伙伴的阅读足迹吧！</cover-view>
+      <cover-view class='choose-container'>
+        <cover-view class='cancel' bindtap='onCloseDialog'>算了</cover-view>
+        <cover-view class='download' bindtap='toWebView'>去下载</cover-view>
+      </cover-view>
+    </cover-view>
+  </block>
+  <block wx:else>
+    <form report-submit='true' bindsubmit='onPostChance' bindtap='onSubmitAppoint'>
+      <cover-image class='appoint-image' src='/images/bg_dialog_appoint.png'></cover-image>
+      <cover-view class='appoint-container'>
+        <cover-view class='appoint-slogan'>每天坚持多一点，</cover-view>
+        <cover-view class='appoint-slogan'>就比别人强一点！</cover-view>
+        <button class='appoint-button' form-type='submit'>预约每日提醒</button>
+      </cover-view>
+
+      <cover-image class='appoint-close-image' src='/images/ic_close.png' catchtap='onCloseDialog'></cover-image>
+    </form>
+  </block>
+</view>
+
+
+<!-- 1.1 -->
+<!-- 弹窗 ------------------------------->
+
+<view class="view-mask" wx:if="{{isShowMask==true&&isHideSignUpView1==false}}" catchtouchmove='stopPageScroll' catchtap='OnCloseView'>
+
+  <view class='bcview-remind' wx:if="{{isShowSignUpView==true&&isHideSignUpView1==false&&isHideSignUpView2==false}}" catchtap='OnCloseView'>
+    <text class='text-sign-up-view'>你好萌新，\n邀你参加单词挑战，\n<text class='text-red'>背单词赢奖品</text></text>
+    <view class='bcview-sign-up' catchtap='OnSignUp'>
+      <text class='text-sign-up'>立即挑战</text>
+    </view>
+  </view>
+
+
+
+  <!-- 免死金牌 ------------------------------->
+
+  <view class='bcview-free-death' wx:if="{{isShowMedallionView==true && medallion_show==true}}">
+    <text class='text-support-view'>恭喜你获得一张<text class='text-red'>免死金牌</text>\n偷懒天数再加一天呦！\n邀请三位好友助力即可领取</text>
+
+    <view class='view-support-user1'>
+      <text class='text-question-mark' wx:if="{{user_list[0]==undefined}}">?</text>
+      <image class='user_list1' src='{{user_list[0].portrait}}' wx:if="{{user_list[0]!=undefined}}"></image>
+    </view>
+
+    <view class='view-support-user2'>
+      <text class='text-question-mark' wx:if="{{user_list[1]==undefined}}">?</text>
+      <image class='user_list2' src='{{user_list[1].portrait}}' wx:if="{{user_list[1]!=undefined}}"></image>
+    </view>
+
+    <view class='view-support-user3'>
+      <text class='text-question-mark' wx:if="{{user_list[2]==undefined}}">?</text>
+      <image class='user_list3' src='{{user_list[2].portrait}}' wx:if="{{user_list[2]!=undefined}}"></image>
+    </view>
+
+    <view class='bcview-support' catchtap='OnShare'>
+      <text class='text-support'>邀请好友助力</text>
+      <button class='button_support' open-type='share' form-type='submit' style="opacity:{{0}}" id='101'></button>
+    </view>
+
+  </view>
+  <image wx:if="{{sShowMedallionView==true &&medallion_show==true}}" class='image-close' catchtap='OnCloseView' src='/images/ic_close.png'></image>
+
+  <!-- 挑战红包 ------------------------------->
+
+  <view class='redpack-container' catchtap='OpenChallengeRedpackView' wx:if="{{isShowChallengeRedPackView == true && challenge_success_red_packet==true}}">
+    <view class='text-award-type'>挑战奖励金!</view>
+    <view class='bcview-redpack'>
+      <text class='text-redpack'>立即拆开</text>
+    </view>
+  </view>
+
+  <view class='open-redpack-container' catchtap='OnCloseView' wx:if="{{isOpenChallengeRedPackView}}">
+    <text class='text-redpack-remind'>背呗背单词\n发给您一个红包</text>
+    <text class='text-redpack-detial'><text class='text-redpack-number' >{{challenge_red_packet}}\n</text> 已存入零钱，可用于发红包
+    </text>
+    <text class='text-repack-record' catchtap='ToBillDetail'>查看我的红包记录</text>
+    <view class='bcview-open-redpack' catchtap='onMoneyTap'>
+      <text class='text-redpack'>再次挑战</text>
+    </view>
+  </view>
+
+  <view wx:if="{{isOpenChallengeRedPackView}}">
+    <view class='view-line1'></view>
+    <view class='view-line2'></view>
+    <text class='text-invite'>邀请好友获得奖励</text>
+    <image class='image-pyq' src='/images/pyq.png' catchtap='saveImg'></image>
+
+    <image class='image-wechat' src='/images/wechat.png'></image>
+    <button class='button_wechat' open-type='share' form-type='submit' style="opacity:{{0}}" id='102'></button>
+    <text class='text-pyq'>朋友圈</text>
+    <text class='text-wechat'>微信</text>
+  </view>
+
+
+
+  <!-- 邀请红包 ------------------------------->
+
+
+  <view class='redpack-container' catchtap='OpenInviteRedpackView' wx:if="{{isShowInviteRedPackView == true && challenge_invite_red_packet==true}}">
+    <cover-view class='text-award-type'>邀请奖励金!</cover-view>
+    <view class='bcview-redpack'>
+      <text class='text-redpack'>立即拆开</text>
+    </view>
+  </view>
+
+  <view class='open-redpack-container' catchtap='OnCloseView' wx:if="{{isOpenInviteRedPackView}}">
+    <text class='text-redpack-remind'>背呗背单词\n发给您一个红包</text>
+    <text class='text-redpack-detial'><text class='text-redpack-number' >{{invite_challenge_red_packet}}\n</text> 已存入零钱，可用于发红包
+    </text>
+    <text class='text-repack-record' catchtap='ToBillDetail'>查看我的红包记录</text>
+    <view class='bcview-open-redpack' catchtap='onMoneyTap'>
+      <text class='text-redpack'>进入挑战</text>
+    </view>
+  </view>
+
+  <view wx:if="{{isOpenInviteRedPackView}}">
+    <view class='view-line1'></view>
+    <view class='view-line2'></view>
+    <text class='text-invite'>邀请好友获得奖励</text>
+    <image class='image-pyq' src='/images/pyq.png' catchtap='saveImg'></image>
+    <button class='button_pyq' catchtap='shareTopyq' form-type='submit' style="opacity:{{0}}"></button>
+    <image class='image-wechat' src='/images/wechat.png'></image>
+    <button class='button_wechat' open-type='share' form-type='submit' style="opacity:{{0}}" id='102'></button>
+    <text class='text-pyq'>朋友圈</text>
+    <text class='text-wechat'>微信</text>
+  </view>
+
+
+  <image wx:if="{{isShowSupportSuccess==true}}" class='image-SupportSuccess' src='/images/SupportSuccess.png' catchtap='OnCloseView'></image>
+
+</view>
+
+
+<!-- 生成朋友圈分享图片 -->
+<view class="canvas-box">
+  <canvas canvas-id="myCanvas" style="width:100%;height:{{screenHeight}}px;"></canvas>
+</view>
+
+<!-- 1.2 运营活动 -->
+<cover-view class='mask-container' catchtouchmove='stopPageScroll' wx:if='{{showScope == true}}'>
+  <cover-view class='scope-image-container' animation="{{scopeAnimation}}">
+    <cover-image src='/images/bg_scope.png'></cover-image>
+    <cover-view class='scope-text' style='margin-top:560rpx'>欢迎使用背呗背单词</cover-view>
+    <cover-view class='scope-text'>授权信息保存学习记录</cover-view>
+    <cover-view class='scope-text'>背呗与你一起学习</cover-view>
+    <button open-type='getUserInfo' class='scope-button' bindgetuserinfo='bindGetUserInfo' wx:if='{{canIUse}}'>去授权</button>
+    <cover-view wx:else class='error-scope'>
+      请更新微信版本
+    </cover-view>
+  </cover-view>
+</cover-view>

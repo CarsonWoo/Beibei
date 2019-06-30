@@ -1,0 +1,45 @@
+<!--pages/user/wallet/wallet.wxml-->
+
+
+<view class='content'>
+
+<view class='bcview-wallet'></view>
+
+<view class='bcview-money'>
+
+<view class='text-cash'>可提现金额</view>
+
+<view class='text-cash-nunmber'><text class='text-money-mark'>￥</text>{{total_cash}}</view>
+
+<view wx:if="{{is_withdrawing==true}}" class='text-back-cash'>￥{{withdrawing_cash}}正在提现中</view>
+
+<view wx:if="{{is_withdrawing==true}}"class='text-detail-backing' catchtap='ToBill'>查看明细 <text class='text-arrow-mark'>></text></view>
+
+<view wx:if="{{is_withdrawing==false}}"class='text-detail' catchtap='ToBill'>查看明细 <text class='text-arrow-mark'>></text></view>
+
+<view class='view-underline'></view>
+
+</view>
+
+
+<view class='bcview-alipay' catchtap='ToAlipay'> <image class='image-alipay' src='/images/Alipay.png'></image><text class='text-alipay'>支付宝提现</text></view>
+
+<view class='bcview-wechat-pay' catchtap='ToWechatPay'><image class='image-wechat-pay' src='/images/WeChatPay.png'></image><text class='text-wechat-pay'>微信提现</text></view>
+
+</view>
+
+
+
+<view class="view-mask" wx:if="{{is_show_mask}}" catchtouchmove='stopPageScroll' catchtap='OnCloseView'>
+
+  <view  class='bcview-remind' wx:if="{{is_show_remind_view}}" catchtap='OnCloseView' >   
+
+<image class='image-remind' src='/images/left_fish.png'></image>
+
+<text class='text-remind'>5元以上才可以提现哦~</text>
+
+<text class='text-determine'>确定</text>
+        
+  </view>
+  
+  </view>

@@ -1,0 +1,63 @@
+<view class='container'>
+  <view class='bg-header'>
+    <view class='portrait-container'>
+      <image class='portrait' src='{{virtualUser[vidx].portrait}}'></image>
+      <text class='white min-size'>{{virtualUser[vidx].username}}刚刚报名了课程</text>
+    </view>
+    <view class='sign-people'>{{people}}人已报名</view>
+    <view class='class-time'>开课时间: {{st}}</view>
+  </view>
+  <block wx:for="{{img_urls}}">
+    <image mode='widthFix' class='info-img' src='{{item}}'></image>
+  </block>
+
+  <view class='bottom-container'>
+    <view class='float-container'>已有{{people}}人报名</view>
+
+    <view class='button-container'>
+      <block wx:if="{{status == 'no'}}">
+        <view class='origin-pay-container white normal-size bold' catchtap='onOriginPay'>
+          <text>￥199.9</text>
+          <text>立即支付</text>
+        </view>
+        <view class='assist-pay-container white normal-size bold' catchtap='onAssistPay'>
+          <text>￥59.9</text>
+          <text>发起助力</text>
+        </view>
+      </block>
+      <block wx:elif="{{status == 'yes'}}">
+        <view class='sign-container' catchtap='onCourseTap'>
+          <text>点击查看课程信息</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{isShowDialog == false && inviter != undefined}}" class='back-container' animation="{{translateAnimation}}" catchtap='onHomeTap'>
+  <image src='/images/home_selected.png'></image>
+  <text>回首页</text>
+</view>
+
+<view class="mask" wx:if="{{isShowDialog == true}}" catchtouchmove='stopPageScroll'>
+  <view class="dialog-container">
+    <view class="label-text">还在犹豫？</view>
+    <view class='label-text'>联系督学老师了解下</view>
+    <view class="dialog-portrait-container">
+      <image src="https://file.ourbeibei.com/l_e/static/images/img_portrait_tmp.png" mode='widthFix'></image>
+    </view>
+    <button class="pay-button" catchtap="onRepay">重新支付</button>
+    <button class="chat-button" catchtap="onTeacherTap">跟TA聊聊</button>
+  </view>
+
+  <image class="close-img" src="https://file.ourbeibei.com/l_e/static/images/ic_dialog_close.png" catchtap="onCloseDialog"></image>
+</view>
+
+<view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
+  <view class='sign-dialog-container'>
+    <image class='first-img' src='/images/dialog_img_1.png' mode='widthFix'></image>
+    <image class='fill-img' src='/images/dialog_img_2.png' mode='widthFix' style='margin-top:-40rpx'></image>
+    <image class='fill-img' src='/images/dialog_img_3.png' mode='widthFix'></image>
+    <view class='cancel-button' catchtap='cancelDialog'>确定</view>
+  </view>
+</view>

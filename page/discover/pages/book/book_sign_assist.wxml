@@ -1,0 +1,22 @@
+<view class='container'>
+  <image src='/images/bg_assist.png' class='background-img' mode='widthFix'></image>
+  <view class='label-text'>
+    <text>快快邀请好友参与助力吧！\n完成就可以参与课程啦！</text>
+  </view>
+  <view class='portrait-container'>
+    <view class='portrait'>
+      <image src="{{user_info[0].portrait == ''}}"></image>
+      <text>?</text>
+    </view>
+    <view class='portrait'>
+      <image src="{{user_info[1].portrait == ''}}"></image>
+      <text>?</text>
+    </view>
+    <view class='portrait'>
+      <image src="{{user_info[2].portrait == ''}}"></image>
+      <text>?</text>
+    </view>
+  </view>
+  <button class='button-container' open-type='share'>邀请好友助力</button>
+  <text class='underline' catchtap='onPayOrigin'>支付40元跳过此环节</text>
+</view>

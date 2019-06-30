@@ -1,0 +1,89 @@
+
+<view class='content'>
+  <view >
+  <view class='bcview-top'>
+    <image class='image-touchFish'  src= "{{img_touchFish}}" ></image>
+
+    <text class='text-top'>本期已有<text class='text-top-highlight'>{{people}}</text>名挑战者\n邀请好友一起挑战!\n<text>可获<text class='text-top-highlight'>多倍奖励金</text>噢~</text>\t\n邀请越多倍数越多</text>
+
+    <text class='text-wait-days'>距离挑战开始还有{{wait_days}}天</text>
+  </view>
+
+  </view>
+
+    <view class='bcimage-head' catchtap='ToMyInvite' wx:if="{{is_have_rank}}">
+
+      <text class='text-my-reward'>邀请获得<text class='text-my-reward-number'>{{invite_reward}}</text>元</text>  
+
+      <text class='text-my-invite' >查看我的邀请></text> 
+
+      <text class='text-my-name'>{{username}}</text>
+
+      <image class='image-my-avatar'mode='aspectFit' src= "{{portrait}}" ></image>
+
+      <text class='text-my-rank'>{{user_rank}}.</text>
+
+
+  </view>
+
+<scroll-view class='scroll' scroll-y="true"  style="height: 300rpx;"  wx:if="{{is_have_rank}}">
+
+  <view class="bcview-scroll">
+
+  <block wx:for="{{total_rank}}" wx:for-item = 'item'>
+    
+    <view class='view-user'>
+
+      <text class='text-user-rank'>{{item.user_rank}}.</text>
+
+      <image class='image-user-avatar'mode='aspectFit' src='{{item.portrait}}' ></image>
+
+      <text class='text-user-name'>{{item.username}}·······································································································</text>
+
+      <view class='bcview-user-reward'>
+
+      <text class='text-user-reward'>邀请获得<text class='text-user-reward-number'>{{item.invite_reward}}元</text></text> 
+
+      </view> 
+  
+    </view>
+
+  </block>
+
+  </view>
+
+</scroll-view>
+
+  <text class='text-rule' catchtap='ToRule'> 规则详情 </text>
+
+<view wx:if="{{is_have_rank == false}}">
+    <image class='image-no-rank' src='/images/img_no_rank.png'></image>
+</view>
+
+  <view class='view-line1'></view>
+
+  <view class='view-line2'></view>
+
+  <text class='text-invite'>邀请好友获得奖励</text>
+
+
+  <image class='image-pyq' src='/images/pyq.png'></image>
+
+  <image class='image-wechat' src='/images/wechat.png'></image>
+
+  <button class='button_pyq' bindtap='shareTopyq' form-type='submit'style="opacity:{{0}}"  ></button>
+
+  <button class='button_wechat' open-type='share' form-type='submit'style="opacity:{{0}}"  ></button>
+
+  <text class='text-pyq'>朋友圈</text>
+
+  <text class='text-wechat'>微信</text>
+
+
+</view>
+
+
+
+<view class="canvas-box">
+        <canvas canvas-id="myCanvas" style="width:100%;height:{{screenHeight}}px;"></canvas>
+</view>

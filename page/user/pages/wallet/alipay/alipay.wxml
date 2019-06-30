@@ -1,0 +1,40 @@
+<!--pages/user/wallet/alipay/alipay.wxml-->
+<view class='content'>
+
+<text class='text-total-cash'>可提现金额￥{{total_cash}}</text>
+
+<text class='text-cash-back'>提现金额</text>
+ 
+ <form report-submit="true" bindsubmit="save">
+
+    <view class='bcview-cash-number'><text class='text-cash-number'>￥</text> <input value='{{input_cash_number}}' maxlength='6' class='input-cash-number' type="digit"name="cash_number" bindinput="input_number_filter"/></view>
+
+    <view class='bcview-name'><text class='text-name'>支付宝姓名：</text><input value='{{input_name}}' maxlength='18' class='input-name' type="text"name="cash_name"    bindinput="input_name_filter"/></view>
+
+    <view class='bcview-account'><text class='text-account'>支付宝账号：</text><input value='{{input_account}}' maxlength='20' class='input-account' type="number" name="cash_account"  bindinput="input_account_filter"/></view>
+    <text class='text-remind'>温馨提示：请确保支付宝已实名认证，并填写真实姓名\n（请不要填写昵称）</text>
+
+  <view wx:if="{{is_input_number==true &&is_input_name==true&&is_input_account==true}}" class="green_bcview-submit" form-type="submit" catchtap='submit_successed'><text class='text-submit'>提现</text></view>
+
+    <view wx:if="{{is_input_number==false ||is_input_name==false || is_input_account==false}}" class="gray_bcview-submit" form-type="submit" ><text class='text-submit'>提现</text></view>
+
+</form>
+
+</view>
+
+
+
+<view class="view-mask" wx:if="{{is_show_mask}}" catchtouchmove='stopPageScroll' catchtap='OnCloseView'>
+
+  <view  class='bcview-remind' wx:if="{{is_show_remind_view}}" catchtap='OnCloseView' >   
+
+<image class='image-remind' src='/images/left_fish.png'></image>
+
+<text class='text-cash-back-remind'>5元以上才可以提现哦~</text>
+
+<text class='text-determine'>确定</text>
+        
+  </view>
+  </view>
+
+
