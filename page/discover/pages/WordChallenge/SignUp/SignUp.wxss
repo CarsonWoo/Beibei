@@ -248,11 +248,31 @@
 
 }
 
+.text-invate{
+
+  /* position: fixed; */
+
+  margin-top: 0rpx ;
+
+  margin-left: 570rpx;
+
+  font-weight: 400;
+
+  font-size: 33rpx;
+
+  text-decoration:underline; 
+
+  font-family:Arial, Helvetica, sans-serif;
+
+  color: white;
+
+}
+
 .text-mark{
 
   margin-left: 232rpx;
 
-  margin-top: 32rpx ;
+  margin-top: 5rpx ;
 
   font-weight: 450;
 
