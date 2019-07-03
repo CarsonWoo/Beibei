@@ -8,6 +8,7 @@ Page({
    */
   data: {
     location:0,
+    scrollviewheight:0,
   },
 
   onLikeTap: function (event) {
@@ -139,9 +140,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showShareMenu({
-      withShareTicket: true
-    })
     var id = options.id
     var location = options.location
     this.setData({
@@ -181,6 +179,21 @@ Page({
             order: data.order,
             likes: data.likes
           })
+          var data = res.data.data
+          var that = this
+          for (var i = 0; i < data.order.length-1;i++){
+            wx.getImageInfo({
+              src: data.order[i + 1].pic,
+              success: function (res) {
+                var scrollviewheight = that.data.scrollviewheight+res.height/1.5
+                // console.log(res.height)
+                that.setData({
+                  scrollviewheight:scrollviewheight
+                })
+                console.log(scrollviewheight)
+              }
+            })
+          }
         } else if (res.data.status == 400 && res.data.msg == '身份认证错误！') {
           this.getToken()
         }
@@ -265,5 +278,6 @@ Page({
       path: 'page/tabBar/home/home?action=onFeedsTap'+'&feed_id=' + this.data.id + '&feed_location=' + this.data.location,
       // imageUrl: share_img,
     }
+
   }
 })
