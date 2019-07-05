@@ -8,7 +8,7 @@ Page({
    */
   data: {
     location:0,
-    scrollviewheight:0,
+    scrollviewheight:1334,
   },
 
   onLikeTap: function (event) {
@@ -150,8 +150,17 @@ Page({
         location: location
       })
     }
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          scrollviewheight:res.windowHeight*2,
+        })
+      }
+    })
     this.loadData()
   },
+
 
   loadData: function() {
     var token = app.globalData.token
@@ -179,21 +188,21 @@ Page({
             order: data.order,
             likes: data.likes
           })
-          var data = res.data.data
-          var that = this
-          for (var i = 0; i < data.order.length-1;i++){
-            wx.getImageInfo({
-              src: data.order[i + 1].pic,
-              success: function (res) {
-                var scrollviewheight = that.data.scrollviewheight+res.height/1.5
-                // console.log(res.height)
-                that.setData({
-                  scrollviewheight:scrollviewheight
-                })
-                console.log(scrollviewheight)
-              }
-            })
-          }
+          // var data = res.data.data
+          // var that = this
+          // for (var i = 0; i < data.order.length-1;i++){
+          //   wx.getImageInfo({
+          //     src: data.order[i + 1].pic,
+          //     success: function (res) {
+          //       var scrollviewheight = that.data.scrollviewheight+res.height/1.5
+          //       // console.log(res.height)
+          //       that.setData({
+          //         scrollviewheight:scrollviewheight
+          //       })
+          //       // console.log(scrollviewheight)
+          //     }
+          //   })
+          // }
         } else if (res.data.status == 400 && res.data.msg == '身份认证错误！') {
           this.getToken()
         }

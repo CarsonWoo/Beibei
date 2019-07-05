@@ -1,5 +1,5 @@
 <view class='container'>
-  <scroll-view class='scroll' scroll-y="true"  style="height:{{scrollviewheight}}rpx;">
+  <scroll-view scroll-y="true"  style="height:{{scrollviewheight}}rpx;">
   <image class='header-image' mode='widthFix' src='{{pic}}'></image>
   <view style='margin-left:24rpx;margin-top:55rpx;margin-bottom:55rpx;'>
     <text class='title'>{{title}}</text>
