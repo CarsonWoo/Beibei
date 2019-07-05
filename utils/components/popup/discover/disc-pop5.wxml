@@ -1,0 +1,12 @@
+<!--utils/components/popup/discover/disc-pop5.wxml-->
+<!--components/discover/disc-pop5.wxml 联系客服弹窗-->
+<view class='disc-pop5' hidden='{{flag}}'  bindtap='_hide'>
+<view class='pop-container'>
+<image class='img-head' src='{{img_follow_us}}'></image>
+<view class='pop-footer'>
+<view class='pop-text'>联系客服回复“1”</view>
+<view class='pop-text'>关注公众号第一时间收到更新推送</view>
+<button class='btn-kefu'>联系客服</button>
+</view>
+</view>
+</view>

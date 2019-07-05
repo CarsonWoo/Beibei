@@ -1,0 +1,71 @@
+/* utils/components/popup/discover/mat-pop1.wxss */
+.mat-pop1{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+.pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 407rpx;
+}
+.pop-head{
+  width: 517rpx;
+  height: 115rpx;
+  background: #fff;
+  border-top-left-radius: 20rpx;
+   border-top-right-radius:20rpx;
+}
+.img-head{
+  position: absolute;
+  top:97rpx;
+  left:118rpx;
+  width: 517rpx;
+  height: 416rpx;
+}
+.pop-footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  width: 517rpx;
+  padding-bottom: 49rpx;
+  border-bottom-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+}
+.text-meetcode{
+  font-family: PingFang-SC-Bold;
+	font-size: 40rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 40rpx;
+	letter-spacing: 0rpx;
+	color: #fe6983;
+  margin-top: 42rpx;
+  margin-bottom: 19rpx;
+}
+.text-lead{
+  font-family: PingFang-SC-Regular;
+	font-size: 34rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 34rpx;
+	letter-spacing: 0rpx;
+	color: #55585b;
+  margin-top: 12rpx;
+}
+.toast-copy{
+  margin-top: 36rpx;
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 28rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+}
+

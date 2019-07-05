@@ -1,0 +1,78 @@
+/* utils/components/popup/discover/disc-pop4.wxss */
+/* components/discover/disc-pop4.wxss */
+.disc-pop4{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+.pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50rpx;
+}
+
+.img-head{
+  width: 569rpx;
+  height: 432rpx;
+}
+.pop-footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  width: 569rpx;
+  height: 500rpx;
+  border-bottom-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+}
+.pop-text1{
+  font-family: PingFang-SC-Regular;
+	font-size: 28rpx;
+  line-height: 37rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0rpx;
+	color: #161616;
+  margin-top: 30rpx;
+}
+
+.body-wxcode{
+  margin-top: 28rpx;
+  width: 200rpx;
+	height: 200rpx;
+	background-color: #ffffff;
+	border: solid 1rpx #dcdcdc;
+}
+.img-wxcode{
+   width: 200rpx;
+	height: 200rpx;
+}
+.btn-download{
+  margin-top: 24rpx;
+  width: 214rpx;
+  height: 61rpx;
+}
+.pop-text2{
+  margin-top: 27rpx;
+  font-family: PingFang-SC-Regular;
+	font-size: 26rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 26rpx;
+	letter-spacing: 0rpx;
+	color: #7d7d7d;
+}
+.toast-download{
+  margin-top: 40rpx;
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 28rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+}

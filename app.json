@@ -3,7 +3,8 @@
     "page/tabBar/home/home",
     "page/tabBar/user/user",
     "page/tabBar/discover/discover",
-    "page/tabBar/index/index"
+    "page/tabBar/index/index",
+    "utils/components/popup/test"
   ],
   "window": {
     "backgroundTextStyle": "light",

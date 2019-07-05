@@ -1,0 +1,26 @@
+{
+  "usingComponents": {
+    
+    "pop-openvip": "/utils/components/popup/discover/disc-pop1",
+   
+    "pop-lead": "/utils/components/popup/discover/disc-pop2",
+    
+    "pop-vipintro": "/utils/components/popup/discover/disc-pop3",
+    
+    "pop-bluewxcode": "/utils/components/popup/discover/disc-pop4",
+    
+    "pop-contactus": "/utils/components/popup/discover/disc-pop5",
+    
+    "pop-pinkwxcode": "/utils/components/popup/discover/disc-pop6",
+  
+    "pop-meetcode": "/utils/components/popup/discover/mat-pop1",
+    
+    "pop-break": "/utils/components/popup/discover/mat-pop2",
+   
+    "pop-remind": "/utils/components/popup/discover/mat-pop3",
+   
+    "pop-restart": "/utils/components/popup/discover/mat-pop4",
+    
+    "pop-matchsuccess": "/utils/components/popup/discover/mat-pop5"
+  }
+}

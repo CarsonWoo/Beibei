@@ -1,0 +1,20 @@
+<!--utils/components/popup/discover/disc-pop6.wxml-->
+<!--components/discover/disc-pop6.wxml 下载二维码弹窗2-->
+<view class='disc-pop6' hidden='{{flag}}'  bindtap='_hide'>
+<view class='pop-container'>
+<view class='pop-head'>
+<image class='img-head' src='{{img_girls2}}'></image>
+</view>
+<view class='pop-footer'>
+<text class='pop-text1'>添加月老小呗完善信息
+让更多人发现优秀的你</text>
+<view class='body-wxcode'>
+<image class='img-wxcode' src='{{img_wxcode_staff}}'></image>
+</view>
+<image class='btn-download'src='{{btn_download_wxcode}}' ></image>
+</view>
+<view class='toast-download' hidden='{{toastFlag}}'>哈哈哈哈哈</view>
+</view>
+
+</view>
+

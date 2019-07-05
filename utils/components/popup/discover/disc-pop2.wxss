@@ -1,0 +1,80 @@
+/* utils/components/popup/discover/disc-pop2.wxss */
+/* components/discover/disc-pop2.wxss */
+.disc-pop2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+.pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*margin: 93rpx 62rpx 198rpx  63rpx;*/
+}
+.pop-img1{
+  width: 625rpx;
+  height: 305rpx;
+  margin-top:90rpx;
+}
+.pop-footer{
+  background: #fff;
+  width: 625rpx;
+  height: 624rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;/*footer底部圆角*/
+}
+.pop-text1{
+  width: 478rpx;
+	height: 33rpx;
+	font-family: PingFang-SC-Regular;
+	font-size: 32rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 34rpx;
+	letter-spacing: 0rpx;
+	color: #655f40;
+  margin: 34rpx 0rpx;
+  
+}
+.pop-leadimg{
+  width:566rpx;
+  height: 254rpx;
+}
+.pop-text2{
+	font-family: PingFang-SC-Medium;
+	font-size: 50rpx;
+  /*实现颜色渐变*/
+  background: linear-gradient(to right, #c6b76a, #655f40);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0rpx;
+  margin-top: 49rpx;
+  margin-bottom: 28rpx;
+}
+.img-area{
+  margin-top: 28rpx;
+}
+.btn-add{
+  margin-top: 28rpx;
+  width:238rpx;
+  height: 61rpx;
+}
+
+.bg-vip{
+  /*vip背景图设置绝对定位*/
+  position: absolute;
+  width: 545rpx;
+	height: 305rpx;
+  bottom: 138rpx;
+  right:50rpx;
+}

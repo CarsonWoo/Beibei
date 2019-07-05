@@ -1,0 +1,59 @@
+/* utils/components/popup/discover/disc-pop5.wxss */
+.disc-pop5{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+.pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 296rpx;
+  width: 519rpx;
+	height: 489rpx;
+  margin-left: 116rpx;
+}
+.img-head{
+  width: 519rpx;
+	height: 260rpx;
+}
+.pop-footer{
+  padding-top: 33rpx;
+  width: 519rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 230rpx;
+  background: #fff;
+  border-bottom-left-radius:  20rpx;
+  border-bottom-right-radius:  20rpx;
+}
+.pop-text{
+  margin-top: 10rpx;
+	font-family: PingFang-SC-Medium;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30rpx;
+	letter-spacing: 0rpx;
+	color: #222c38;
+}
+.btn-kefu{
+  margin-top: 30rpx;
+  padding-top: 18rpx;
+  width: 184rpx;
+	height: 65rpx;
+	background-color: #ffffff;
+	border-radius: 30rpx;
+	border: solid 1rpx #826aff;
+  font-family: PingFang-SC-Regular;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30rpx;
+	letter-spacing: 0rpx;
+	color: #826aff;
+}

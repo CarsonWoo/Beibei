@@ -1,0 +1,9 @@
+<!--utils/components/popup/discover/disc-pop1.wxml-->
+<!--components/discover/disc-pop1.wxml成功开通vip提示弹窗-->
+<view class='disc-pop1' hidden='{{flag}}' bindtap='_hide'>
+<view class='pop-container'>
+<image class='img-vip' src='{{img_vip_crown}}'></image>
+<view class='text-vip'>您已成功开通超级VIP服务
+8大特权尊享中</view>
+</view>
+</view>

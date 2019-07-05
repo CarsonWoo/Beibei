@@ -1,0 +1,73 @@
+/* utils/components/popup/discover/mat-pop5.wxss */
+/* components/match/mat-pop5.wxss */
+.mat-pop5{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+.pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 147rpx;
+}
+.img-match{
+  height: 369rpx;
+  width: 439rpx;
+}
+.pop-text1{
+  margin-bottom: 22rpx;
+  font-family: PingFang-SC-Bold;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+}
+.pop-text2{
+  font-family: PingFang-SC-Regular;
+	font-size: 26rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+}
+.progress-body{
+  margin-top: 34rpx;
+  position: relative;
+}
+progress{
+  width: 358rpx;
+  border:  solid 1rpx #8269ff;
+  border-radius: 13rpx;
+  
+}
+.img-heart{
+  position: absolute;
+  width: 49rpx;
+	height: 49rpx;
+  bottom: -11.5rpx;
+  right: 0;
+  
+}
+.btn-enter{
+  margin-top: 66rpx;
+  width: 287rpx;
+	height: 66rpx;
+	border-radius: 31rpx;
+  background-color:rgba(0, 0, 0, 0) ;
+	border: solid 2rpx #ffffff;
+  font-family: PingFang-SC-Bold;
+	font-size: 34rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 34rpx;
+	letter-spacing: 3rpx;
+	color: #ffffff;
+  padding: 17rpx 0 ;
+}

@@ -1,0 +1,261 @@
+/* utils/components/popup/test.wxss */
+
+
+/* 以下为 pop7 wxss类文件 */
+.disc-pop7{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+
+.top-toast{
+  font-family: PingFang-SC-Regular;
+	font-size: 40rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 40rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  height: 40rpx;
+  margin-left: 189rpx;
+  margin-top: 48rpx;
+}
+.pop-container{
+  position: absolute;
+  top:112rpx;
+  left: 63rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pop-head1{
+  width: 625rpx;
+	height: 551rpx;
+	background-color: #f0edff;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.btn-add{
+  width: 194rpx;
+	height: 194rpx;
+  margin-top: 151rpx;
+}
+.text-photo{
+  font-family: PingFang-SC-Regular;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #4e4e4e;
+  margin-top: 41rpx;
+}
+
+
+.pop-head2{
+  width: 625rpx;
+	height: 551rpx;
+	background-color: #f0edff;
+	border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  position: relative;
+}
+.img-photo{
+  width: 625rpx;
+	height: 551rpx;
+  border-radius: 10rpx;
+  position: absolute;
+}
+.btn-change{
+  width: 212rpx;
+	height: 55rpx;
+  position: absolute;
+  bottom:36rpx;
+  left:220rpx;
+
+}
+
+.footer1{
+  height: 312rpx;
+   width: 625rpx;
+   background: #fff;
+   position: relative;
+   border-bottom-left-radius: 10rpx;
+   border-bottom-right-radius: 10rpx;
+}
+/*自定义的dots样式*/
+.dots{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 17rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.dot{
+  margin: 0 8rpx;
+  width: 13rpx;
+	height: 13rpx;
+  border-radius: 50%;
+	background-color: #ffffff;
+	border: solid 1rpx #dcdcdc;
+  transition: all .6s;
+}
+.dot.active{
+  width: 13rpx;
+	height: 13rpx;
+  border-radius: 50%;
+	background-color: #ababab;
+}
+
+/* swiper-item1性别选择块*/
+.swiper-body1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 58rpx;
+}
+.text-title{
+	font-family: PingFang-SC-Bold;
+	font-size: 32rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 32rpx;
+	letter-spacing: 0rpx;
+	color: #363943;
+}
+.btns-sex{
+  margin-top: 34rpx;
+  display: flex;
+  flex-direction: row;
+}
+.btn-boy{
+  width: 164rpx;
+	height: 70rpx;
+  margin-right: 67rpx;
+}
+.btn-girl{
+  width: 164rpx;
+	height: 70rpx;
+}
+
+.swiper-body2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 25rpx;
+}
+.btns-want{
+  display: flex;
+  flex-direction: row;
+  margin-top: 15rpx;
+  height: 57rpx;
+  margin-bottom: 24rpx;
+}
+.btn-want{
+  width: 153rpx;
+	height: 57rpx;
+	background-color: #ffffff;
+	border-radius: 29rpx;
+	border: solid 1rpx #e5e5e5;
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 28rpx;
+	letter-spacing: 0rpx;
+	color: #999d9e;
+  padding-top: 16rpx;
+  margin: 0 13rpx;
+}
+.btn-want-check{
+  width: 153rpx;
+	height: 57rpx;
+	background-color: #c0b3ff;
+	border-radius: 29rpx;
+	border: solid 1rpx #e5e5e5;
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 28rpx;
+	letter-spacing: 0rpx;
+	color: #fff;
+  padding-top: 16rpx;
+  margin: 0 13rpx;
+}
+.btn-post{
+  
+  width: 261rpx;
+	height: 77rpx;
+  background-image: linear-gradient(90deg, 
+		#5c3cff 31%, 
+		#ff5b95 100%), 
+	linear-gradient(
+		#000000, 
+		#000000);
+	background-blend-mode: normal, 
+		normal;
+	box-shadow: 0rpx 8rpx 18rpx 0rpx 
+		rgba(92, 60, 255, 0.39);
+	border-radius: 39rpx;
+  font-family: PingFang-SC-Bold;
+	font-size: 34rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 34rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  padding-top: 23rpx;
+}
+.text-bottom{
+  margin-top: 17rpx;
+  font-family: PingFang-SC-Regular;
+	font-size: 24rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 24rpx;
+	letter-spacing: 0rpx;
+	color: #999d9e;
+}
+.bottom-toast{
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  margin-top: 33rpx;
+}
+
+.footer2{
+   height: 217rpx;
+   width: 625rpx;
+   background: #fff;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   border-bottom-left-radius: 10rpx;
+   border-bottom-right-radius: 10rpx;
+}
+.text-photo{
+  font-family: PingFang-SC-Regular;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #4e4e4e;
+  margin-top: 38rpx;
+  margin-bottom: 33rpx;
+}
+/* 以上为 pop7 wxss类文件 */

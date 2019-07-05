@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 14,
 			"list": [
 				{
 					"id": -1,
@@ -132,6 +132,12 @@
 					"name": "单词挑战规则",
 					"pathName": "page/discover/pages/WordChallenge/Rule/Rule",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bintest",
+					"pathName": "utils/components/popup/test",
 					"scene": null
 				}
 			]

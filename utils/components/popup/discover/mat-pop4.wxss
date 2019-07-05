@@ -1,0 +1,113 @@
+/* utils/components/popup/discover/mat-pop4.wxss */
+/* components/match/mat-pop4.wxss */
+.mat-pop4{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+.pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 297rpx;
+  margin-left: 116rpx;
+  width: 517rpx;
+  height: 486rpx;
+  background: #fff;
+  border-radius: 20rpx;
+}
+.pop-title{
+  font-family: PingFang-SC-Bold;
+	font-size: 34rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 34rpx;
+	letter-spacing: 0rpx;
+	color: #222c38;
+  margin-top: 49rpx;
+}
+.text-btn-row{
+  margin-top: 35rpx;
+  display: flex;
+  flex-direction: row;
+  height: 65rpx;
+  margin-bottom: 38rpx;
+}
+.text-sign{
+  font-family: PingFang-SC-Bold;
+	font-size: 40rpx;
+	font-weight: bold;
+	font-stretch: normal;
+	line-height: 42rpx;
+	letter-spacing: 0rpx;
+	color: #8a75ff;
+}
+.btn-sign{
+  width: 188rpx;
+	height: 65rpx;
+	background-image: linear-gradient(180deg, 
+		#8a75ff 0%, 
+		#7061ff 100%), 
+	linear-gradient(
+		#6170ff, 
+		#6170ff);
+	background-blend-mode: normal, 
+		normal;
+	border-radius: 31rpx;
+	font-family: PingFang-SC-Medium;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  padding: 19rpx 36rpx 18rpx 35rpx;
+}
+.text-description{
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 42rpx;
+	letter-spacing: 0rpx;
+	color: #666767;
+}
+.btns-row{
+  display: flex;
+  flex-direction: row;
+  margin-top: 57rpx;
+}
+.btn-cancel{
+  width: 184rpx;
+	height: 65rpx;
+	background-color: #ffffff;
+	border-radius: 30rpx;
+	border: solid 1rpx #cdcdcd;
+  margin-right: 24rpx;
+  font-family: PingFang-SC-Regular;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30rpx;
+	letter-spacing: 0rpx;
+	color: #535353;
+  padding-top: 17rpx;
+}
+.btn-sure{
+  width: 184rpx;
+	height: 65rpx;
+	background-color: #ffffff;
+	border-radius: 30rpx;
+	border: solid 1rpx #826aff;
+  font-family: PingFang-SC-Regular;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30rpx;
+	letter-spacing: 0rpx;
+	color: #826aff;
+  padding-top: 17rpx;
+}
