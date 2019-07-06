@@ -94,24 +94,34 @@
 
   </block>
 
-  <!-- 关于运营0.3的基础内容卸载partnership里面 以免混淆 -->
-  <view class='partnership' wx:if="{{partner_level}}">
+  <!-- 关于运营0.3的基础内容写在partnership里面 以免混淆 -->
+  <view class='partnership' wx:if="{{partner_level == 1}}">
     <!-- 标题栏 -->
     <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
-      <image class='partnership-label-small-image' src='/images/label_partnership.png'></image>
-      <text class='partnership-label-text'>我想和你一起背单词</text>
-      <view class='partnership-icon-container {{label_should_fixed ? "label-fixed-icon-container" : ""}}'>
-        <image style='margin-right:30rpx' src='{{ic_soundless_like}}'></image>
-        <image src='{{ic_lighten}}'></image>
-        <canvas class='partnership-like-toast' canvas-id='partnership_toast_like' wx:if="{{showLikeToast}}" catchtap='closeLikeToastTap'></canvas>
-        <canvas class='partnership-lighten-toast' canvas-id='partnership_toast_lighten' wx:if="{{showLightenToast}}" catchtap='closeLightenToastTap'></canvas>
-      </view>
+      <block wx:if='{{!isInLove}}'>
+        <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_left.png'></image>
+        <text class='partnership-label-text'>我想和你一起背单词</text>
+        <view class='partnership-icon-container {{label_should_fixed ? "label-fixed-icon-container" : ""}}'>
+          <image style='margin-right:30rpx' src='{{ic_soundless_like}}'></image>
+          <image src='{{ic_lighten}}'></image>
+          <canvas class='partnership-like-toast' canvas-id='partnership_toast_like' wx:if="{{showLikeToast}}" catchtap='closeLikeToastTap'></canvas>
+          <canvas class='partnership-lighten-toast' canvas-id='partnership_toast_lighten' wx:if="{{showLightenToast}}" catchtap='closeLightenToastTap'></canvas>
+        </view>
+      </block>
+      <block wx:elif='{{isInLove}}'>
+        <view style='width:100%;height:{{label_origin_height}};display:flex;justify-content:center;align-items:center;padding-right:{{label_should_fixed ? "10%" : "0"}};z-index:9999;'>
+          <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_left.png'></image>
+          <text class='partnership-label-text'>我想和你一起背单词</text>
+          <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_right.png' style='margin-left:20rpx;'></image>
+        </view>
+
+      </block>
     </view>
     <!-- 卡片 -->
     <view class='partnership-card-container'>
       <image class='partnership-base-image'></image>
-      <cover-image style="margin-right:130rpx" src='{{ic_like}}'></cover-image>
-      <cover-image src='{{ic_super_like}}'></cover-image>
+      <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
+      <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
       <view class='partnership-userinfo-container'>
         <text class='black partnership-normal-text'>左撇子杰克</text>
         <image src='{{ic_gender}}'></image>
@@ -125,52 +135,108 @@
       </view>
     </view>
 
-    <!-- 微信公众号引导关注view 只有在今日推荐看完以后才会出现 -->
-    <view class='partnership-wechat-guide-container'>
-      <view class='partnership-wechat-guide-text-container'>
-        <text class='black' style='font-size:28rpx;'>今日的每日推荐已看完，请期待明天的更新...</text>
-        <text class='partnership-min-text lighter-gray' style='margin-top:10rpx'>关注公众号可以第一时间收到更新推送</text>
+    <block wx:if="{{!is_show_more_cards && !is_show_time_reversal && !is_vip}}">
+      <!-- 微信公众号引导关注view 只有在今日推荐看完以后才会出现 -->
+      <view class='partnership-wechat-guide-container'>
+        <view class='partnership-wechat-guide-text-container'>
+          <text class='black' style='font-size:28rpx;'>今日的每日推荐已看完，请期待明天的更新...</text>
+          <text class='partnership-min-text lighter-gray' style='margin-top:10rpx'>关注公众号可以第一时间收到更新推送</text>
+        </view>
+        <view class='partnership-wechat-guide-button-container'>
+          <button class='partnership-wechat-guide-follow-button'>去关注</button>
+        </view>
       </view>
-      <view class='partnership-wechat-guide-button-container'>
-        <button class='partnership-wechat-guide-follow-button'>去关注</button>
+
+      <!-- 非vip且看完了当日推荐才会出现 -->
+      <view class='guide-open-vip-text'>
+        <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
+        <text>开启VIP,寻觅更多好友</text>
       </view>
-    </view>
 
-    <!-- 非vip且看完了当日推荐才会出现 -->
-    <view class='guide-open-vip-text'>
-      <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
-      <text>开启VIP,寻觅更多好友</text>
-    </view>
+      <view style='width:100%;display:flex;margin-top:60rpx;'>
+        <!-- 时光倒流机 -->
+        <view class='half-width-container'>
 
-    <view style='width:100%;display:flex;margin-top:60rpx;'>
-      <!-- 时光倒流机 -->
-      <view class='half-width-container'>
+          <view class='time-reversal-button'>
+            <image src='{{ic_time_reversal}}'></image>
+            <text class='normal-text'>时光倒流机</text>
+            <text class='partnership-min-text' style='margin-left:5rpx;'>+10</text>
 
-        <view class='time-reversal-button'>
-          <image src='{{ic_time_reversal}}'></image>
-          <text class='normal-text'>时光倒流机</text>
-          <text class='partnership-min-text' style='margin-left:5rpx;'>+10</text>
+            <!-- 漂浮的用户label 不一定有 详见prd -->
+            <view class='time-reversal-user-float-container'>
+              <image></image>
+              <text>伯舒小姐使用了该功能</text>
+            </view>
+          </view>
 
-          <!-- 漂浮的用户label 不一定有 详见prd -->
-          <view class='time-reversal-user-float-container'>
-            <image></image>
-            <text>伯舒小姐使用了该功能</text>
+
+        </view>
+        <!-- 查看更多卡片 -->
+        <view class='half-width-container'>
+          <view class='watch-more-button'>
+            <image src='{{ic_watch_more}}'></image>
+            <text class='normal-text'>查看更多卡片</text>
+            <text class='partnership-min-text' style='margin-left:5rpx;'>+5</text>
           </view>
         </view>
-
-
       </view>
-      <!-- 查看更多卡片 -->
-      <view class='half-width-container'>
-        <view class='watch-more-button'>
-          <image src='{{ic_watch_more}}'></image>
-          <text class='normal-text'>查看更多卡片</text>
-          <text class='partnership-min-text' style='margin-left:5rpx;'>+5</text>
+    </block>
+
+
+    <!-- 查看更多卡片释放 -->
+    <block wx:if="{{is_show_more_cards}}">
+      <view class='vip-more-cards-label'>
+        <view class='vip-dividing-line'></view>
+        <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_watch_more.png'></image>
+        <text>查看更多卡片</text>
+        <view class='vip-dividing-line'></view>
+      </view>
+      <view class='partnership-card-container'>
+        <image class='partnership-base-image'></image>
+        <cover-image style="margin-right:130rpx" src='{{ic_like}}'></cover-image>
+        <cover-image src='{{ic_super_like}}'></cover-image>
+        <view class='partnership-userinfo-container'>
+          <text class='black partnership-normal-text'>左撇子杰克</text>
+          <image src='{{ic_gender}}'></image>
+          <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁 · 广东外语外贸大学</text>
+        </view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
+        <view class='partnership-tag-container'>
+          <view class='tag blue-bg'>好好学习</view>
+          <view class='tag light-blue-bg'>乐观</view>
+          <view class='tag light-pink-bg'>幽默风趣</view>
         </view>
       </view>
-    </view>
+    </block>
+
+    <!-- 时光倒流机释放 -->
+    <block wx:if="{{is_show_time_reversal}}">
+      <view class='vip-more-cards-label'>
+        <view class='vip-dividing-line'></view>
+        <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_time_reversal.png'></image>
+        <text>时光倒流机</text>
+        <view class='vip-dividing-line'></view>
+      </view>
+      <view class='partnership-card-container'>
+        <image class='partnership-base-image'></image>
+        <cover-image style="margin-right:130rpx" src='{{ic_like}}'></cover-image>
+        <cover-image src='{{ic_super_like}}'></cover-image>
+        <view class='partnership-userinfo-container'>
+          <text class='black partnership-normal-text'>左撇子杰克</text>
+          <image src='{{ic_gender}}'></image>
+          <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁 · 广东外语外贸大学</text>
+        </view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
+        <view class='partnership-tag-container'>
+          <view class='tag blue-bg'>好好学习</view>
+          <view class='tag light-blue-bg'>乐观</view>
+          <view class='tag light-pink-bg'>幽默风趣</view>
+        </view>
+      </view>
+    </block>
 
   </view>
+  <view class='partnership' wx:elif="{{partner_level == 2}}"></view>
 
   <swiper previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange'>
     <block wx:for="{{card_list}}">

@@ -28,6 +28,10 @@ Page({
     // isShowDialog: true
     partner_level: 1,
     showLikeToast: true,
+    is_show_more_cards: false,
+    is_show_time_reversal: false,
+    is_vip: false,
+    isInLove: false,
     // showLightenToast: true,
     ic_soundless_like: app.globalData.FTP_ICON_HOST + "secret_like.png",
     ic_lighten: app.globalData.FTP_ICON_HOST + 'super_lighten.png',

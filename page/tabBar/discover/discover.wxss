@@ -835,13 +835,14 @@ swiper {
   background-color: #a2c7f7;
 }
 
-.partnership-card-container cover-image {
+.partnership-card-cover-image {
   position: absolute;
   right: 15rpx;
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
   top: 580rpx;
+  z-index: 9998;
   /* box-shadow: 0 50rpx 0 rgba(0, rgb(228, 228, 228), rgb(167, 167, 255), 0.8); */
 }
 
@@ -935,6 +936,7 @@ swiper {
 
 .label-fixed-icon-container {
   width: 46.7%;
+  z-index: 9999;
 }
 
 .partnership-wechat-guide-container {
@@ -1076,4 +1078,32 @@ swiper {
 
 .watch-more-button text {
   color: white;
+}
+
+.vip-more-cards-label {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #debc6a;
+  font-size: 30rpx;
+  margin-top: 32rpx;
+  margin-bottom: 20rpx;
+}
+
+.vip-more-cards-label text {
+  margin-left: 5rpx;
+  margin-right: 10rpx;
+}
+
+.vip-more-cards-label image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 10rpx;
+}
+
+.vip-dividing-line {
+  height: 1px;
+  width: 188rpx;
+  background-color: #debc6a;
 }
