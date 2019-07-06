@@ -1,14 +1,36 @@
 /* utils/components/popup/test.wxss */
 
 
+
 /* 以下为 pop7 wxss类文件 */
-.disc-pop7{
-  position: absolute;
-  left: 0;
+.pop-mask {
+  position: fixed;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, .5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0);
+  display: none;
+}
+
+.pop-show .pop-container {
+  transform: translateY(0);
+}
+
+.pop-show .pop-mask {
+  display: block;
+}
+.pop-container{
+  position: fixed;
+  transform: translateY(300%);
+  transition: all 0.4s ease;
+  z-index: 12;
+  top:112rpx;
+  left: 63rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .top-toast{
@@ -20,16 +42,7 @@
 	letter-spacing: 0rpx;
 	color: #ffffff;
   height: 40rpx;
-  margin-left: 189rpx;
-  margin-top: 48rpx;
-}
-.pop-container{
-  position: absolute;
-  top:112rpx;
-  left: 63rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-bottom: 18rpx;
 }
 
 .pop-head1{
@@ -167,13 +180,13 @@
 	border-radius: 29rpx;
 	border: solid 1rpx #e5e5e5;
   font-family: PingFang-SC-Medium;
-	font-size: 28rpx;
+	font-size: 27rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 28rpx;
+	line-height: 27rpx;
 	letter-spacing: 0rpx;
 	color: #999d9e;
-  padding-top: 16rpx;
+  padding-top: 15rpx;
   margin: 0 13rpx;
 }
 .btn-want-check{
@@ -183,17 +196,16 @@
 	border-radius: 29rpx;
 	border: solid 1rpx #e5e5e5;
   font-family: PingFang-SC-Medium;
-	font-size: 28rpx;
+	font-size: 27rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 28rpx;
+	line-height: 27rpx;
 	letter-spacing: 0rpx;
 	color: #fff;
-  padding-top: 16rpx;
+  padding-top: 15rpx;
   margin: 0 13rpx;
 }
 .btn-post{
-  
   width: 261rpx;
 	height: 77rpx;
   background-image: linear-gradient(90deg, 
@@ -208,10 +220,10 @@
 		rgba(92, 60, 255, 0.39);
 	border-radius: 39rpx;
   font-family: PingFang-SC-Bold;
-	font-size: 34rpx;
+	font-size: 33rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 34rpx;
+	line-height: 33rpx;
 	letter-spacing: 0rpx;
 	color: #ffffff;
   padding-top: 23rpx;

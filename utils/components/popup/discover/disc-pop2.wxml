@@ -1,23 +1,23 @@
 <!--utils/components/popup/discover/disc-pop2.wxml-->
 <!--components/discover/disc-pop2.wxml 引导添加小呗弹窗-->
-<view class="disc-pop2" hidden="{{flag}}"  bindtap='_hide'>
+<view class="{{ !flag ? 'pop-show' : '' }}">
+  <view class="pop-mask" bindtap="_hide" />
   <view class='pop-container'>
-    
-    <image  class='pop-img1' src='{{img_couple}}'></image>
+    <image class='pop-img1' src='{{img_couple}}'></image>
+    <view class='pop-footer'>
+      <!-- 白色背景的footer-->
+      <view class='pop-text1'>
+        添加月老小呗，微信红包完成支付
+      </view>
 
-    <view class='pop-footer'><!-- 白色背景的footer-->
-    <view class='pop-text1'>
-    添加月老小呗，微信红包完成支付
+      <image src='{{img_lead}}' class='pop-leadimg'></image>
+      <view class='pop-text2'>
+        <!--此处传值替换文字-->
+        成为VIP,开启8项特权
+      </view>
+      <image class='btn-add' src='{{btn_add_staff}}'></image>
+      <image class='bg-vip' src='{{bg_vip_grey}}'></image>
     </view>
-    
-    <image src='{{img_lead}}' class='pop-leadimg'></image>
-    <view class='pop-text2'><!--此处传值替换文字-->
-    成为VIP,开启8项特权 
-    </view>
-    <image class='btn-add' src='{{btn_add_staff}}'></image>
-    <image class='bg-vip' src='{{bg_vip_grey}}'></image>
-    </view>
-    
+
   </view>
 </view>
-

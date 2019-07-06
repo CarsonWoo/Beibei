@@ -1,18 +1,19 @@
 <!--utils/components/popup/discover/disc-pop4.wxml-->
 <!--components/discover/disc-pop4.wxml小呗二维码弹窗1完善+修改资料-->
-<view class='disc-pop4' hidden='{{flag}}'  bindtap='_hide'>
-<view class='pop-container'>
-<image class='img-head' src='{{img_girls1}}'></image>
-<view class='pop-footer'>
-<text class='pop-text1'>完善、修改资料（性别、年龄、学校、
+<view class=" {{ !flag ? 'pop-show' : '' }}">
+  <view class="pop-mask" bindtap="_hide" />
+  <view class='pop-container'>
+    <image class='img-head' src='{{img_girls1}}'></image>
+    <view class='pop-footer'>
+      <text class='pop-text1'>完善、修改资料（性别、年龄、学校、
 标签、个性签名）快加月老小呗微信吧</text>
-<view class='body-wxcode'>
-<image class='img-wxcode' src='{{img_wxcode_staff}}'></image>
-</view>
-<image class='btn-download'src='{{btn_download_wxcode}}'></image>
-<view class='pop-text2'>完善资料，背呗帮你闪电匹配</view>
-</view>
-<view class='toast-download' hidden='{{toastFlag}}'>哈哈哈哈哈</view>
-</view>
+      <view class='body-wxcode'>
+        <image class='img-wxcode' src='{{img_wxcode_staff}}'></image>
+      </view>
+      <image class='btn-download' src='{{btn_download_wxcode}}'></image>
+      <view class='pop-text2'>完善资料，背呗帮你闪电匹配</view>
+    </view>
+    <view class='toast-download' hidden='{{toastFlag}}'>哈哈哈哈哈</view>
+  </view>
 
 </view>

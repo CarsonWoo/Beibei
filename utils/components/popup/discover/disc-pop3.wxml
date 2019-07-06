@@ -1,11 +1,12 @@
 <!--utils/components/popup/discover/disc-pop3.wxml-->
 <!--components/discover/disc-pop3.wxml开通vip弹窗-->
-<view class='disc-pop3' hidden='{{flag}}'  bindtap='_hide'>
-<view class='pop-container'>
-<view class='pop-footer'>
-<text class='btm-text1'>VIP限时优惠</text>
-<text class='btm-text2'>￥19.9/月</text>
-<text class='btm-text3'>￥<text class='text-bold'>9.9</text>/月</text>
-</view>
-</view>
+<view class="{{ !flag ? ' pop-show ' : ' ' }}">
+  <view class="pop-mask" bindtap="_hide" />
+  <view class='pop-container'>
+    <view class='pop-footer'>
+      <text class='btm-text1'>VIP限时优惠</text>
+      <text class='btm-text2'>￥19.9/月</text>
+      <text class='btm-text3'>￥<text class='text-bold'>9.9</text>/月</text>
+    </view>
+  </view>
 </view>

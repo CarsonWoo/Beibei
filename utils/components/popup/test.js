@@ -9,6 +9,7 @@ Page({
     inForPopFlag:true, //完善资料弹窗的隐藏标志
     photoFlag: true, //用户是否已存在照片标志
     swiperCurrent: 0,
+    swiperError :0,//swiper卡死状态
     sexFlag: 0, //性别标志 0,1,2  0代表未选择，1代表选中boy，2代表选中girl
     btn_boy_check: app.globalData.FTP_ICON_HOST + 'btn_boy_check.png',
     btn_boy_normal: app.globalData.FTP_ICON_HOST + 'btn_boy_normal.png',
@@ -43,6 +44,26 @@ Page({
     this.setData({
       swiperCurrent: e.detail.current
     })
+  },
+  changeInforSwip: function (detail) {
+    if (detail.detail.source == "touch") {
+      //当页面卡死的时候，current的值会变成0 
+      if (detail.detail.current == 0) {
+        //有时候这算是正常情况，所以暂定连续出现3次就是卡了
+        let swiperError = this.data.swiperError
+        swiperError += 1
+        this.setData({ swiperError: swiperError })
+        if (swiperError >= 3) { //在开关被触发3次以上
+          console.error(this.data.swiperError)
+          this.setData({ goodsIndex: this.data.preIndex });//，重置current为正确索引
+          this.setData({ swiperError: 0 })
+        }
+      } else {//正常轮播时，记录正确页码索引
+        this.setData({ swiperCurrent: detail.detail.current });
+        //将开关重置为0
+        this.setData({ swiperError: 0 })
+      }
+    }
   },
 
   //监听选择boy、girl性别的按钮改变
@@ -148,6 +169,15 @@ Page({
     this.setData({
       inForPopFlag:!this.data.inForPopFlag
     })
+  },
+  hideInforPop(){
+    this.setData({
+      inForPopFlag: !this.data.inForPopFlag
+    })
+  },
+
+  stopPageScroll(){
+    return
   },
 
   /**

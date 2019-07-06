@@ -1,18 +1,34 @@
 /* utils/components/popup/discover/mat-pop5.wxss */
 /* components/match/mat-pop5.wxss */
-.mat-pop5{
-  position: absolute;
-  left: 0;
+.pop-mask {
+  position: fixed;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, .5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, .4);
+  display: none;
+}
+
+.pop-show .pop-container {
+  transform: translateY(0);
+}
+
+.pop-show .pop-mask {
+  display: block;
 }
 .pop-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 147rpx;
+  position: fixed;
+  bottom: 0rpx;
+  transform: translateY(300%);
+  transition: all 0.4s ease;
+  z-index: 12;
+  top: 147rpx;
+  left: 159rpx;
 }
 .img-match{
   height: 369rpx;
@@ -63,11 +79,11 @@ progress{
   background-color:rgba(0, 0, 0, 0) ;
 	border: solid 2rpx #ffffff;
   font-family: PingFang-SC-Bold;
-	font-size: 34rpx;
+	font-size: 32rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 34rpx;
+	line-height: 32rpx;
 	letter-spacing: 3rpx;
 	color: #ffffff;
-  padding: 17rpx 0 ;
+  padding: 15rpx 0 ;
 }

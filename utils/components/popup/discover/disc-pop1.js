@@ -31,6 +31,9 @@ Component({
         flag:!this.data.flag
       })
     },
+    stopPageScroll(){
+
+    },
 
     //内部私有事件最好用下划线_开头
     _hide(){

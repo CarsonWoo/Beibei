@@ -1,18 +1,34 @@
 /* utils/components/popup/discover/mat-pop2.wxss */
 /* components/match/mat-pop2.wxss */
-.mat-pop2{
-  position: absolute;
-  left: 0;
+.pop-mask {
+  position: fixed;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, .5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0);
+  display: none;
 }
+
+.pop-show .pop-container {
+  transform: translateY(0);
+}
+
+.pop-show .pop-mask {
+  display: block;
+}
+
 .pop-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 297rpx;
+  position: fixed;
+  top:297rpx;
+  left:116rpx;
+  transform: translateY(300%);
+  transition: all 0.4s ease;
+  z-index: 12;
 }
 .img-head{
   width: 517rpx;
@@ -30,13 +46,13 @@
 }
 .pop-text{
   font-family: PingFang-SC-Bold;
-	font-size: 34rpx;
+	font-size: 32rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 34rpx;
+	line-height: 32rpx;
 	letter-spacing: 0rpx;
 	color: #222c38;
-  margin-top: 37rpx;
+  margin-top: 38rpx;
 }
 .pop-btns{
   display: flex;
@@ -44,7 +60,7 @@
   margin-top: 27rpx;
 }
 .btn-sure{
-  padding:18rpx 0;
+  padding:17rpx 0;
   margin-right: 24rpx;
   width: 184rpx;
 	height: 65rpx;
@@ -52,25 +68,25 @@
 	border-radius: 30rpx;
 	border: solid 1rpx #cdcdcd;
   font-family: PingFang-SC-Regular;
-	font-size: 30rpx;
+	font-size: 28rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 30rpx;
+	line-height: 28rpx;
 	letter-spacing: 0rpx;
 	color: #535353;
 }
 .btn-stay{
-  padding:18rpx 0;
+  padding:17rpx 0;
   width: 184rpx;
 	height: 65rpx;
 	background-color: #ffffff;
 	border-radius: 30rpx;
 	border: solid 1rpx #826aff;
   font-family: PingFang-SC-Regular;
-	font-size: 30rpx;
+	font-size: 28rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 30rpx;
+	line-height: 28rpx;
 	letter-spacing: 0rpx;
 	color: #826aff;
 }

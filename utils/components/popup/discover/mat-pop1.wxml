@@ -1,16 +1,17 @@
 <!--utils/components/popup/discover/mat-pop1.wxml-->
 <!--相遇码弹窗-->
-<view class='mat-pop1' bindtap='_hide' hidden='{{flag}}'>
-<view class='pop-container'>
-<view class='pop-head'>
-<image class='img-head' src='{{img_girls2}}'></image>
-</view>
-<view class='pop-footer'>
-<text class='text-meetcode'>相遇码{{meetCode}}</text>
-<view class='text-lead'>带上复制的相遇码</view>
-<view class='text-lead'>添加月老小呗和Ta相遇</view>
-</view>
-<view class='toast-copy' hidden='{{toastFlag}}'>已复制相遇码</view>
+<view class="{{ !flag ? 'pop-show' : '' }}">
+  <view class="pop-mask" bindtap="_hide" />
+  <view class='pop-container'>
+    <view class='pop-head'>
+      <image class='img-head' src='{{img_girls2}}'></image>
+    </view>
+    <view class='pop-footer'>
+      <text class='text-meetcode'>相遇码{{meetCode}}</text>
+      <view class='text-lead'>带上复制的相遇码</view>
+      <view class='text-lead'>添加月老小呗和Ta相遇</view>
+    </view>
+    <view class='toast-copy' hidden='{{toastFlag}}'>已复制相遇码</view>
 
-</view>
+  </view>
 </view>

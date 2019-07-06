@@ -1,17 +1,19 @@
 <!--utils/components/popup/discover/mat-pop3.wxml-->
 <!--components/match/mat-pop3.wxml 悄悄提醒ta弹窗 可能不用组件比较容易处理数据-->
-<view class='mat-pop3' hidden='{{flag}}' bindtap='_hide'>
-<view class='pop-container'>
-<view class='pop-head'>
-<image class='bg-img' src='{{img_couple}}'></image>
-<view class='bg-text'> <text class='text-tixing'>悄悄提醒Ta </text> </view>
-</view>
-<view class='pop-footer'>
-<view class='bg-et'>
-<textarea class='et-tixing'  placeholder='快来和我一起背单词吧！' auto-focus='true' maxlength='11'>
-</textarea>
-</view>
-<button class='btn-send'>发送</button>
-</view>
-</view>
+<view class="{{ !flag ? 'pop-show' : '' }}">
+  <view class="pop-mask" bindtap="_hide" />
+  <view class='pop-container'>
+    <view class='pop-head'>
+      <image class='bg-img' src='{{img_couple}}'></image>
+      <view class='bg-text'>
+        <text class='text-tixing'>悄悄提醒Ta </text> </view>
+    </view>
+    <view class='pop-footer'>
+      <view class='bg-et'>
+        <textarea class='et-tixing' placeholder='快来和我一起背单词吧！'  maxlength='11'>
+        </textarea>
+      </view>
+      <button class='btn-send'>发送</button>
+    </view>
+  </view>
 </view>

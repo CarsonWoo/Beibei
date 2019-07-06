@@ -1,18 +1,38 @@
 /* utils/components/popup/discover/disc-pop2.wxss */
-/* components/discover/disc-pop2.wxss */
-.disc-pop2 {
-  position: absolute;
-  left: 0;
+
+/* pop-mask为弹窗外部 z-index标志层级优先度*/
+.pop-mask {
+  position: fixed;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, .5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0);
+  display: none;
 }
+
+/*弹窗弹起至正常高度*/
+.pop-show .pop-container {
+  transform: translateY(0);
+}
+
+.pop-show .pop-mask {
+  display: block;
+}
+/*先将弹窗内容translateY(300%)向下移动一个超过当前页面高度的距离（表示隐藏）
+  距离为当前弹窗高度的300%
+  */
 .pop-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  /*margin: 93rpx 62rpx 198rpx  63rpx;*/
+  position: fixed;
+  bottom: 0rpx;
+  transform: translateY(300%);
+  transition: all 0.4s ease;
+  z-index: 12;
+  margin: 93rpx 62rpx 198rpx  63rpx;
 }
 .pop-img1{
   width: 625rpx;
@@ -30,8 +50,6 @@
   border-bottom-right-radius: 20rpx;/*footer底部圆角*/
 }
 .pop-text1{
-  width: 478rpx;
-	height: 33rpx;
 	font-family: PingFang-SC-Regular;
 	font-size: 32rpx;
 	font-weight: normal;

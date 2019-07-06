@@ -1,14 +1,15 @@
 <!--utils/components/popup/discover/mat-pop2.wxml-->
 <!--components/match/mat-pop2.wxml 解除关系弹窗-->
-<view class='mat-pop2' hidden='{{flag}}'  bindtap='_hide'>
-<view class='pop-container'>
-<image src='{{img_relation_break}}' class='img-head'></image>
-<view class='pop-footer'>
-<text class='pop-text'>你真的要走吗！</text>
-<view class='pop-btns'>
-<button class='btn-sure'>是的</button>
-<button class='btn-stay'>留下</button>
-</view>
-</view>
-</view>
+<view class="{{ !flag ? 'pop-show' : '' }}">
+  <view class="pop-mask" bindtap="_hide" />
+  <view class='pop-container'>
+    <image src='{{img_relation_break}}' class='img-head'></image>
+    <view class='pop-footer'>
+      <text class='pop-text'>你真的要走吗！</text>
+      <view class='pop-btns'>
+        <button class='btn-sure'>是的</button>
+        <button class='btn-stay'>留下</button>
+      </view>
+    </view>
+  </view>
 </view>

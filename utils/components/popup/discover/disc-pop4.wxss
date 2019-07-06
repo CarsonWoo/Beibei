@@ -1,18 +1,33 @@
 /* utils/components/popup/discover/disc-pop4.wxss */
 /* components/discover/disc-pop4.wxss */
-.disc-pop4{
-  position: absolute;
-  left: 0;
+.pop-mask {
+  position: fixed;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, .5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0);
+  display: none;
+}
+
+.pop-show .pop-container {
+  transform: translateY(0);
+}
+
+.pop-show .pop-mask {
+  display: block;
 }
 .pop-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50rpx;
+  position: fixed;
+  transform: translateY(300%);
+  transition: all 0.4s ease;
+  z-index: 12;
+  left: 91rpx;
+  top:63rpx;
 }
 
 .img-head{
@@ -36,7 +51,7 @@
 	font-weight: normal;
 	font-stretch: normal;
 	letter-spacing: 0rpx;
-	color: #161616;
+	color: #311e1e;
   margin-top: 30rpx;
 }
 

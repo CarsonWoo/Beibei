@@ -1,19 +1,20 @@
 <!--utils/components/popup/discover/mat-pop4.wxml-->
 <!--components/match/mat-pop4.wxml 重温回忆 清空双方数值弹窗-->
-<view class='mat-pop4' hidden='{{flag}}' bindtap='_hide'>
-<view class='pop-container'>
-<text class='pop-title'>双方点击</text>
-<view class='text-btn-row'>
-<text class='text-sign'>“</text>
-<button class='btn-sign'>重温回忆</button>
-<text class='text-sign'>”</text>
-</view>
-<view class='text-description'>你和Ta都点击“确认”后</view>
-<view class='text-description'>将清零匹配天数及总背单词数，</view>
-<view class='text-description'>从你们相遇的第一天开始~</view>
-<view class='btns-row'>
-<button class='btn-cancel'>取消</button>
-<button class='btn-sure'>确认</button>
-</view>
-</view>
+<view class="{{ !flag ? 'pop-show' : '' }}">
+  <view class="pop-mask" bindtap="_hide" />
+  <view class='pop-container'>
+    <text class='pop-title'>双方点击</text>
+    <view class='text-btn-row'>
+      <text class='text-sign'>“</text>
+      <button class='btn-sign'>重温回忆</button>
+      <text class='text-sign'>”</text>
+    </view>
+    <view class='text-description'>你和Ta都点击“确认”后</view>
+    <view class='text-description'>将清零匹配天数及总背单词数，</view>
+    <view class='text-description'>从你们相遇的第一天开始~</view>
+    <view class='btns-row'>
+      <button class='btn-cancel'>取消</button>
+      <button class='btn-sure'>确认</button>
+    </view>
+  </view>
 </view>
