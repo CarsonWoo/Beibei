@@ -61,6 +61,7 @@ App({
     HOST: 'https://www.ourbeibei.com',
     FTP_ICON_HOST: 'https://file.ourbeibei.com/l_e/static/mini_program_icons/',
     code: null,
+    // 测试服务器 开发时用此
     // HOST: 'http://47.102.152.102:8080',
 
     //-----1.1----------

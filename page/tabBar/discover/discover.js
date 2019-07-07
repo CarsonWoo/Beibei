@@ -242,8 +242,45 @@ Page({
               this.onStartReading(e)
             }
           }
+          //--------------------------------1.1-top------------------------------ 
+          //------为了统一 只有拿到真的token以后才进行请求 避免无效操作 下同------------------
+          //拿到首页中用户挑战状态参数
+          wx.request({
+            url: app.globalData.HOST + "/home/home_page_info.do",
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded',
+              'token': token
+            },
+            success: (res) => {
+              console.log(res.data)
+              var data = res.data
+              if (data.status == 200) {
+                let homeData = data.data
+                let word_challenge_status = homeData.word_challenge_status
+                // let use_medallion = homeData.use_medallion
+                console.log("当前挑战状态为：" + word_challenge_status)
+
+                this.setData({
+                  word_challenge_status: homeData.word_challenge_status
+                  // use_medallion:homeData.use_medallion
+                })
+
+              } else {
+                if (data.status == 400 && data.msg == '身份认证错误！') {
+                  this.getToken()
+                }
+              }
+            },
+            fail: (res) => {
+              console.log(res)
+            }
+          })
+         //------------------------------------------------------------------------------------
+         //----------------------------------------1.1-btm-----------------------------------
 
           // 运营0.3
+          // 获取顶部label的高度 在这里拿因为onShow就需要用在canvas中
           var query = wx.createSelectorQuery()
           query.select('#partnership_label').boundingClientRect()
           query.selectViewport().scrollOffset()
@@ -253,6 +290,9 @@ Page({
               label_origin_height: res[0].top
             })
           })
+
+          // 具体信息
+          this.loadLoveInfo()
 
         } else if (res.data.status == 400 && res.data.msg == '身份认证错误！') {
           this.getToken()
@@ -267,43 +307,6 @@ Page({
         wx.hideLoading()
       }
     })
-
-    //----------------------------------------1.1-top------------------------------------ //------------------------------------------------------------------------------------
-    //拿到首页中用户挑战状态参数
-    wx.request({
-      url: app.globalData.HOST + "/home/home_page_info.do",
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'token': token
-      },
-      success: (res) => {
-        console.log(res.data)
-        var data = res.data
-        if (data.status == 200) {
-          let homeData = data.data
-          let word_challenge_status = homeData.word_challenge_status
-          // let use_medallion = homeData.use_medallion
-          console.log("当前挑战状态为：" + word_challenge_status)
-
-          this.setData({
-            word_challenge_status: homeData.word_challenge_status
-            // use_medallion:homeData.use_medallion
-          })
-
-        } else {
-          if (data.status == 400 && data.msg == '身份认证错误！') {
-            this.getToken()
-          }
-        }
-      },
-      fail: (res) => {
-        console.log(res)
-      }
-    })
-    //------------------------------------------------------------------------------------
-    //----------------------------------------1.1-btm-----------------------------------
-
 
   },
 
@@ -384,6 +387,22 @@ Page({
             // this.globalData.token = token
           }
         })
+      }
+    })
+  },
+
+  loadLoveInfo: function() {
+    wx.request({
+      url: app.globalData.HOST + '/operation/foundPageShowDatingCare.do',
+      method: 'POST',
+      header: {
+        'token': app.globalData.token
+      },
+      success: (res) => {
+        console.log(res)
+      },
+      fail: (er) => {
+        console.log("fail response = " + er)
       }
     })
   },
@@ -1065,6 +1084,8 @@ Page({
     })
   },
 
+  // 运营0.3
+
   closeLikeToastTap: function(e) {
     this.setData({
       showLikeToast: false,
@@ -1088,6 +1109,19 @@ Page({
         label_should_fixed: false
       })
     }
+  },
+
+  onTimeReversalTap: function(e) {
+    this.setData({
+      is_show_time_reversal: true
+    })
+  },
+
+  onMoreCardsTap: function(e) {
+    // TODO 还得判断是否是vip 否的话直接跳vip弹窗 上面一样
+    this.setData({
+      is_show_more_cards: true
+    })
   },
 
   /**

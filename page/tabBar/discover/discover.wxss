@@ -10,7 +10,8 @@
 swiper {
   padding-top: 30rpx;
   margin-bottom: 30rpx;
-  height: 1055rpx;
+  height: 1060rpx;
+  padding-bottom: 20rpx;
   /* margin-right: 45rpx; */
 }
 
@@ -24,7 +25,7 @@ swiper {
   width: 625rpx;
   height: 1050rpx;
   border-radius: 20rpx;
-  box-shadow: 0 3px 1px #555;
+  box-shadow: 0 5rpx 6px rgba(0, 0, 0, 0.7);
 }
 
 .icon-download-image {
@@ -1003,6 +1004,13 @@ swiper {
   justify-content: center;
 }
 
+.full-width-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .time-reversal-button {
   width: 325rpx;
   height: 70rpx;
@@ -1040,7 +1048,7 @@ swiper {
   padding-left: 5rpx;
   padding-right: 10rpx;
   top: -30rpx;
-  z-index: 9999;
+  z-index: 9999; 
 }
 
 .time-reversal-user-float-container image {

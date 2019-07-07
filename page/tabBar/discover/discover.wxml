@@ -135,7 +135,7 @@
       </view>
     </view>
 
-    <block wx:if="{{!is_show_more_cards && !is_show_time_reversal && !is_vip}}">
+    <block>
       <!-- 微信公众号引导关注view 只有在今日推荐看完以后才会出现 -->
       <view class='partnership-wechat-guide-container'>
         <view class='partnership-wechat-guide-text-container'>
@@ -148,16 +148,16 @@
       </view>
 
       <!-- 非vip且看完了当日推荐才会出现 -->
-      <view class='guide-open-vip-text'>
+      <view class='guide-open-vip-text' wx:if='{{!is_vip}}'>
         <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
         <text>开启VIP,寻觅更多好友</text>
       </view>
 
-      <view style='width:100%;display:flex;margin-top:60rpx;'>
+      <view style='width:100%;display:flex;margin-top:60rpx;' wx:if='{{!is_show_time_reversal || !is_show_more_cards}}'>
         <!-- 时光倒流机 -->
-        <view class='half-width-container'>
+        <view class='{{!is_show_time_reversal && is_show_more_cards ? "full-width-container" : "half-width-container"}}' style='display: {{is_show_time_reversal ? "none" : "flex"}}'>
 
-          <view class='time-reversal-button'>
+          <view class='time-reversal-button' catchtap='onTimeReversalTap'>
             <image src='{{ic_time_reversal}}'></image>
             <text class='normal-text'>时光倒流机</text>
             <text class='partnership-min-text' style='margin-left:5rpx;'>+10</text>
@@ -172,8 +172,8 @@
 
         </view>
         <!-- 查看更多卡片 -->
-        <view class='half-width-container'>
-          <view class='watch-more-button'>
+        <view class='{{is_show_time_reversal && !is_show_more_cards ? "full-width-container" : "half-width-container"}}' style='display: {{is_show_more_cards ? "none" : "flex"}}'>
+          <view class='watch-more-button' catchtap='onMoreCardsTap'>
             <image src='{{ic_watch_more}}'></image>
             <text class='normal-text'>查看更多卡片</text>
             <text class='partnership-min-text' style='margin-left:5rpx;'>+5</text>
@@ -193,8 +193,8 @@
       </view>
       <view class='partnership-card-container'>
         <image class='partnership-base-image'></image>
-        <cover-image style="margin-right:130rpx" src='{{ic_like}}'></cover-image>
-        <cover-image src='{{ic_super_like}}'></cover-image>
+        <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
+      <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>左撇子杰克</text>
           <image src='{{ic_gender}}'></image>
@@ -219,8 +219,8 @@
       </view>
       <view class='partnership-card-container'>
         <image class='partnership-base-image'></image>
-        <cover-image style="margin-right:130rpx" src='{{ic_like}}'></cover-image>
-        <cover-image src='{{ic_super_like}}'></cover-image>
+        <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
+      <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>左撇子杰克</text>
           <image src='{{ic_gender}}'></image>
@@ -236,9 +236,10 @@
     </block>
 
   </view>
+  <!-- 这是匹配成功后的页面 -->
   <view class='partnership' wx:elif="{{partner_level == 2}}"></view>
 
-  <swiper previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange'>
+  <swiper previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange' style='margin-top: 20rpx;'>
     <block wx:for="{{card_list}}">
       <swiper-item>
         <view class='icon'>
