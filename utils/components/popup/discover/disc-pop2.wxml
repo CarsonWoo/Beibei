@@ -1,5 +1,5 @@
 <!--utils/components/popup/discover/disc-pop2.wxml-->
-<!--components/discover/disc-pop2.wxml 引导添加小呗弹窗-->
+<!-- 引导添加小呗弹窗-->
 <view class="{{ !flag ? 'pop-show' : '' }}">
   <view class="pop-mask" bindtap="_hide" />
   <view class='pop-container'>
@@ -10,14 +10,14 @@
         添加月老小呗，微信红包完成支付
       </view>
 
-      <image src='{{img_lead}}' class='pop-leadimg'></image>
+      <image src='{{img_lead}}' class='pop-leadimg' ></image>
       <view class='pop-text2'>
         <!--此处传值替换文字-->
         成为VIP,开启8项特权
       </view>
-      <image class='btn-add' src='{{btn_add_staff}}'></image>
+      <image class='btn-add' src='{{btn_add_staff}}' bindtap='_addStaff'></image>
       <image class='bg-vip' src='{{bg_vip_grey}}'></image>
     </view>
-
+     <view class='toast-download' animation="{{animationData}}">{{toastContent}}</view>
   </view>
 </view>

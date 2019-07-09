@@ -7,8 +7,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0);
+  z-index: 9998;
+  background: rgba(0, 0, 0, .4);
   display: none;
 }
 
@@ -28,16 +28,15 @@
   flex-direction: column;
   align-items: center;
   position: fixed;
-  bottom: 0rpx;
   transform: translateY(300%);
   transition: all 0.4s ease;
-  z-index: 12;
-  margin: 93rpx 62rpx 198rpx  63rpx;
+  z-index: 9999;
+  top:90rpx;
+  left:63rpx;
 }
 .pop-img1{
   width: 625rpx;
   height: 305rpx;
-  margin-top:90rpx;
 }
 .pop-footer{
   background: #fff;
@@ -95,4 +94,14 @@
 	height: 305rpx;
   bottom: 138rpx;
   right:50rpx;
+}
+.toast-download{
+  margin-top: 40rpx;
+  font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 28rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
 }

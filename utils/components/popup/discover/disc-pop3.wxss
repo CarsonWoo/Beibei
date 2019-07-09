@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 9998;
   background: rgba(0, 0, 0, 0);
   display: none;
 }
@@ -20,14 +20,14 @@
 }
 .pop-container{
   position: fixed;
-  bottom: 0;
+  top: 65rpx;
+  left:52rpx;
   transform: translateY(300%);
   transition: all 0.4s ease;
-  z-index: 12;
+  z-index: 9999;
   width: 645rpx;
 	height: 1089rpx;
   border-radius: 10rpx;
-  margin: 65rpx 54rpx 52rpx 52rpx;
   /* 本地base编码 尝试--读取ftp服务器再转换base流放到wxss中 */
   background: url('https://file.ourbeibei.com/l_e/static/mini_program_icons/img_vip_intro.png');
   background-size: 100% 100%;

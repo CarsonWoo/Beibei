@@ -120,8 +120,8 @@
     <!-- 卡片 -->
     <view class='partnership-card-container'>
       <image class='partnership-base-image'></image>
-      <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
-      <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
+      <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}' bindtap='onLikeTap'></image>
+      <image class='partnership-card-cover-image' src='{{ic_super_like}}' bindtap='onSuperLikeTap'></image>
       <view class='partnership-userinfo-container'>
         <text class='black partnership-normal-text'>左撇子杰克</text>
         <image src='{{ic_gender}}'></image>
@@ -148,7 +148,7 @@
       </view>
 
       <!-- 非vip且看完了当日推荐才会出现 -->
-      <view class='guide-open-vip-text' wx:if='{{!is_vip}}'>
+      <view class='guide-open-vip-text' wx:if='{{!is_vip}}' bindtap='showVipIntroPop'>
         <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
         <text>开启VIP,寻觅更多好友</text>
       </view>
@@ -194,7 +194,7 @@
       <view class='partnership-card-container'>
         <image class='partnership-base-image'></image>
         <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
-      <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
+        <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>左撇子杰克</text>
           <image src='{{ic_gender}}'></image>
@@ -220,7 +220,7 @@
       <view class='partnership-card-container'>
         <image class='partnership-base-image'></image>
         <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
-      <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
+        <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>左撇子杰克</text>
           <image src='{{ic_gender}}'></image>
@@ -239,7 +239,7 @@
   <!-- 这是匹配成功后的页面 -->
   <view class='partnership' wx:elif="{{partner_level == 2}}"></view>
 
-  <swiper previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange' style='margin-top: 20rpx;'>
+  <swiper class='king-swiper' previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange' style='margin-top: 20rpx;'>
     <block wx:for="{{card_list}}">
       <swiper-item>
         <view class='icon'>
@@ -301,4 +301,74 @@
       <view class='download-text'>{{download_success ? "下载成功" : "分享卡片下载中..."}}</view>
     </block>
   </view>
+ 
+
 </view>
+
+<!--发现页 完善、修改资料提交弹窗-->
+<view class="{{ isShowInforPop ? 'pop-show' : '' }}" id='pop-postinfor' catchtouchmove='stopPageScroll'>
+
+  <view class="pop-mask" bindtap="hideInforPop" />
+  <view class='pop-container'>
+    <view class='top-toast' wx:if='{{isShowTopToast }}'>{{topToastContent}}</view>
+    <!--头像head1与2分别用于用户无头像时和已经上传头像时 -->
+    <view class='pop-head1' wx:if='{{!photoFlag}}'>
+      <image class='btn-add' src='{{btn_upload_photo}}' bindtap='onUploadPhotoTap' id='btn-upload-photo'></image>
+      <text class='text-photo'>好的照片让人耳目一新</text>
+    </view>
+
+    <view class='pop-head2' wx:if='{{photoFlag}}'>
+      <image class='img-photo' src='{{img_photo_example}}'></image>
+      <image class='btn-change' src='{{btn_change_photo}}' bindtap='onUploadPhotoTap' id='btn-change-photo'></image>
+    </view>
+
+    <!--自定义Dots样式的swiper 用于资料未完善时的footer1 -->
+    <view class='footer1' wx:if='{{!isExistInfor}}'>
+      <swiper class='swiper-box' bindchange='swiperChange' current='{{currentItem}}' >
+        <!--两个资料卡片 body -->
+        <swiper-item class='swiper-body1'>
+          <text class='text-title'>性别</text>
+          <view class='btns-sex'>
+            <image class='btn-boy' id='btn-boy' src="{{sexFlag != 1 ? btn_boy_normal:btn_boy_check}}" bindtap='onSexTap'></image>
+            <image class='btn-girl' id='btn-girl' src="{{sexFlag != 2 ? btn_girl_normal:btn_girl_check}}" bindtap='onSexTap'></image>
+          </view>
+
+        </swiper-item>
+        <swiper-item class='swiper-body2'>
+          <text class='text-title'>匹配意向</text>
+          <view class='btns-want'>
+            <button class="btn-want{{wantFlag != 1 ? '':'-check'}}" id='btn-want-girl' bindtap='onWantTap'>小姐姐</button>
+            <button class="btn-want{{wantFlag != 2 ? '':'-check'}}" id='btn-want-boy' bindtap='onWantTap'>小哥哥</button>
+            <button class="btn-want{{wantFlag != 3 ? '':'-check'}}" id='btn-want-all' bindtap='onWantTap'>全都要</button>
+          </view>
+          <button class='btn-post' bindtap='inforPostTap' id='btn-post-infor'>提交</button>
+          <view class='text-bottom'>提交的信息仅用于匹配</view>
+        </swiper-item>
+      </swiper>
+
+      <view class="dots">
+        <view class="dot{{0 == swiperCurrent ? ' active' : ''}}"></view>
+        <view class="dot{{1 == swiperCurrent ? ' active' : ''}}"></view>
+      </view>
+    </view>
+    
+
+    <!--提示更换照片footer -->
+    <view class='footer2' wx:if='{{isNeedChangePhoto}}'>
+      <text class='text-photo'>优秀的你还没有被发现，试试换张靓照吧！</text>
+      <button class='btn-post' bindtap='inforPostTap' id='btn-post-photo'>提交</button>
+    </view>
+
+    <!--资料未填完整提示toast-->
+    <text class='bottom-toast' wx:if='{{isShowBottomToast}}'>{{bottomToastContent}}</text>
+  </view>
+</view>
+
+ <!--vip开通成功弹窗 显示3秒后隐藏-->
+<pop-openvip id='pop-openvip' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-openvip>
+
+<!--vip功能介绍弹窗 底部按钮绑定开通vip触碰事件 -->
+ <pop-vipintro id='pop-vipintro' bind:hide='hidePopup' bind:openVip='openVip' catchtouchmove='stopPageScroll' vipContent='{{vipContent}}' ></pop-vipintro>
+
+<!-- ios用户引导支付弹窗-->
+<pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:addStaff='addStaff'></pop-lead>

@@ -13,7 +13,7 @@
       <image class='btn-download' src='{{btn_download_wxcode}}'></image>
       <view class='pop-text2'>完善资料，背呗帮你闪电匹配</view>
     </view>
-    <view class='toast-download' hidden='{{toastFlag}}'>哈哈哈哈哈</view>
+    <view class='toast-download' animation="{{animationData}}">{{toastContent}}</view>
   </view>
 
 </view>

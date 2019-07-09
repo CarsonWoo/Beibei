@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 9998;
   background: rgba(0, 0, 0, 0);
   display: none;
 }
@@ -25,7 +25,7 @@
   position: fixed;
   transform: translateY(300%);
   transition: all 0.4s ease;
-  z-index: 12;
+  z-index: 9999;
   left: 91rpx;
   top:63rpx;
 }

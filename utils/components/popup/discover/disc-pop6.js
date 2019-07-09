@@ -13,8 +13,8 @@ Component({
    */
   data: {
     flag: true,
-    toastFlag: true,
-    toastContent: null,//使用时传入0和1来改变toast内容 0：二维码下载中... 1：二维码已保存到手机
+    toastContent: '',
+    animationData: {},
     img_girls2: app.globalData.FTP_ICON_HOST + 'img_girls2.png',
     img_wxcode_staff: app.globalData.FTP_ICON_HOST + 'img_wxcode_staff.jpg',
     btn_download_wxcode: app.globalData.FTP_ICON_HOST + 'btn_download_wxcode.png',
@@ -39,6 +39,29 @@ Component({
       this.setData({
         flag: !this.data.flag
       })
+    },
+
+    //底部toast展示
+    showToast(val) {
+      var animation = wx.createAnimation({
+        duration: 300,
+        timingFunction: 'ease',
+      })
+      this.animation = animation
+      animation.opacity(1).step()
+      this.setData({
+        animationData: animation.export(),
+        toastContent: val
+      })
+      /**
+       * 延时消失
+       */
+      setTimeout(function () {
+        animation.opacity(0).step()
+        this.setData({
+          animationData: animation.export()
+        })
+      }.bind(this), 2700)
     },
 
     //内部私有事件最好用下划线_开头

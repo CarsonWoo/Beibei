@@ -1,6 +1,7 @@
 <!--utils/components/popup/discover/disc-pop1.wxml-->
-<!--components/discover/disc-pop1.wxml成功开通vip提示弹窗-->
-<view wx:if='{{!flag}}'>
+<!--成功开通vip提示弹窗-->
+<!--弹出风格：弹起与弹回-->
+<view class="{{ !flag ? 'pop-show' : '' }}" >
   <view class="pop-mask" bindtap="_hide" />
   <view class="pop-container">
     <image class='img-vip' src='{{img_vip_crown}}'></image>

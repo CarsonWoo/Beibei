@@ -3,8 +3,8 @@
 <view class="{{ !flag ? ' pop-show ' : ' ' }}">
   <view class="pop-mask" bindtap="_hide" />
   <view class='pop-container'>
-    <view class='pop-footer'>
-      <text class='btm-text1'>VIP限时优惠</text>
+    <view class='pop-footer' bindtap='_openVip'>
+      <text class='btm-text1'>{{vipContent}}</text>
       <text class='btm-text2'>￥19.9/月</text>
       <text class='btm-text3'>￥<text class='text-bold'>9.9</text>/月</text>
     </view>

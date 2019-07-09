@@ -1,6 +1,7 @@
 <!--utils/components/popup/discover/mat-pop5.wxml-->
-<!--components/match/mat-pop5.wxml 匹配成功进度条弹窗-->
-<view class="{{ !flag ? 'pop-show' : '' }}">
+<!-- 匹配成功进度条弹窗-->
+<!--弹出风格：直接显示与隐藏-->
+<view wx:if='{{!flag}}'>
 <view class="pop-mask" bindtap="_hide" />
 <view class='pop-container'>
 <image class='img-match' src='{{img_match_success}}'></image>

@@ -6,17 +6,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index:9998;
   background: rgba(0, 0, 0, 0);
-  display: block;
+  display: none;
 }
 
-.pop-show .pop-container {
-  transform: translateY(0); 
-}
-.pop-show .pop-mask {
-  display: block;
-}
+
 /*先将弹窗内容translateY(300%)向下移动一个超过当前页面高度的距离（表示隐藏）
   距离为当前弹窗高度的300%
   */
@@ -28,12 +23,20 @@
 	height: 354rpx;
 	background-color: #ffffff;
 	border-radius: 20rpx;
-  margin: 274rpx 117rpx 532rpx 116rpx;
   position: fixed;
-  bottom: 0rpx;
   transition: all 0.4s ease;
-  z-index: 12;
+  z-index: 9999;
   padding-bottom: 43rpx;
+  transform: translateY(300%); 
+  top:274rpx;
+  left:116rpx;
+}
+
+.pop-show .pop-container {
+  transform: translateY(0); 
+}
+.pop-show .pop-mask {
+  display: block;
 }
 
 

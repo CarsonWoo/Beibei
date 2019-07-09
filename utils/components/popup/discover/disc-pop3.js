@@ -5,6 +5,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    vipContent:{
+      type:String,
+      value:'VIP限时特惠'
+    },
 
   },
 
@@ -34,5 +38,8 @@ Component({
     _hide() {
       this.triggerEvent("hide")
     },
+    _openVip(){
+      this.triggerEvent("openVip")
+    }
   }
 })

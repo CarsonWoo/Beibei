@@ -6,9 +6,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 9998;
   background: rgba(0, 0, 0, .4);
-  display: none;
+  display: block;
 }
 
 .pop-show .pop-container {
@@ -23,10 +23,8 @@
   flex-direction: column;
   align-items: center;
   position: fixed;
-  bottom: 0rpx;
-  transform: translateY(300%);
   transition: all 0.4s ease;
-  z-index: 12;
+  z-index: 9999;
   top: 147rpx;
   left: 159rpx;
 }

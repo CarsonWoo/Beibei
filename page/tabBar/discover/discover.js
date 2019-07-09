@@ -40,28 +40,29 @@ Page({
     ic_super_like: app.globalData.FTP_ICON_HOST + 'super_like_unclick.png',
     ic_time_reversal: app.globalData.FTP_ICON_HOST + 'time_reversal.png',
     ic_watch_more: app.globalData.FTP_ICON_HOST + 'watch_more_white.png',
-    ic_progress_heart: app.globalData.FTP_ICON_HOST+'ic_progress_heart.png',
-    bg_vip_grey: app.globalData.FTP_ICON_HOST+'bg_vip_grey.png',
-    btn_add_staff: app.globalData.FTP_ICON_HOST+'btn_add_staff.png',
-    btn_post: app.globalData.FTP_ICON_HOST+'btn_add.png',
-    btn_upload_photo: app.globalData.FTP_ICON_HOST+'btn_upload_photo.png',
-    btn_change_photo: app.globalData.FTP_ICON_HOST+'btn_change_photo.png',
-    btn_download_wxcode: app.globalData.FTP_ICON_HOST+'btn_download_wxcode.png',
+
+    platform: '',
+    vipContent: 'VIP限时特惠',
+
+
+    isShowInforPop: false, //是否展示完善资料弹窗
+    isExistInfor: false, //用户资料(包括照片、性别、意向)是否已存在后台
+    isNeedChangePhoto:false,//已上传过基本资料的用户是否需要更换照片
+    topToastContent:'完善资料，闪电匹配',
+    isShowTopToast: true,
+    currentItem: 0,
+    swiperCurrent: 0,
+    isFinishInfor:false,//完善信息窗口是否填写完三类信息，填完后顶部toast隐藏
+    photoFlag:false,//是否已保存新的照片（打开弹窗后剪裁后显示但还未提交的图片）
+    sexFlag: 0, //性别标志 0,1,2  0代表未选择，1代表选中boy，2代表选中girl
+    wantFlag: 0, //意向标志 0123 0代表未选择，123分别对应三选项
     btn_boy_check: app.globalData.FTP_ICON_HOST + 'btn_boy_check.png',
     btn_boy_normal: app.globalData.FTP_ICON_HOST + 'btn_boy_normal.png',
     btn_girl_check: app.globalData.FTP_ICON_HOST + 'btn_girl_check.png',
     btn_girl_normal: app.globalData.FTP_ICON_HOST + 'btn_girl_normal.png',
-    img_couple: app.globalData.FTP_ICON_HOST + 'img_couple.png',
-    img_follow_us: app.globalData.FTP_ICON_HOST + 'img_follow_us.png',
-    img_girls1: app.globalData.FTP_ICON_HOST + 'img_girls1.png',
-    img_girls2: app.globalData.FTP_ICON_HOST + 'img_girls2.png',
-    img_lead: app.globalData.FTP_ICON_HOST + 'img_lead.png',
-    img_match_success: app.globalData.FTP_ICON_HOST + 'img_match_success.png',
-    img_photo_example: app.globalData.FTP_ICON_HOST + 'img_photo_example.png',
-    img_relation_break: app.globalData.FTP_ICON_HOST + 'img_relation_break.png',
-    img_vip_crown: app.globalData.FTP_ICON_HOST + 'img_vip_crown.png',
-    img_vip_intro: app.globalData.FTP_ICON_HOST + 'img_vip_intro.png',
-    img_wxcode_staff: app.globalData.FTP_ICON_HOST + 'img_wxcode_staff.jpg',
+    btn_upload_photo: app.globalData.FTP_ICON_HOST + 'btn_upload_photo.png',
+    btn_change_photo: app.globalData.FTP_ICON_HOST + 'btn_change_photo.png',
+   
   },
 
   /**
@@ -108,6 +109,24 @@ Page({
       is_today_book_finished: wx.getStorageSync('is_today_book_finished'),
       is_today_sign_book_finished: wx.getStorageSync('is_today_sign_book_finished')
     })
+
+    //获取用户手机系统类型
+    let platform = wx.getSystemInfoSync().platform
+    console.log('platform' + platform)
+    if (platform == 'ios') {
+      this.setData({
+        platform: 'ios'
+      })
+    } else if (platform == 'android') {
+      this.setData({
+        platform: 'android'
+      })
+    } else if (platform == 'devtools') {
+      this.setData({
+        //pc端跟ios相同處理
+        platform: 'ios'
+      })
+    }
 
     var token = app.globalData.token
     console.log("token = " + token)
@@ -276,8 +295,8 @@ Page({
               console.log(res)
             }
           })
-         //------------------------------------------------------------------------------------
-         //----------------------------------------1.1-btm-----------------------------------
+          //------------------------------------------------------------------------------------
+          //----------------------------------------1.1-btm-----------------------------------
 
           // 运营0.3
           // 获取顶部label的高度 在这里拿因为onShow就需要用在canvas中
@@ -496,6 +515,18 @@ Page({
    */
   onReady: function() {
     wx.showTabBar({})
+    //绑定弹窗组件id
+    this.popOpenVip = this.selectComponent("#pop-openvip");
+    this.popLead = this.selectComponent("#pop-lead");
+    this.popVipIntro = this.selectComponent("#pop-vipintro");
+    this.popBlueWxCode = this.selectComponent("#pop-bluewxcode");
+    this.popPinkWxCode = this.selectComponent("#pop-pinkwxcode");
+    this.popContactUs = this.selectComponent("#pop-contactus");
+    this.popMeetCode = this.selectComponent("#pop-meetcode");
+    this.popBreak = this.selectComponent("#pop-break");
+    this.popRemind = this.selectComponent("#pop-remind");
+    this.popRestart = this.selectComponent("#pop-restart");
+    this.popMatchSuccess = this.selectComponent("#pop-matchsuccess");
 
   },
 
@@ -1112,17 +1143,406 @@ Page({
   },
 
   onTimeReversalTap: function(e) {
+    if (!this.data.is_vip) {
+      this.popVipIntro.showPopup();
+      wx.hideTabBar({
+        aniamtion: true,
+        success: function(res) {},
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+      return;
+    }
     this.setData({
       is_show_time_reversal: true
     })
   },
 
   onMoreCardsTap: function(e) {
-    // TODO 还得判断是否是vip 否的话直接跳vip弹窗 上面一样
+    if (!this.data.is_vip) {
+      //vip功能 非vip用户点击弹出vip介绍弹窗
+      this.popVipIntro.showPopup();
+      wx.hideTabBar({
+        aniamtion: true,
+        success: function(res) {},
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+      return;
+    }
     this.setData({
       is_show_more_cards: true
     })
   },
+  onLikeTap: function() {
+    var isExistPhoto = false
+    var isCompleteInfor = false;
+    if (!this.data.isExistInfor) {
+      //没有填写基本资料（头像、性别、意愿）
+      this.setData({
+        isShowInforPop: !this.data.isShowInforPop
+      })
+      return;
+    }
+    if(this.data.isExistInfor){
+      if(this.data.isNeedChangePhoto){
+        //后台存在基本资料需要该用户更换照片
+        this.setData({
+          topToastContent:'更换靓照，提升魅力',
+          isShowInforPop: !this.data.isShowInforPop,
+          sexFlag: 999,
+          wantFlag: 999,//此处设999用于顶部toast隐藏的条件判断
+        })
+      }
+    }
+
+    // if (!this.data.isCompleteInfor) {
+    //   //没有添加小呗完善信息,
+    //   this.popBlueWxCode.showPopup();
+    //   return;
+    // }
+    // if (this.data.likeTapNumber > 3 && !this.data.is_vip) {
+    //   //非vip用户点击喜欢次数大于三次
+    //   this.popVipIntro.showPopup();
+    //   wx.hideTabBar({
+    //     aniamtion: true,
+    //     success: function(res) {},
+    //     fail: function(res) {},
+    //     complete: function(res) {},
+    //   })
+    //   return;
+    // }
+    console.log('you tap like')
+  },
+  onSuperLikeTap: function() {
+    if (!is_vip) {
+      this.popVipIntro.showPopup();
+      wx.hideTabBar({
+        aniamtion: true,
+        success: function(res) {},
+        fail: function(res) {},
+        complete: function(res) {},
+      });
+    }
+  },
+
+  //监听选择boy、girl性别的按钮改变 boy 1 / girl 2
+  onSexTap: function(event) {
+    switch (event.target.id) {
+      case 'btn-boy':
+        this.setData({
+          sexFlag: 1
+        })
+        break;
+      case 'btn-girl':
+        this.setData({
+          sexFlag: 2
+        })
+        break;
+    }
+    this.hideTopToast();
+    let self = this;
+    //设置延时切换swiper item
+    setTimeout(function() {
+      self.setData({
+        currentItem: 1
+      })
+    }, 300)
+  },
+  //点击事件绑定匹配意向的flag变动 girl 1,boy 2 ,all 3
+  onWantTap: function(event) {
+    switch (event.target.id) {
+      case 'btn-want-girl':
+        this.setData({
+          wantFlag: 1
+        })
+        break;
+      case 'btn-want-boy':
+        this.setData({
+          wantFlag: 2
+        })
+        break;
+      case 'btn-want-all':
+        this.setData({
+          wantFlag: 3
+        })
+        break;
+    }
+    this.hideTopToast();
+  },
+  onUploadPhotoTap: function(event) {
+    switch (event.target.id) {
+      //上传照片
+      case 'btn-upload-photo':
+        let self = this;
+        wx.getSetting({
+          success: function (res) {
+            if (!res.authSetting['scope.writePhotosAlbum']) {
+              //没有访问相册权限时申请权限
+              wx.authorize({
+                scope: 'scope.writePhotosAlbum',
+                success() {
+                  // 上传头像
+                  //选择相册或开启相机--选中后进行图片剪裁--剪裁后图片保存--新头像展示至弹窗---点击提交按钮开始上传头像与其他信息
+                },
+                fail() {
+                  //申请被拒绝toast提示
+                  console.log('authorize fali')      
+                }
+              });
+            } else {
+              //已获取相册权限
+              // 上传头像并toast提示
+              console.log('had scope to album')
+            }
+          },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+        break;
+      //更换照片
+      case 'btn-change-photo':
+        break;
+    }
+
+  },
+  //隐藏顶部文字 通常在最后一个填写事件完成后触发
+  hideTopToast:function(){
+    if(this.data.sexFlag>0&&this.data.wantFlag>0&&this.data.photoFlag){
+      this.setData({
+        isShowTopToast:false
+      })
+    }
+  },
+
+  //完善资料或更换照片弹窗信息提交按钮事件
+  inforPostTap: function(event) {
+    if(this.data.isShowTopToast){
+      //顶部文字未消除，说明资料未填写完整
+      this.setData({
+        isShowBottomToast:true,
+        bottomToastContent:'有未填写的信息噢!'
+      })
+      //三秒后消失
+      let self = this;
+      setTimeout(function(){
+        self.setData({
+          isShowBottomToast: false
+        })
+      },3000)
+    }
+
+    switch(event.target.id){
+      //上传信息
+      case'btn-post-infor':
+        console.log('you post infor')
+        break;
+      //上传更换的照片
+      case'btn-post-photo':
+        console.log('you post photo')
+        break;  
+    }
+  },
+
+  //完善资料弹窗中自定义swiper圆点指示器 绑定swiper切换事件来改变圆点的active状态
+  swiperChange: function(e) {
+    console.log('current item:' + this.data.currentItem)
+    this.setData({
+      swiperCurrent: e.detail.current
+    })
+  },
+
+  //多个自定义组件弹窗的弹起与隐藏
+  showOpenVipPop: function() {
+    console.log('openvip');
+    this.popOpenVip.showPopup();
+  },
+  showLeadPop: function() {
+    this.popLead.showPopup();
+  },
+  showVipIntroPop: function() {
+    this.popVipIntro.showPopup();
+    wx.hideTabBar({
+      aniamtion: true,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+  showBlueWxCodePop: function() {
+    this.popBlueWxCode.showPopup();
+  },
+  showPinkWxCodePop: function() {
+    this.popPinkWxCode.showPopup();
+  },
+  showContactUsPop: function() {
+    this.popContactUs.showPopup();
+  },
+  showMeetCodePop: function() {
+    this.popMeetCode.showPopup();
+  },
+  showBreakPop: function() {
+    this.popBreak.showPopup();
+  },
+  showRemindPop: function() {
+    this.popRemind.showPopup();
+  },
+  showBreakPop: function() {
+    this.popRestart.showPopup();
+  },
+  showMatchSuccessPop: function() {
+    this.popMatchSuccess.showPopup();
+  },
+  hidePopup: function(event) {
+    switch (event.target.id) {
+      case 'pop-openvip':
+        this.popOpenVip.hidePopup();
+        break;
+      case 'pop-lead':
+        this.popLead.hidePopup();
+        break;
+      case 'pop-vipintro':
+        this.popVipIntro.hidePopup();
+        wx.showTabBar({
+          aniamtion: true
+        });
+        break;
+      case 'pop-bluewxcode':
+        this.popBlueWxCode.hidePopup();
+        break;
+      case 'pop-pinkwxcode':
+        this.popPinkWxCode.hidePopup();
+        break;
+      case 'pop-contactus':
+        this.popContactUs.hidePopup();
+        break;
+      case 'pop-meetcode':
+        this.popMeetCode.hidePopup();
+        break;
+      case 'pop-break':
+        this.popBreak.hidePopup();
+        break;
+      case 'pop-remind':
+        this.popRemind.hidePopup();
+        break;
+      case 'pop-restart':
+        this.popRestart.hidePopup();
+        break;
+      case 'pop-matchsuccess':
+        this.popMatchSuccess.hidePopup();
+        break;
+    }
+  },
+  hideInforPop(){
+    this.setData({
+      isShowInforPop:false
+    })
+  },
+
+  /*
+   * vip介绍弹窗触发条件
+   *非vip用户点击vip功能时弹出（超级喜欢，查看谁喜欢我，超级曝光，时光倒流机，查看更多卡片）
+   *vip用户在倒数3天内过期 每天12点30分由后台发送通知，前端接收在用户打开小程序时推送续费弹窗
+   */
+  openVip: function() {
+    //判断安卓用户与ios用户
+    //安卓：调用微信支付接口进行支付，支付成功回调：vip介绍窗口消失， 成功开通vip弹窗显示3秒消失
+    //安卓支付失败回调： 回到vip介绍弹窗
+    //ios：弹出支付指导窗口
+    console.log('you touch open-vip button');
+    if (this.data.is_vip) {
+      //当用户为vip时改变弹窗文字内容
+      this.setData({
+        vipContent: '立即续费VIP'
+      })
+    }
+    if (this.data.platform == 'ios') {
+      this.popVipIntro.hidePopup();
+      this.popLead.showPopup();
+      wx.showTabBar({
+        aniamtion: true,
+        success: function(res) {},
+        fail: function(res) {},
+        complete: function(res) {},
+      });
+    } else {
+      //安卓用户调用支付接口
+    }
+  },
+
+  /*
+   *引导支付弹窗的添加小呗按钮事件
+   */
+  addStaff: function() {
+    // 判断是否已授权访问相册
+    //已授权:自动下载二维码（toast二维码下载中；二维码已保存至手机）
+    //未授权：点击下载二维码button - 申请访问相册授权 - 授权成功：执行已授权的步骤，授权失败：留在支付引导页
+    console.log('touch add staff button')
+    let self = this;
+    wx.getSetting({
+      success: function(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          //没有访问相册权限时申请权限
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              // 下载二维码并toast提示
+              self.popLead.showToast("二维码开始下载");
+              self.saveImgToAlbum();
+            },
+            fail() {
+              //申请被拒绝toast提示
+              console.log('authorize fali')
+              //被用户拒绝后 接下来每次申请权限都会被默认拒绝。
+              //firstFlag：true 判断用户是否为第一次申请权限，第一次则将firstFlag置为false
+              //非第一次申请权限 则通过open-type="getsetting"的button(待添加)由用户手动开启访问权限        
+            }
+          });
+        } else {
+          //已获取相册权限
+          // 下载二维码并toast提示
+          console.log('had scope to album')
+          self.popLead.showToast("二维码开始下载");
+          self.saveImgToAlbum();
+        }
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+
+  /*
+   *保存二维码到相册
+   */
+  saveImgToAlbum: function() {
+    let self = this;
+    wx.downloadFile({
+      //先将二维码下载至项目本地临时路径
+      //小呗二维码下载路径
+      url: app.globalData.FTP_ICON_HOST + 'img_wxcode_staff.jpg',
+      success: function(res) {
+        if (res.statusCode === 200) {
+          let img = res.tempFilePath;
+          wx.saveImageToPhotosAlbum({
+            filePath: img,
+            success: function(res) {
+              self.popLead.showToast("二维码已保存至手机相册")
+            },
+            fail: function(res) {
+              self.popLead.showToast("保存二维码失败")
+            },
+            complete: function(res) {},
+          })
+        }
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+
+
+
+
 
   /**
    * 页面上拉触底事件的处理函数
@@ -1130,6 +1550,8 @@ Page({
   onReachBottom: function() {
 
   },
+
+
 
   /**
    * 用户点击右上角分享
