@@ -88,13 +88,7 @@ Page({
       })
     }
     
-    //从截取页面传回的截取头像文件路径 并展示
-    if (app.globalData.cropPhotoSrc) {
-      this.setData({
-        photoFlag: true,
-        img_photo_example: app.globalData.cropPhotoSrc
-      })
-    }
+    
   },
 
   loadData: function() {
@@ -609,6 +603,14 @@ Page({
 
     // toast.stroke()
     toastLighten.draw()
+
+    //从截取页面传回的截取头像文件路径 并展示
+    if (app.globalData.cropPhotoSrc) {
+      this.setData({
+        photoFlag: true,
+        img_photo_example: app.globalData.cropPhotoSrc
+      })
+    }
 
    
   },
