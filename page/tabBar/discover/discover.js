@@ -52,7 +52,7 @@ Page({
     isShowTopToast: true,
     currentItem: 0,
     swiperCurrent: 0,
-    isFinishInfor:false,//完善信息窗口是否填写完三类信息，填完后顶部toast隐藏
+    isFinishInfor:false,//完善资料窗口是否填写完三类信息，填完后顶部toast隐藏
     photoFlag:false,//是否已保存新的照片（打开弹窗后剪裁后显示但还未提交的图片）
     sexFlag: 0, //性别标志 0,1,2  0代表未选择，1代表选中boy，2代表选中girl
     wantFlag: 0, //意向标志 0123 0代表未选择，123分别对应三选项
@@ -62,6 +62,8 @@ Page({
     btn_girl_normal: app.globalData.FTP_ICON_HOST + 'btn_girl_normal.png',
     btn_upload_photo: app.globalData.FTP_ICON_HOST + 'btn_upload_photo.png',
     btn_change_photo: app.globalData.FTP_ICON_HOST + 'btn_change_photo.png',
+
+    isExistCompleteInfor:false,//是否后台存在完整信息（年龄、学校、个性签名）,
    
   },
 
@@ -83,6 +85,14 @@ Page({
     if (options.action != undefined) {
       this.setData({
         action: options.action
+      })
+    }
+    
+    //从截取页面传回的截取头像文件路径 并展示
+    if (app.globalData.cropPhotoSrc) {
+      this.setData({
+        photoFlag: true,
+        img_photo_example: app.globalData.cropPhotoSrc
       })
     }
   },
@@ -599,6 +609,8 @@ Page({
 
     // toast.stroke()
     toastLighten.draw()
+
+   
   },
 
   // onShowDialog: function(event) {
@@ -1196,11 +1208,11 @@ Page({
       }
     }
 
-    // if (!this.data.isCompleteInfor) {
-    //   //没有添加小呗完善信息,
-    //   this.popBlueWxCode.showPopup();
-    //   return;
-    // }
+    if (!this.data.isExistCompleteInfor) {
+      //没有添加小呗完善信息,
+      this.ifNotExistShowBlueWxCodePop();
+      return;
+    }
     // if (this.data.likeTapNumber > 3 && !this.data.is_vip) {
     //   //非vip用户点击喜欢次数大于三次
     //   this.popVipIntro.showPopup();
@@ -1271,14 +1283,11 @@ Page({
     this.hideTopToast();
   },
   onUploadPhotoTap: function(event) {
-    switch (event.target.id) {
-      //上传照片
-      case 'btn-upload-photo':
+    
         let self = this;
         wx.getSetting({
           success: function (res) {
             if (!res.authSetting['scope.writePhotosAlbum']) {
-              //没有访问相册权限时申请权限
               wx.authorize({
                 scope: 'scope.writePhotosAlbum',
                 success() {
@@ -1294,16 +1303,14 @@ Page({
               //已获取相册权限
               // 上传头像并toast提示
               console.log('had scope to album')
+              wx.navigateTo({
+                url: '../../../utils/components/image-cropper/croppertest',
+              })
             }
           },
           fail: function (res) { },
           complete: function (res) { },
         })
-        break;
-      //更换照片
-      case 'btn-change-photo':
-        break;
-    }
 
   },
   //隐藏顶部文字 通常在最后一个填写事件完成后触发
@@ -1336,13 +1343,34 @@ Page({
       //上传信息
       case'btn-post-infor':
         console.log('you post infor')
-        break;
+        //请求信息提交接口
+        //请求成功回调后底部toast显示'上传成功'3秒  
+        //基本资料弹窗消失 --- 如果用户没有完善更多信息，弹出完善更多信息窗口
+        //下面为请求成功后的代码
+        // this.setData({
+        //   isShowBottomToast: true,
+        //   bottomToastContent: '有未填写的信息噢!'
+        // })
+        // //三秒后消失
+        // let self = this;
+        // setTimeout(function () {
+        //   self.setData({
+        //     isShowBottomToast: false
+        //   })
+        // }, 3000)
+        // break;
+        //this.ifNotExistShowBlueWxCodePop();
       //上传更换的照片
       case'btn-post-photo':
         console.log('you post photo')
+        //请求更换照片提交接口  成功回调后执行ifNotExistShowBlueWxCodePop()方法。
         break;  
     }
   },
+
+  
+
+
 
   //完善资料弹窗中自定义swiper圆点指示器 绑定swiper切换事件来改变圆点的active状态
   swiperChange: function(e) {
@@ -1369,8 +1397,11 @@ Page({
       complete: function(res) {},
     })
   },
-  showBlueWxCodePop: function() {
-    this.popBlueWxCode.showPopup();
+  ifNotExistShowBlueWxCodePop: function() {
+    //判断用户没有通过小呗登记完整资料时展示二维码弹窗
+    if(!this.data.isExistCompleteInfor){
+      this.popBlueWxCode.showPopup();
+    }
   },
   showPinkWxCodePop: function() {
     this.popPinkWxCode.showPopup();
@@ -1488,7 +1519,7 @@ Page({
             success() {
               // 下载二维码并toast提示
               self.popLead.showToast("二维码开始下载");
-              self.saveImgToAlbum();
+              self.saveImgToAlbum('popLead');
             },
             fail() {
               //申请被拒绝toast提示
@@ -1514,8 +1545,9 @@ Page({
   /*
    *保存二维码到相册
    */
-  saveImgToAlbum: function() {
+  saveImgToAlbum: function(popType) {
     let self = this;
+    var pop = popType;
     wx.downloadFile({
       //先将二维码下载至项目本地临时路径
       //小呗二维码下载路径
@@ -1526,10 +1558,24 @@ Page({
           wx.saveImageToPhotosAlbum({
             filePath: img,
             success: function(res) {
-              self.popLead.showToast("二维码已保存至手机相册")
+              switch(pop){
+                case 'popLead':
+                  self.popLead.showToast("二维码已保存至手机相册");
+                  break;
+                case 'popBlueWxCode':
+                  self.popBlueWxCode.showToast("二维码已保存至手机相册");
+                  break;
+              }
             },
             fail: function(res) {
-              self.popLead.showToast("保存二维码失败")
+              switch (pop) {
+                case 'popLead':
+                  self.popLead.showToast("二维码保存失败");
+                  break;
+                case 'popBlueWxCode':
+                  self.popBlueWxCode.showToast("二维码保存失败");
+                  break;
+              }
             },
             complete: function(res) {},
           })
@@ -1537,6 +1583,45 @@ Page({
       },
       fail: function(res) {},
       complete: function(res) {},
+    })
+  },
+
+  //完善更多资料弹窗 下载二维码的点击事件
+  onDownloadWxCodeTap:function(){
+    // 判断是否已授权访问相册
+    //已授权:自动下载二维码（toast二维码下载中；二维码已保存至手机）
+    //未授权：点击下载二维码button - 申请访问相册授权 - 授权成功：执行已授权的步骤，授权失败：留在支付引导页
+    console.log('touch add staff button')
+    let self = this;
+    wx.getSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          //没有访问相册权限时申请权限
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              // 下载二维码并toast提示
+              self.popBlueWxCode.showToast("二维码开始下载");
+              self.saveImgToAlbum('popBlueWxCode');
+            },
+            fail() {
+              //申请被拒绝toast提示
+              console.log('authorize fali')
+              //被用户拒绝后 接下来每次申请权限都会被默认拒绝。
+              //firstFlag：true 判断用户是否为第一次申请权限，第一次则将firstFlag置为false
+              //非第一次申请权限 则通过open-type="getsetting"的button(待添加)由用户手动开启访问权限        
+            }
+          });
+        } else {
+          //已获取相册权限
+          // 下载二维码并toast提示
+          console.log('had scope to album')
+          self.popBlueWxCode.showToast("二维码开始下载");
+          self.saveImgToAlbum('popBlueWxCode');
+        }
+      },
+      fail: function (res) { },
+      complete: function (res) { },
     })
   },
 

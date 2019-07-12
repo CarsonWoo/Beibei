@@ -14,16 +14,16 @@
   <button id='btn-pop-matchsuccess' bindtap='showPopup'>匹配成功进度条弹窗</button>
   <button id='btn-pop-postinfor' bindtap='showInforPop'>完善修改资料并提交弹窗</button>
   <button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
-<button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
+  <button>hhhhhh</button>
   <pop-openvip id='pop-openvip' bind:hide='hidePopup' catchtouchmove='stopPageScroll'></pop-openvip>
-  <pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-lead>
+  <pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:addStaff='addStaff'> </pop-lead>
   <pop-vipintro id='pop-vipintro' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-vipintro>
   <pop-bluewxcode id='pop-bluewxcode' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-bluewxcode>
   <pop-pinkwxcode id='pop-pinkwxcode' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-pinkwxcode>
@@ -37,16 +37,16 @@
 
 
 <!--发现页 完善、修改资料提交弹窗-->
-<view class="{{ !inForPopFlag ? 'pop-show' : '' }}"  id='pop-postinfor'  catchtouchmove='stopPageScroll'>
- 
+<view class="{{ !flag ? 'pop-show' : '' }}" id='pop-postinfor' catchtouchmove='stopPageScroll'>
+
   <view class="pop-mask" bindtap="hideInforPop" />
   <view class='pop-container'>
-     <view class='top-toast' wx:if='{{!postFlag }}'>完善资料，闪电匹配</view>
+    <view class='top-toast' wx:if='{{!postFlag }}'>完善资料，闪电匹配</view>
     <!--头像head1与2分别用于用户无头像时和已经上传头像时 -->
     <!-- hidden只能在块标签中使用 在flex布局中无效果-->
     <!-- hidden为简单的隐藏和显示，更适合频繁切换 wx:if为切换时再渲染，适合很少切换-->
     <view class='pop-head1' wx:if='{{!photoFlag}}'>
-      <image class='btn-add' src='{{btn_upload_photo}}'></image>
+      <image class='btn-add' src='{{btn_upload_photo}}' bindtap='choosePhoto'></image>
       <text class='text-photo'>好的照片让人耳目一新</text>
     </view>
 
@@ -56,7 +56,7 @@
     </view>
 
     <!--自定义Dots样式的swiper 用于资料未完善时的footer1 -->
-    <view class='footer1' >
+    <view class='footer1'>
       <swiper class='swiper-box' bindchange='swiperChange'>
         <!--两个资料卡片 body -->
         <swiper-item class='swiper-body1'>

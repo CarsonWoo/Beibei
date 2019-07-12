@@ -10,7 +10,7 @@
       <view class='body-wxcode'>
         <image class='img-wxcode' src='{{img_wxcode_staff}}'></image>
       </view>
-      <image class='btn-download' src='{{btn_download_wxcode}}'></image>
+      <image class='btn-download' src='{{btn_download_wxcode}}' bindtap='_downloadWxCode'></image>
       <view class='pop-text2'>完善资料，背呗帮你闪电匹配</view>
     </view>
     <view class='toast-download' animation="{{animationData}}">{{toastContent}}</view>

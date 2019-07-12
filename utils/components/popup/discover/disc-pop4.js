@@ -68,5 +68,8 @@ Component({
     _hide() {
       this.triggerEvent("hide")
     },
+    _downloadWxCode(){
+      this.triggerEvent("download")
+    }
   }
 })

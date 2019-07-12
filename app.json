@@ -4,7 +4,8 @@
     "page/tabBar/user/user",
     "page/tabBar/discover/discover",
     "page/tabBar/index/index",
-    "utils/components/popup/test"
+    "utils/components/popup/test",
+    "utils/components/image-cropper/croppertest"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -372,3 +372,6 @@
 
 <!-- ios用户引导支付弹窗-->
 <pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:addStaff='addStaff'></pop-lead>
+
+<!-- 完善更多资料弹窗-->
+<pop-wxcode-blue id='pop-bluewxcode' bind:hide='hidePopup'   bind:download='onDownloadWxCodeTap' catchtouchmove='stopPageScroll' ></pop-wxcode-blue>

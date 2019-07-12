@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 15,
 			"list": [
 				{
 					"id": -1,
@@ -138,6 +138,13 @@
 					"id": -1,
 					"name": "bintest",
 					"pathName": "utils/components/popup/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "头像剪裁测试",
+					"pathName": "utils/components/image-cropper/croppertest",
 					"scene": null
 				}
 			]

@@ -2,7 +2,7 @@
 
 
 
-/* 以下为 pop7 wxss类文件 */
+/* 以下为完善资料弹窗 wxss类 */
 .pop-mask {
   position: fixed;
   top: 0;
@@ -10,7 +10,7 @@
   right: 0;
   bottom: 0;
   z-index: 10;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0.4);
   display: none;
 }
 
@@ -34,6 +34,7 @@
 }
 
 .top-toast{
+  position: absolute;
   font-family: PingFang-SC-Regular;
 	font-size: 40rpx;
 	font-weight: normal;
@@ -42,7 +43,8 @@
 	letter-spacing: 0rpx;
 	color: #ffffff;
   height: 40rpx;
-  margin-bottom: 18rpx;
+  top:-58rpx;
+  left:127rpx;
 }
 
 .pop-head1{
@@ -270,4 +272,4 @@
   margin-top: 38rpx;
   margin-bottom: 33rpx;
 }
-/* 以上为 pop7 wxss类文件 */
+/* 以上为 完善资料弹窗 wxss类 */

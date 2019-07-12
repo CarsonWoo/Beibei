@@ -1,0 +1,54 @@
+/* utils/components/image-cropper/croppertest.wxss */
+.top{
+  position: absolute;
+  width:100%;
+  top:10rpx;
+  display: flex;
+  flex-flow:wrap;
+  z-index: 10;
+  color:white;
+  justify-content:space-around;
+}
+page{
+  background:rgb(14, 13, 13);
+}
+view{
+  font-size: 30rpx;
+}
+.bottom{
+  position: absolute;
+  width:100%;
+  bottom:0rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 10;
+  height: 116rpx;
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+  background-color: #1b1b1b;
+	border: solid 1rpx #313131;
+}
+.bottom-text1{
+	font-family: PingFang-SC-Regular;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  
+}
+.bottom-text2{
+	font-family: PingFang-SC-Regular;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  margin-left: 587rpx;
+}
+
+
+

@@ -6,19 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    inForPopFlag:true, //完善资料弹窗的隐藏标志
-    photoFlag: true, //用户是否已存在照片标志
-    swiperCurrent: 0,
-    swiperError :0,//swiper卡死状态
-    sexFlag: 0, //性别标志 0,1,2  0代表未选择，1代表选中boy，2代表选中girl
-    btn_boy_check: app.globalData.FTP_ICON_HOST + 'btn_boy_check.png',
-    btn_boy_normal: app.globalData.FTP_ICON_HOST + 'btn_boy_normal.png',
-    btn_girl_check: app.globalData.FTP_ICON_HOST + 'btn_girl_check.png',
-    btn_girl_normal: app.globalData.FTP_ICON_HOST + 'btn_girl_normal.png',
-    wantFlag: 0, //意向标志 0123 0代表未选择，123分别对应三选项
-    emptyFlag: false,//用于提示资料填写未完成的toast控制
-    postFlag: false,//未提交或失败提交为0，成功提交为1
-
+   
+    flag:true,
+    photoFlag:false,
+    img_photo_example:'',
     ic_progress_heart: app.globalData.FTP_ICON_HOST + 'ic_progress_heart.png',
     bg_vip_grey: app.globalData.FTP_ICON_HOST + 'bg_vip_grey.png',
     btn_add_staff: app.globalData.FTP_ICON_HOST + 'btn_add_staff.png',
@@ -39,32 +30,27 @@ Page({
     img_wxcode_staff: app.globalData.FTP_ICON_HOST + 'img_wxcode_staff.jpg',
   },
 
-  //绑定swiper切换事件来改变圆点的active状态
-  swiperChange: function (e) {
-    this.setData({
-      swiperCurrent: e.detail.current
-    })
-  },
-  changeInforSwip: function (detail) {
-    if (detail.detail.source == "touch") {
-      //当页面卡死的时候，current的值会变成0 
-      if (detail.detail.current == 0) {
-        //有时候这算是正常情况，所以暂定连续出现3次就是卡了
-        let swiperError = this.data.swiperError
-        swiperError += 1
-        this.setData({ swiperError: swiperError })
-        if (swiperError >= 3) { //在开关被触发3次以上
-          console.error(this.data.swiperError)
-          this.setData({ goodsIndex: this.data.preIndex });//，重置current为正确索引
-          this.setData({ swiperError: 0 })
-        }
-      } else {//正常轮播时，记录正确页码索引
-        this.setData({ swiperCurrent: detail.detail.current });
-        //将开关重置为0
-        this.setData({ swiperError: 0 })
-      }
-    }
-  },
+  
+  // changeInforSwip: function (detail) {
+  //   if (detail.detail.source == "touch") {
+  //     //当页面卡死的时候，current的值会变成0 
+  //     if (detail.detail.current == 0) {
+  //       //有时候这算是正常情况，所以暂定连续出现3次就是卡了
+  //       let swiperError = this.data.swiperError
+  //       swiperError += 1
+  //       this.setData({ swiperError: swiperError })
+  //       if (swiperError >= 3) { //在开关被触发3次以上
+  //         console.error(this.data.swiperError)
+  //         this.setData({ goodsIndex: this.data.preIndex });//，重置current为正确索引
+  //         this.setData({ swiperError: 0 })
+  //       }
+  //     } else {//正常轮播时，记录正确页码索引
+  //       this.setData({ swiperCurrent: detail.detail.current });
+  //       //将开关重置为0
+  //       this.setData({ swiperError: 0 })
+  //     }
+  //   }
+  // },
 
   //监听选择boy、girl性别的按钮改变
   boyTap: function () {
@@ -167,7 +153,7 @@ Page({
   },
   showInforPop(){
     this.setData({
-      inForPopFlag:!this.data.inForPopFlag
+      flag:!this.data.flag
     })
   },
   hideInforPop(){
@@ -178,6 +164,15 @@ Page({
 
   stopPageScroll(){
     return
+  },
+  addStaff:function(){
+    console.log("click staff");
+    this.popup2.showToast("嗯呢讷讷嗯呢额");
+  },
+  choosePhoto(){
+    wx.navigateTo({
+      url: '../image-cropper/croppertest',
+    })
   },
 
   /**
@@ -210,6 +205,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if(app.globalData.cropPhotoSrc){
+      this.setData({
+        photoFlag:true,
+        img_photo_example:app.globalData.cropPhotoSrc
+      })
+    }
   },
 
   /**

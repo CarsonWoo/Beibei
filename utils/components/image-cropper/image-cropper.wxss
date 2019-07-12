@@ -1,0 +1,150 @@
+.image-cropper{
+  background:rgba(14, 13, 13,.8);
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index: 1;
+}
+.main{
+  position: absolute;
+  width:100vw;
+  height:100vh;
+  overflow: hidden;
+}
+.content{
+  z-index: 9;
+  position: absolute;
+  width:100vw;
+  height:100vh;
+  display: flex;
+  flex-direction:column;
+  pointer-events:none;
+}
+.bg_black{
+  background: rgba(0, 0, 0, 0.8)!important;
+}
+.bg_gray{
+  background: rgba(0, 0, 0, 0.45);
+  transition-duration: .35s;
+}
+.content>.content_top{
+  pointer-events:none;
+}
+.content>.content_middle{
+  display: flex;
+  height: 200px;
+  width:100%;
+}
+.content_middle_middle{
+  width:200px;
+  box-sizing:border-box;
+  position: relative;
+  transition-duration: .3s;
+}
+.content_middle_right{
+  flex: auto;
+}
+.content>.content_bottom{
+  flex: auto;
+}
+.image-cropper .img{
+  z-index: 2;
+  top:0;
+  left:0;
+  position: absolute;
+  border:none;
+  width:100%;
+  backface-visibility: hidden;
+  transform-origin:center;
+}
+.image-cropper-canvas{
+  position: fixed;
+  background: white;
+  width:150px;
+  height:150px;
+  z-index: 10;
+  top:-200%;
+  pointer-events:none;
+}
+.border-bg{
+  background: rgba(0, 0, 0, 0);
+  pointer-events:auto;
+  position:absolute;
+}
+.line-top{
+  top:0.625px;
+  height:1.25px;
+  width: 100%;
+  background: #fff;
+}
+.line-bottom{
+  bottom:0.625px;
+  height:1.25px;
+  width: 100%;
+  background: #fff;
+}
+.line-left{
+  left:0.625px;
+  height:100%;
+  width: 1.25px;
+  background: #fff;
+}
+.line-right{
+  right:0.625px;
+  height:100%;
+  width: 1.25px;
+  background: #fff;
+}
+.border{
+  background: white;
+}
+.border-top-left{
+  left:0px;
+  top:0px;
+  height:2.5px;
+  width:33rpx;
+}
+.border-top-right{
+  right:0px;
+  top:0px;
+  height:2.5px;
+  width:33rpx;
+}
+.border-right-top{
+  top:0px;
+  width:2.5px;
+  height:30rpx;
+  right:0px;
+}
+.border-right-bottom{
+  width:2.5px;
+  height:30rpx;
+  right:0px;
+  bottom:0px;
+}
+.border-bottom-left{
+  height:2.5px;
+  width:33rpx;
+  bottom:0px;
+  left:0px;
+}
+.border-bottom-right{
+  height:2.5px;
+  width:33rpx;
+  bottom:0px;
+  right:0px;
+}
+.border-left-top{
+  top:0px;
+  width:2.5px;
+  height:30rpx;
+  left:0px;
+}
+.border-left-bottom{
+  width:2.5px;
+  height:30rpx;
+  left:0px;
+  bottom:0px;
+}
