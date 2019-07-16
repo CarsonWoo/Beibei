@@ -329,8 +329,8 @@
         <swiper-item class='swiper-body1'>
           <text class='text-title'>性别</text>
           <view class='btns-sex'>
-            <image class='btn-boy' id='btn-boy' src="{{sexFlag != 1 ? btn_boy_normal:btn_boy_check}}" bindtap='onSexTap'></image>
-            <image class='btn-girl' id='btn-girl' src="{{sexFlag != 2 ? btn_girl_normal:btn_girl_check}}" bindtap='onSexTap'></image>
+            <image class='btn-boy' id='btn-boy' src="{{sexFlag != 0 ? btn_boy_normal:btn_boy_check}}" bindtap='onSexTap'></image>
+            <image class='btn-girl' id='btn-girl' src="{{sexFlag != 1 ? btn_girl_normal:btn_girl_check}}" bindtap='onSexTap'></image>
           </view>
 
         </swiper-item>
@@ -338,10 +338,10 @@
           <text class='text-title'>匹配意向</text>
           <view class='btns-want'>
             <button class="btn-want{{wantFlag != 1 ? '':'-check'}}" id='btn-want-girl' bindtap='onWantTap'>小姐姐</button>
-            <button class="btn-want{{wantFlag != 2 ? '':'-check'}}" id='btn-want-boy' bindtap='onWantTap'>小哥哥</button>
-            <button class="btn-want{{wantFlag != 3 ? '':'-check'}}" id='btn-want-all' bindtap='onWantTap'>全都要</button>
+            <button class="btn-want{{wantFlag != 0 ? '':'-check'}}" id='btn-want-boy' bindtap='onWantTap'>小哥哥</button>
+            <button class="btn-want{{wantFlag != 2 ? '':'-check'}}" id='btn-want-all' bindtap='onWantTap'>全都要</button>
           </view>
-          <button class='btn-post' bindtap='inforPostTap' id='btn-post-infor'>提交</button>
+          <button class='btn-post' bindtap='onInforPostTap' id='btn-post-infor'>提交</button>
           <view class='text-bottom'>提交的信息仅用于匹配</view>
         </swiper-item>
       </swiper>
@@ -356,7 +356,7 @@
     <!--提示更换照片footer -->
     <view class='footer2' wx:if='{{isNeedChangePhoto}}'>
       <text class='text-photo'>优秀的你还没有被发现，试试换张靓照吧！</text>
-      <button class='btn-post' bindtap='inforPostTap' id='btn-post-photo'>提交</button>
+      <button class='btn-post' bindtap='onInforPostTap' id='btn-post-photo'>提交</button>
     </view>
 
     <!--资料未填完整提示toast-->

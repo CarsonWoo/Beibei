@@ -47,15 +47,15 @@ Page({
 
     isShowInforPop: false, //是否展示完善资料弹窗
     isExistInfor: false, //用户资料(包括照片、性别、意向)是否已存在后台
-    isNeedChangePhoto:false,//已上传过基本资料的用户是否需要更换照片
-    topToastContent:'完善资料，闪电匹配',
+    isNeedChangePhoto: false, //已上传过基本资料的用户是否需要更换照片
+    topToastContent: '完善资料，闪电匹配',
     isShowTopToast: true,
     currentItem: 0,
     swiperCurrent: 0,
-    isFinishInfor:false,//完善资料窗口是否填写完三类信息，填完后顶部toast隐藏
-    photoFlag:false,//是否已保存新的照片（打开弹窗后剪裁后显示但还未提交的图片）
-    sexFlag: 0, //性别标志 0,1,2  0代表未选择，1代表选中boy，2代表选中girl
-    wantFlag: 0, //意向标志 0123 0代表未选择，123分别对应三选项
+    isFinishInfor: false, //完善资料窗口是否填写完三类信息，填完后顶部toast隐藏
+    photoFlag: false, //是否已保存新的照片（打开弹窗后剪裁后显示但还未提交的图片）
+    sexFlag: -1, //性别标志 0,1,2  -1代表未选择，0代表选中boy，1代表选中girl
+    wantFlag: -1, //意向标志 0123 -1代表未选择，012分别对应三选项
     btn_boy_check: app.globalData.FTP_ICON_HOST + 'btn_boy_check.png',
     btn_boy_normal: app.globalData.FTP_ICON_HOST + 'btn_boy_normal.png',
     btn_girl_check: app.globalData.FTP_ICON_HOST + 'btn_girl_check.png',
@@ -63,8 +63,8 @@ Page({
     btn_upload_photo: app.globalData.FTP_ICON_HOST + 'btn_upload_photo.png',
     btn_change_photo: app.globalData.FTP_ICON_HOST + 'btn_change_photo.png',
 
-    isExistCompleteInfor:false,//是否后台存在完整信息（年龄、学校、个性签名）,
-   
+    isExistCompleteInfor: false, //是否后台存在完整信息（年龄、学校、个性签名）,
+
   },
 
   /**
@@ -87,8 +87,8 @@ Page({
         action: options.action
       })
     }
-    
-    
+
+
   },
 
   loadData: function() {
@@ -302,7 +302,10 @@ Page({
           //------------------------------------------------------------------------------------
           //----------------------------------------1.1-btm-----------------------------------
 
-          // 运营0.3
+
+
+// ------------------------------------ 运营0.3-top-------------------------------------
+
           // 获取顶部label的高度 在这里拿因为onShow就需要用在canvas中
           var query = wx.createSelectorQuery()
           query.select('#partnership_label').boundingClientRect()
@@ -330,6 +333,9 @@ Page({
         wx.hideLoading()
       }
     })
+
+    this.getUserMatchData();
+
 
   },
 
@@ -610,9 +616,10 @@ Page({
         photoFlag: true,
         img_photo_example: app.globalData.cropPhotoSrc
       })
+      this.hideTopToast()
     }
 
-   
+
   },
 
   // onShowDialog: function(event) {
@@ -1131,6 +1138,28 @@ Page({
 
   // 运营0.3
 
+  //请求0.3用户信息接口
+  getUserMatchData(){
+    wx.request({
+      url: app.globalData.HOST +'/operation/foundPageShowDatingCare.do',
+      method:'POST',
+      header:{
+        'token':app.globalData.token,
+        'content-type':'application/x-www-form-urlencoded'
+      },
+      success(res){
+        if(res.status==='200'){
+          console.log(res.data)
+        }else{
+          console.log(res.data)
+        }
+      },
+      fail(res){
+        console.log('requestData fail')
+      }
+    })
+  },
+
   closeLikeToastTap: function(e) {
     this.setData({
       showLikeToast: false,
@@ -1198,14 +1227,14 @@ Page({
       })
       return;
     }
-    if(this.data.isExistInfor){
-      if(this.data.isNeedChangePhoto){
+    if (this.data.isExistInfor) {
+      if (this.data.isNeedChangePhoto) {
         //后台存在基本资料需要该用户更换照片
         this.setData({
-          topToastContent:'更换靓照，提升魅力',
+          topToastContent: '更换靓照，提升魅力',
           isShowInforPop: !this.data.isShowInforPop,
           sexFlag: 999,
-          wantFlag: 999,//此处设999用于顶部toast隐藏的条件判断
+          wantFlag: 999, //此处设999用于顶部toast隐藏的条件判断
         })
       }
     }
@@ -1240,17 +1269,17 @@ Page({
     }
   },
 
-  //监听选择boy、girl性别的按钮改变 boy 1 / girl 2
+  //监听选择boy、girl性别的按钮改变 boy 0/ girl 1
   onSexTap: function(event) {
     switch (event.target.id) {
       case 'btn-boy':
         this.setData({
-          sexFlag: 1
+          sexFlag: 0
         })
         break;
       case 'btn-girl':
         this.setData({
-          sexFlag: 2
+          sexFlag: 1
         })
         break;
     }
@@ -1263,7 +1292,7 @@ Page({
       })
     }, 300)
   },
-  //点击事件绑定匹配意向的flag变动 girl 1,boy 2 ,all 3
+  //点击事件绑定匹配意向的flag变动 girl 1,boy 0 ,all 2
   onWantTap: function(event) {
     switch (event.target.id) {
       case 'btn-want-girl':
@@ -1273,79 +1302,100 @@ Page({
         break;
       case 'btn-want-boy':
         this.setData({
-          wantFlag: 2
+          wantFlag: 0
         })
         break;
       case 'btn-want-all':
         this.setData({
-          wantFlag: 3
+          wantFlag: 2
         })
         break;
     }
     this.hideTopToast();
   },
+
   onUploadPhotoTap: function(event) {
-    
-        let self = this;
-        wx.getSetting({
-          success: function (res) {
-            if (!res.authSetting['scope.writePhotosAlbum']) {
-              wx.authorize({
-                scope: 'scope.writePhotosAlbum',
-                success() {
-                  // 上传头像
-                  //选择相册或开启相机--选中后进行图片剪裁--剪裁后图片保存--新头像展示至弹窗---点击提交按钮开始上传头像与其他信息
-                },
-                fail() {
-                  //申请被拒绝toast提示
-                  console.log('authorize fali')      
-                }
-              });
-            } else {
-              //已获取相册权限
-              // 上传头像并toast提示
-              console.log('had scope to album')
+    let self = this;
+    wx.getSetting({
+      success: function(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
               wx.navigateTo({
                 url: '../../../utils/components/image-cropper/croppertest',
               })
+            },
+            fail() {
+              console.log('authorize fali')
             }
-          },
-          fail: function (res) { },
-          complete: function (res) { },
-        })
+          });
+        } else {
+          console.log('had scope to album')
+          wx.navigateTo({
+            url: '../../../utils/components/image-cropper/croppertest',
+          })
+        }
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
 
   },
   //隐藏顶部文字 通常在最后一个填写事件完成后触发
-  hideTopToast:function(){
-    if(this.data.sexFlag>0&&this.data.wantFlag>0&&this.data.photoFlag){
+  hideTopToast: function() {
+    if (!(this.data.sexFlag < 0) &&!(this.data.wantFlag < 0 )&& (this.data.photoFlag) ){
       this.setData({
-        isShowTopToast:false
+        isShowTopToast: false
       })
     }
   },
 
   //完善资料或更换照片弹窗信息提交按钮事件
-  inforPostTap: function(event) {
-    if(this.data.isShowTopToast){
+  onInforPostTap: function(event) {
+    if (this.data.isShowTopToast) {
       //顶部文字未消除，说明资料未填写完整
       this.setData({
-        isShowBottomToast:true,
-        bottomToastContent:'有未填写的信息噢!'
+        isShowBottomToast: true,
+        bottomToastContent: '有未填写的信息噢!'
       })
       //三秒后消失
       let self = this;
-      setTimeout(function(){
+      setTimeout(function() {
         self.setData({
           isShowBottomToast: false
         })
-      },3000)
+      }, 3000)
     }
 
-    switch(event.target.id){
+    var photoUrl = app.globalData.cropPhotoSrc
+    var gender = this.sexFlag
+    var intention = this.wantFlag
+
+    switch (event.target.id) {
       //上传信息
-      case'btn-post-infor':
+      case 'btn-post-infor':
         console.log('you post infor')
         //请求信息提交接口
+        wx.request({
+          url: app.globalData.HOST + '/operation/uploadDatingCard.do',
+          header: ({
+            'content-type': 'application/x-www-form-urlencoded',
+            'token': app.globalData.token
+          }),
+          method: 'POST',
+          data: ({
+            'gender': gender,
+            'intention': intention,
+            'cover': photoUrl
+          }),
+          success(res){
+            console.log(res.data)
+          },
+          fail(res){
+            console.log('failrequest')
+          }
+        })
         //请求成功回调后底部toast显示'上传成功'3秒  
         //基本资料弹窗消失 --- 如果用户没有完善更多信息，弹出完善更多信息窗口
         //下面为请求成功后的代码
@@ -1362,15 +1412,15 @@ Page({
         // }, 3000)
         // break;
         //this.ifNotExistShowBlueWxCodePop();
-      //上传更换的照片
-      case'btn-post-photo':
+        //上传更换的照片
+      case 'btn-post-photo':
         console.log('you post photo')
         //请求更换照片提交接口  成功回调后执行ifNotExistShowBlueWxCodePop()方法。
-        break;  
+        break;
     }
   },
 
-  
+
 
 
 
@@ -1401,7 +1451,7 @@ Page({
   },
   ifNotExistShowBlueWxCodePop: function() {
     //判断用户没有通过小呗登记完整资料时展示二维码弹窗
-    if(!this.data.isExistCompleteInfor){
+    if (!this.data.isExistCompleteInfor) {
       this.popBlueWxCode.showPopup();
     }
   },
@@ -1466,9 +1516,9 @@ Page({
         break;
     }
   },
-  hideInforPop(){
+  hideInforPop() {
     this.setData({
-      isShowInforPop:false
+      isShowInforPop: false
     })
   },
 
@@ -1560,7 +1610,7 @@ Page({
           wx.saveImageToPhotosAlbum({
             filePath: img,
             success: function(res) {
-              switch(pop){
+              switch (pop) {
                 case 'popLead':
                   self.popLead.showToast("二维码已保存至手机相册");
                   break;
@@ -1589,14 +1639,14 @@ Page({
   },
 
   //完善更多资料弹窗 下载二维码的点击事件
-  onDownloadWxCodeTap:function(){
+  onDownloadWxCodeTap: function() {
     // 判断是否已授权访问相册
     //已授权:自动下载二维码（toast二维码下载中；二维码已保存至手机）
     //未授权：点击下载二维码button - 申请访问相册授权 - 授权成功：执行已授权的步骤，授权失败：留在支付引导页
     console.log('touch add staff button')
     let self = this;
     wx.getSetting({
-      success: function (res) {
+      success: function(res) {
         if (!res.authSetting['scope.writePhotosAlbum']) {
           //没有访问相册权限时申请权限
           wx.authorize({
@@ -1622,8 +1672,8 @@ Page({
           self.saveImgToAlbum('popBlueWxCode');
         }
       },
-      fail: function (res) { },
-      complete: function (res) { },
+      fail: function(res) {},
+      complete: function(res) {},
     })
   },
 
