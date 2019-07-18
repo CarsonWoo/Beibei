@@ -5,7 +5,7 @@
       <text class='white min-size'>{{virtualUser[vidx].username}}刚刚报名了课程</text>
     </view>
     <view class='sign-people'>{{people}}人已报名</view>
-    <view class='class-time'>开课时间: {{st}}</view>
+    <view class='class-time'>{{st}}-{{et}}</view>
   </view>
   <block wx:for="{{img_urls}}">
     <image mode='widthFix' class='info-img' src='{{item}}'></image>
@@ -17,7 +17,7 @@
     <view class='button-container'>
       <block wx:if="{{status == 'no'}}">
         <view class='origin-pay-container white normal-size bold' catchtap='onOriginPay'>
-          <text>￥199.9</text>
+          <text>￥129.9</text>
           <text>立即支付</text>
         </view>
         <view class='assist-pay-container white normal-size bold' catchtap='onAssistPay'>

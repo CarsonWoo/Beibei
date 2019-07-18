@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 15,
 			"list": [
 				{
 					"id": -1,
@@ -131,6 +131,20 @@
 					"id": -1,
 					"name": "单词挑战规则",
 					"pathName": "page/discover/pages/WordChallenge/Rule/Rule",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "web",
+					"pathName": "page/discover/pages/book/book_sign_up",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "teacher",
+					"pathName": "page/discover/pages/teacher/teacher",
 					"query": "",
 					"scene": null
 				}
