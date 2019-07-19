@@ -13,15 +13,41 @@
   <button id='btn-pop-restart' bindtap='showPopup'>重温回忆弹窗</button>
   <button id='btn-pop-matchsuccess' bindtap='showPopup'>匹配成功进度条弹窗</button>
   <button id='btn-pop-postinfor' bindtap='showInforPop'>完善修改资料并提交弹窗</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
-  <button>hhhhhh</button>
+  <button id='btn-toast' bindtap='showCardToast'> 展示toast</button>
+  <view class='partnership'>
+    <view class='partner-card-container'>
+      <image class='bg-partner-card' src='{{bg_partner_card}}'>
+      </image>
+      <view class='card-content-body'>
+        <image class='img-card-title' src='{{img_card_title}}'></image>
+        <view class='users-photo-container'>
+          <image class='img-circle-photo' src='{{img_photo_example}}'></image>
+          <image class='img-heart' src='{{ic_heart}}'></image>
+          <image class='img-circle-photo' src='{{img_photo_example}}'></image>
+        </view>
+          
+         <text class='text-match-days'>你和哈哈哈哈走过的第[999]天</text>
+        <image class='btn-meet-ta' src='{{btn_meetta}}'></image>
+        <image class='btn-remind-ta' src='{{btn_remindta}}'></image>
+        <image class='btn-break' src='{{btn_break}}'></image>
+        <block wx:if='false'>
+          <canvas canvas-id='progressbar-canvas' class='word-progressbar'></canvas>
+        </block>
+
+        <block wx:if='{{false}}'>
+          <view class='btn-restart'>
+          <text class='text-totalnumber'>总背33000</text>
+          <image class='img-restart-text' src='{{img_restart_text}}'></image>
+          </view>
+        </block>
+        
+      </view>
+
+    </view>
+
+  </view>
+
+ 
   <pop-openvip id='pop-openvip' bind:hide='hidePopup' catchtouchmove='stopPageScroll'></pop-openvip>
   <pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:addStaff='addStaff'> </pop-lead>
   <pop-vipintro id='pop-vipintro' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-vipintro>
@@ -30,9 +56,10 @@
   <pop-contactus id='pop-contactus' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-contactus>
   <pop-meetcode id='pop-meetcode' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-meetcode>
   <pop-break id='pop-break' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-break>
-  <pop-remind id='pop-remind' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-remind>
+  <pop-remind id='pop-remind' bind:send='onSendRemindTap' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-remind>
   <pop-restart id='pop-restart' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-restart>
   <pop-matchsuccess id='pop-matchsuccess' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-matchsuccess>
+  <card-toast id='card-toast'> </card-toast>
 </view>
 
 

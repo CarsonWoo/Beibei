@@ -26,27 +26,62 @@ Page({
     // isPacked: true,
     // showRedPacket: true,
     // isShowDialog: true
-    partner_level: 1,
+
     showLikeToast: true,
     is_show_more_cards: false,
     is_show_time_reversal: false,
     is_vip: false,
     isInLove: false,
     // showLightenToast: true,
-    ic_soundless_like: app.globalData.FTP_ICON_HOST + "secret_like.png",
-    ic_lighten: app.globalData.FTP_ICON_HOST + 'super_lighten.png',
-    ic_gender: app.globalData.FTP_ICON_HOST + 'male.png',
-    ic_like: app.globalData.FTP_ICON_HOST + 'like_unclick.png',
-    ic_super_like: app.globalData.FTP_ICON_HOST + 'super_like_unclick.png',
+    ic_soundless_like_common: app.globalData.FTP_ICON_HOST + 'ic_soundless_like.png',
+    ic_lighten_common: app.globalData.FTP_ICON_HOST + 'super_lighten.png',
+    ic_gender_male: app.globalData.FTP_ICON_HOST + 'male.png',
+    ic_gender_female: app.globalData.FTP_ICON_HOST + 'female.png',
+    ic_like_common: app.globalData.FTP_ICON_HOST + 'like_unclick.png',
+    ic_super_like_common: app.globalData.FTP_ICON_HOST + 'super_like_unclick.png',
     ic_time_reversal: app.globalData.FTP_ICON_HOST + 'time_reversal.png',
     ic_watch_more: app.globalData.FTP_ICON_HOST + 'watch_more_white.png',
 
+    isShowSoundlessLikeCardList: false, //展示偷偷喜欢你的卡片列表
+    isSuperLighten: false, //超级曝光是否开启
+
+
+    //用来设置vip与普通用户的图标
+    ic_soundless_like: '',
+    ic_soundless_like_check: '',
+    ic_lighten: '',
+    ic_lighten_check: '',
+    ic_like: '',
+    ic_like_check: '',
+    ic_super_like: '',
+    ic_super_like_check: '',
+
+    //用来设置不同等级和类型的匹配关系 (男女，女女，*男男) 
+    bg_partner_card: '',
+    img_card_title: '',
+
+
+
+    ic_soundless_like_common_check: app.globalData.FTP_ICON_HOST + "ic_soundless_like_check.png",
+    ic_soundless_like_vip: app.globalData.FTP_ICON_HOST + "ic_soundless_like_vip_normal.png",
+    ic_soundless_like_vip_check: app.globalData.FTP_ICON_HOST + "ic_soundless_like_vip_check.png",
+    ic_like_common_check: app.globalData.FTP_ICON_HOST + "ic_like_check.png",
+    ic_like_vip: app.globalData.FTP_ICON_HOST + "ic_like_vip_normal.png",
+    ic_like_vip_check: app.globalData.FTP_ICON_HOST + "ic_like_vip_check.png",
+    ic_super_like_common_check: app.globalData.FTP_ICON_HOST + "ic_super_like_check.png",
+    ic_super_like_vip: app.globalData.FTP_ICON_HOST + "ic_super_like_vip_normal.png",
+    ic_super_like_vip_check: app.globalData.FTP_ICON_HOST + "ic_super_like_vip_check.png",
+    ic_lighten_common_check: app.globalData.FTP_ICON_HOST + "ic_lighten_check.png",
+    ic_lighten_vip_check: app.globalData.FTP_ICON_HOST + "ic_lighten_vip_check.png",
+    ic_lighten_vip: app.globalData.FTP_ICON_HOST + "ic_lighten_vip_normal.png",
+    img_super_like_you: app.globalData.FTP_ICON_HOST + "img_super_like_you.png",
+    bg_vip_crown: app.globalData.FTP_ICON_HOST + "bg_vip_crown.png",
     platform: '',
     vipContent: 'VIP限时特惠',
-
-
+    isFirstTime: true,
+    isTodayFirstTimeTapLiekOrSuperLike: false,
+    userInfoStatus: 0, //用户基本信息的上传状态  0代表未上传，1代表资料审核中，2代表审核通过
     isShowInforPop: false, //是否展示完善资料弹窗
-    isExistInfor: false, //用户资料(包括照片、性别、意向)是否已存在后台
     isNeedChangePhoto: false, //已上传过基本资料的用户是否需要更换照片
     topToastContent: '完善资料，闪电匹配',
     isShowTopToast: true,
@@ -65,7 +100,26 @@ Page({
 
     isExistCompleteInfor: false, //是否后台存在完整信息（年龄、学校、个性签名）,
 
+
+    bg_matchday: app.globalData.FTP_ICON_HOST + 'bg-matchday.png',
+    btn_meetta: app.globalData.FTP_ICON_HOST + 'btn-meetta.png',
+    btn_break: app.globalData.FTP_ICON_HOST + 'btn-break.png',
+    btn_remindta: app.globalData.FTP_ICON_HOST + 'btn-remindta.png',
+    img_stop1: app.globalData.FTP_ICON_HOST + 'img-stop1.png',
+    img_stop2: app.globalData.FTP_ICON_HOST + 'img-stop2.png',
+    ic_heart: app.globalData.FTP_ICON_HOST + 'ic_progress_heart.png',
+    img_restart_text: app.globalData.FTP_ICON_HOST + 'img-restart-text.png',
+
+    dating_card_list: [],
+    more_card_list: [],
+    time_reversal_list: [],
+    partner_level: 1, //匹配卡片的等级 80单词进度完成一次提升一级  卡片更换一次  6次更换后 可以进行重温回忆
+    match_type: 1, //  0代表男女，1女女，2男男
+    studiedWordsNumber: 9, //匹配成功后每个进度中的单词数
+    isShowRestartBtn: false,
   },
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -304,7 +358,7 @@ Page({
 
 
 
-// ------------------------------------ 运营0.3-top-------------------------------------
+          // ------------------------------------ 运营0.3-top-------------------------------------
 
           // 获取顶部label的高度 在这里拿因为onShow就需要用在canvas中
           var query = wx.createSelectorQuery()
@@ -335,8 +389,6 @@ Page({
     })
 
     this.getUserMatchData();
-
-
   },
 
   getToken: function() {
@@ -526,7 +578,7 @@ Page({
   onReady: function() {
     wx.showTabBar({})
     //绑定弹窗组件id
-    this.popOpenVip = this.selectComponent("#pop-openvip");
+    this.popOpenVipSuccess = this.selectComponent("#pop-openvip");
     this.popLead = this.selectComponent("#pop-lead");
     this.popVipIntro = this.selectComponent("#pop-vipintro");
     this.popBlueWxCode = this.selectComponent("#pop-bluewxcode");
@@ -537,6 +589,9 @@ Page({
     this.popRemind = this.selectComponent("#pop-remind");
     this.popRestart = this.selectComponent("#pop-restart");
     this.popMatchSuccess = this.selectComponent("#pop-matchsuccess");
+    this.cardToast = this.selectComponent("#card-toast");
+
+
 
   },
 
@@ -619,7 +674,8 @@ Page({
       this.hideTopToast()
     }
 
-
+    //canvas绘制匹配页面的进度条
+    this.drawProgressBar();
   },
 
   // onShowDialog: function(event) {
@@ -851,6 +907,8 @@ Page({
         }
       }
     })
+
+
 
   },
 
@@ -1139,25 +1197,122 @@ Page({
   // 运营0.3
 
   //请求0.3用户信息接口
-  getUserMatchData(){
+  getUserMatchData() {
+    let self = this;
     wx.request({
-      url: app.globalData.HOST +'/operation/foundPageShowDatingCare.do',
-      method:'POST',
-      header:{
-        'token':app.globalData.token,
-        'content-type':'application/x-www-form-urlencoded'
+      url: app.globalData.HOST + '/operation/foundPageShowDatingCare.do',
+      method: 'POST',
+      header: {
+        'token': app.globalData.token,
+        'content-type': 'application/x-www-form-urlencoded'
       },
-      success(res){
-        if(res.status==='200'){
+      success(res) {
+        if (res.data.status === 200) {
           console.log(res.data)
-        }else{
+          let data = res.data.data
+          let selfData = self.data;
+          self.setData({
+            dating_card_list: data.datingCards,
+            more_card_list: self.deleteArrayFirstItem(data.datingCards).length != 0 ? self.deleteArrayFirstItem(data.datingCards) : [],
+            is_vip: data.datingVip === 0 ? false : true,
+            is_show_more_cards: data.datingVip === 0 ? false : true,
+            is_show_time_reversal: data.datingVip === 0 ? false : true,
+            isInLove: data.isInLove === 0 ? false : true,
+            isExistCompleteInfor: data.infoComplete === 0 ? false : true,
+            isFirstTime: data.firstTime === 0 ? false : true,
+            // isTodayFirstTimeTapLiekOrSuperLike : data.todayFirstTime === '0' ? false : true ,
+            userInfoStatus: data.userStatus,
+          });
+          if (data.datingVip === 1) {
+            self.getTimeReservalList();
+          }
+          self.setIconStyle();
+          self.setCardStyle();
+
+        } else {
           console.log(res.data)
         }
       },
-      fail(res){
+      fail(res) {
         console.log('requestData fail')
       }
     })
+  },
+  //获取用户vip支付参数
+  getVipPayInfo() {
+    let self = this;
+    wx.request({
+      url: app.globalData.HOST + '/operation/datingVipPay.do',
+      method: 'POST',
+      header: {
+        'token': app.globalData.token,
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success(res) {
+        if (res.data.status === 200) {
+          console.log(res.data)
+          let data = res.data.data
+          wx.requestPayment({
+            timeStamp: data.timeStamp,
+            nonceStr: data.nonceStr,
+            package: data.package,
+            signType: data.signType,
+            paySign: data.paySign,
+            success(res) {
+              console.log(res)
+              self.popVipIntro.hidePopup()
+              wx.showTabBar({})
+              self.showOpenVipSuccessPop()
+            },
+            fail(res) {
+              console.log(res)
+            }
+          })
+        } else {
+          console.log(res.data)
+        }
+      },
+      fail(res) {
+        console.log('requestData fail')
+      }
+    })
+  },
+  getTimeReservalList() {
+    let self = this;
+    wx.request({
+      url: app.globalData.HOST + '/operation/backInTime.do',
+      method: 'POST',
+      header: {
+        'token': app.globalData.token,
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success(res) {
+        console.log(res.data)
+        if (res.data.status === 200) {
+          self.setData({
+            time_reversal_list: res.data.data.datingCards
+          })
+        }
+      },
+      fail(res) {}
+    })
+  },
+
+  //看看有谁偷偷喜欢你
+  onShowSoundlessLikeYouTap: function(e) {
+    console.log('点击看谁偷偷喜欢你')
+    this.setData({
+      isShowSoundlessLikeCardList: !this.data.isShowSoundlessLikeCardList
+    })
+  },
+
+  //十倍曝光，超级匹配
+  onSuperLightenTap: function(e) {
+    console.log('点击超级曝光')
+    this.setData({
+      isSuperLighten: !this.data.isSuperLighten
+    })
+    this.showCardToast("超级曝光已开启")
   },
 
   closeLikeToastTap: function(e) {
@@ -1217,19 +1372,20 @@ Page({
       is_show_more_cards: true
     })
   },
-  onLikeTap: function() {
-    var isExistPhoto = false
-    var isCompleteInfor = false;
-    if (!this.data.isExistInfor) {
-      //没有填写基本资料（头像、性别、意愿）
+  onLikeTap: function(options) {
+    console.log("userInfoStatus" + this.data.userInfoStatus)
+    console.log(options)
+    console.log("userID:" + options.currentTarget.dataset.userid)
+    if (this.data.userInfoStatus === 0) {
+      //未上传基本资料（头像、性别、意愿） 或者资料审核失败
       this.setData({
         isShowInforPop: !this.data.isShowInforPop
       })
       return;
     }
-    if (this.data.isExistInfor) {
+    if (this.data.userInfoStatus != 0) {
       if (this.data.isNeedChangePhoto) {
-        //后台存在基本资料需要该用户更换照片
+        //后台存在基本资料但需要该用户更换照片
         this.setData({
           topToastContent: '更换靓照，提升魅力',
           isShowInforPop: !this.data.isShowInforPop,
@@ -1239,11 +1395,18 @@ Page({
       }
     }
 
-    if (!this.data.isExistCompleteInfor) {
-      //没有添加小呗完善信息,
-      this.ifNotExistShowBlueWxCodePop();
-      return;
+
+    //没有添加小呗完善信息,并且当天第一次点击 展示弹窗
+    if (this.data.isTodayFirstTimeTapLiekOrSuperLike) {
+      //调用记录当天第一次点击喜欢和超级喜欢接口
+
+      if (!this.data.isExistCompleteInfor) {
+        this.ifNotExistShowBlueWxCodePop();
+        return;
+        }
     }
+
+
     // if (this.data.likeTapNumber > 3 && !this.data.is_vip) {
     //   //非vip用户点击喜欢次数大于三次
     //   this.popVipIntro.showPopup();
@@ -1255,7 +1418,24 @@ Page({
     //   })
     //   return;
     // }
-    console.log('you tap like')
+    wx.request({
+      url: app.globalData.HOST + '/operation/likeButton.do',
+      method: 'POST',
+      header:({
+        'token': app.globalData.token,
+        'content-type': 'application/x-www-form-urlencoded'
+      }),
+      data:({
+        'targetId': options.currentTarget.dataset.userid
+      }),
+      success(res) {
+        if (res.data.status === 200) {
+          console.log(res.data)
+        } else {
+          console.log(res.data)
+        }
+      },
+    })
   },
   onSuperLikeTap: function() {
     if (!is_vip) {
@@ -1344,7 +1524,7 @@ Page({
   },
   //隐藏顶部文字 通常在最后一个填写事件完成后触发
   hideTopToast: function() {
-    if (!(this.data.sexFlag < 0) &&!(this.data.wantFlag < 0 )&& (this.data.photoFlag) ){
+    if (!(this.data.sexFlag < 0) && !(this.data.wantFlag < 0) && (this.data.photoFlag)) {
       this.setData({
         isShowTopToast: false
       })
@@ -1353,6 +1533,7 @@ Page({
 
   //完善资料或更换照片弹窗信息提交按钮事件
   onInforPostTap: function(event) {
+    let self = this;
     if (this.data.isShowTopToast) {
       //顶部文字未消除，说明资料未填写完整
       this.setData({
@@ -1360,7 +1541,6 @@ Page({
         bottomToastContent: '有未填写的信息噢!'
       })
       //三秒后消失
-      let self = this;
       setTimeout(function() {
         self.setData({
           isShowBottomToast: false
@@ -1389,10 +1569,15 @@ Page({
             'intention': intention,
             'cover': photoUrl
           }),
-          success(res){
+          success(res) {
             console.log(res.data)
+            if (res.data.status === 200) {
+              self.showCardToast("成功提交!")
+            } else {
+              self.showCardToast("提交失败!" + res.data.msg)
+            }
           },
-          fail(res){
+          fail(res) {
             console.log('failrequest')
           }
         })
@@ -1433,8 +1618,8 @@ Page({
   },
 
   //多个自定义组件弹窗的弹起与隐藏
-  showOpenVipPop: function() {
-    console.log('openvip');
+  showOpenVipSuccessPop: function() {
+    console.log('openvipSuccess');
     this.popOpenVip.showPopup();
   },
   showLeadPop: function() {
@@ -1470,7 +1655,7 @@ Page({
   showRemindPop: function() {
     this.popRemind.showPopup();
   },
-  showBreakPop: function() {
+  showRestartPop: function() {
     this.popRestart.showPopup();
   },
   showMatchSuccessPop: function() {
@@ -1549,18 +1734,15 @@ Page({
         complete: function(res) {},
       });
     } else {
-      //安卓用户调用支付接口
+      //获取参数并进行支付
+      this.getVipPayInfo();
     }
   },
 
   /*
-   *引导支付弹窗的添加小呗按钮事件
+   * 获取用户访问相册的权限如果成功下载二维码到相册
    */
-  addStaff: function() {
-    // 判断是否已授权访问相册
-    //已授权:自动下载二维码（toast二维码下载中；二维码已保存至手机）
-    //未授权：点击下载二维码button - 申请访问相册授权 - 授权成功：执行已授权的步骤，授权失败：留在支付引导页
-    console.log('touch add staff button')
+  getAuthorizeAndDownLoadWXCode(pop) {
     let self = this;
     wx.getSetting({
       success: function(res) {
@@ -1570,10 +1752,11 @@ Page({
             scope: 'scope.writePhotosAlbum',
             success() {
               // 下载二维码并toast提示
-              self.popLead.showToast("二维码开始下载");
-              self.saveImgToAlbum('popLead');
+              pop.showToast("二维码开始下载");
+              self.saveImgToAlbum(pop);
             },
             fail() {
+              pop.showToast("访问相册权限被拒绝,用户需手动开启权限")
               //申请被拒绝toast提示
               console.log('authorize fali')
               //被用户拒绝后 接下来每次申请权限都会被默认拒绝。
@@ -1585,8 +1768,8 @@ Page({
           //已获取相册权限
           // 下载二维码并toast提示
           console.log('had scope to album')
-          self.popLead.showToast("二维码开始下载");
-          self.saveImgToAlbum();
+          pop.showToast("二维码开始下载");
+          self.saveImgToAlbum(pop);
         }
       },
       fail: function(res) {},
@@ -1595,11 +1778,18 @@ Page({
   },
 
   /*
+   *引导支付弹窗的添加小呗按钮事件
+   */
+  addStaff: function() {
+    console.log('touch add staff button')
+    this.getAuthorizeAndDownLoadWXCode(this.popLead);
+  },
+
+  /*
    *保存二维码到相册
    */
-  saveImgToAlbum: function(popType) {
+  saveImgToAlbum: function(pop) {
     let self = this;
-    var pop = popType;
     wx.downloadFile({
       //先将二维码下载至项目本地临时路径
       //小呗二维码下载路径
@@ -1610,73 +1800,220 @@ Page({
           wx.saveImageToPhotosAlbum({
             filePath: img,
             success: function(res) {
-              switch (pop) {
-                case 'popLead':
-                  self.popLead.showToast("二维码已保存至手机相册");
-                  break;
-                case 'popBlueWxCode':
-                  self.popBlueWxCode.showToast("二维码已保存至手机相册");
-                  break;
-              }
+              pop.showToast("二维码已保存到手机")
             },
             fail: function(res) {
-              switch (pop) {
-                case 'popLead':
-                  self.popLead.showToast("二维码保存失败");
-                  break;
-                case 'popBlueWxCode':
-                  self.popBlueWxCode.showToast("二维码保存失败");
-                  break;
-              }
+              pop.showToast("二维码保存失败,请稍后重试");
             },
-            complete: function(res) {},
           })
         }
       },
-      fail: function(res) {},
-      complete: function(res) {},
     })
   },
 
   //完善更多资料弹窗 下载二维码的点击事件
   onDownloadWxCodeTap: function() {
-    // 判断是否已授权访问相册
-    //已授权:自动下载二维码（toast二维码下载中；二维码已保存至手机）
-    //未授权：点击下载二维码button - 申请访问相册授权 - 授权成功：执行已授权的步骤，授权失败：留在支付引导页
-    console.log('touch add staff button')
-    let self = this;
-    wx.getSetting({
-      success: function(res) {
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          //没有访问相册权限时申请权限
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success() {
-              // 下载二维码并toast提示
-              self.popBlueWxCode.showToast("二维码开始下载");
-              self.saveImgToAlbum('popBlueWxCode');
-            },
-            fail() {
-              //申请被拒绝toast提示
-              console.log('authorize fali')
-              //被用户拒绝后 接下来每次申请权限都会被默认拒绝。
-              //firstFlag：true 判断用户是否为第一次申请权限，第一次则将firstFlag置为false
-              //非第一次申请权限 则通过open-type="getsetting"的button(待添加)由用户手动开启访问权限        
-            }
-          });
-        } else {
-          //已获取相册权限
-          // 下载二维码并toast提示
-          console.log('had scope to album')
-          self.popBlueWxCode.showToast("二维码开始下载");
-          self.saveImgToAlbum('popBlueWxCode');
-        }
-      },
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+    this.getAuthorizeAndDownLoadWXCode(this.popBlueWxCode)
   },
 
+  //没啥用的
+  deleteArrayFirstItem(arr) {
+    if (arr != []) {
+      if (arr[1] === null) {
+        return [];
+      } else {
+        var newArr = [];
+        for (var i = 1; i < arr.length; i++) {
+          newArr[i - 1] = arr[i];
+        }
+        return newArr;
+      }
+    } else {
+      return arr;
+    }
+  },
+  switchChooseNumberText(number) {
+    if (number < 10) {
+      return "  总背" + number + "/80";
+    } else {
+      return "总背" + number + "/80";
+    }
+  },
+  drawProgressBar() {
+    var rpx;
+    //获取屏幕宽度，获取自适应单位
+    wx.getSystemInfo({
+      success: function(res) {
+        rpx = res.windowWidth / 375;
+      },
+    })
+
+    var scale = this.data.studiedWordsNumber / 80; //进度条比例
+    var wordsNumberText = this.switchChooseNumberText(this.data.studiedWordsNumber);
+
+    var borderHeight = 19 * rpx;
+    var borderWidth = 156 * rpx;
+    var strokeWidth = 1.5 * rpx; //外框的线条宽度
+    var bgSolidWidth = 16 * rpx;
+    var tl = strokeWidth / 2; //顶部和左边的缝隙
+    var solidWidth = 12 * rpx; //填充条宽度
+    var il = (borderHeight - solidWidth - strokeWidth * 2) / 2; //填充条与框边的padding值
+    var ctx = wx.createCanvasContext('progressbar-canvas')
+    var pi = Math.PI;
+
+    //内部solid白色背景绘制
+    ctx.beginPath()
+    ctx.moveTo(borderHeight / 2, borderHeight / 2 + tl)
+    ctx.setLineCap("round")
+    ctx.setLineWidth(bgSolidWidth)
+    ctx.setStrokeStyle("#ffffff")
+    ctx.lineTo(borderWidth + tl, borderHeight / 2 + tl)
+    ctx.stroke()
+
+    //外框绘制
+    ctx.beginPath()
+    ctx.setStrokeStyle("#363e49")
+    ctx.setFillStyle("#ffffff")
+    ctx.moveTo(borderHeight / 2 + tl, tl)
+    ctx.setLineWidth(strokeWidth)
+    ctx.lineTo(borderWidth + tl, tl)
+    ctx.arc(borderWidth + tl, borderHeight / 2 + tl, borderHeight / 2, 1.5 * pi, 0)
+    ctx.arc(borderWidth + tl, borderHeight / 2 + tl, borderHeight / 2, 0, 0.5 * pi)
+    ctx.lineTo(borderHeight / 2 + tl, borderHeight + tl);
+    ctx.arc(borderHeight / 2 + tl, borderHeight / 2 + tl, borderHeight / 2, 0.5 * pi, 1 * pi)
+    ctx.arc(borderHeight / 2 + tl, borderHeight / 2 + tl, borderHeight / 2, 1 * pi, 1.5 * pi)
+    ctx.stroke()
+
+    //填充条绘制
+    if (scale > 0) {
+      ctx.beginPath()
+      ctx.moveTo(borderHeight / 2 + tl, borderHeight / 2 + tl)
+      ctx.setLineCap("round")
+      ctx.setLineWidth(solidWidth)
+      ctx.setStrokeStyle("#8269ff")
+      ctx.lineTo((borderWidth + tl) * scale, borderHeight / 2 + tl)
+      ctx.stroke()
+    }
+
+    //文字绘制
+    ctx.beginPath()
+    ctx.setFontSize(11 * rpx)
+    ctx.fillStyle = "#404751"
+    ctx.fillText(wordsNumberText, 100 * rpx + tl, borderHeight / 2 + tl + 3.5 * rpx);
+
+    ctx.draw()
+  },
+  //设置icon的vip或是common风格
+  setIconStyle() {
+    if (this.data.is_vip) {
+      this.setData({
+        ic_soundless_like: this.data.ic_soundless_like_vip,
+        ic_soundless_like_check: this.data.ic_soundless_like_vip_check,
+        ic_lighten: this.data.ic_lighten_vip,
+        ic_lighten_check: this.data.ic_lighten_vip_check,
+        ic_like: this.data.ic_like_vip,
+        ic_like_check: this.data.ic_like_vip_check,
+        ic_super_like: this.data.ic_super_like_vip,
+        ic_super_like_check: this.data.ic_super_like_vip_check,
+      })
+    } else {
+      this.setData({
+        ic_soundless_like_check: this.data.ic_soundless_like_common_check,
+        ic_lighten: this.data.ic_lighten_common,
+        ic_lighten_check: this.data.ic_lighten_common_check,
+        ic_like: this.data.ic_like_common,
+        ic_like_check: this.data.ic_like_common_check,
+        ic_super_like: this.data.ic_super_like_common,
+        ic_super_like_check: this.data.ic_super_like_common_check,
+        ic_soundless_like: this.data.ic_soundless_like_common,
+      })
+      console.log("icon" + this.data.ic_soundless_like)
+    }
+  },
+  setCardStyle() {
+    var type;
+    switch (this.data.match_type) {
+      case 0:
+        type = '-bg'
+        break;
+      case 1:
+        type = '-gg'
+        break;
+      case 2:
+        type = '-bb'
+        break;
+    }
+    var level = this.data.partner_level
+    if (level === 7) { //第7级与第6级内容相同 只不过进度条消失 重温回忆按钮现身
+      level = 6
+      this.setData({
+        isShowRestartBtn: true
+      })
+    }
+
+    this.setData({
+      bg_partner_card: app.globalData.FTP_ICON_HOST + 'bg-' + level + type + '.png',
+      img_card_title: app.globalData.FTP_ICON_HOST + 'img-' + level + type + '.png'
+    })
+
+  },
+
+  //展示toast
+  showCardToast(content) {
+    this.cardToast.setToastContent(content)
+    this.cardToast.showToast(3000)
+  },
+
+  onMeetTaTap() {
+    let self = this;
+    this.popMeetCode.setMeetCode('27773')
+    this.showMeetCodePop()
+    wx.setClipboardData({
+      data: '27773',
+      success() {
+        self.popMeetCode.showToast('已复制相遇码')
+      },
+      fail() {
+        self.popMeetCode.showToast('复制相遇码失败')
+      }
+    })
+    //稍微延迟0.3秒再开始获取二维码
+    setTimeout(function() {
+      self.getAuthorizeAndDownLoadWXCode(self.popMeetCode)
+    }, 300)
+
+  },
+  onRemindTaTap() {
+    this.showRemindPop()
+  },
+  onBreakTap() {
+    this.showBreakPop()
+  },
+  onRestartTap() {
+    this.showRestartPop()
+  },
+
+  //发送提醒
+  onSendRemindTap() {
+    console.log(this.popRemind.getRemindText())
+  },
+  onBreakEnsureTap() {
+    //确认解除关系
+    console.log("ensure break")
+    this.popBreak.hidePopup()
+  },
+  onBreakCancelTap() {
+    console.log("cancel break")
+    this.popBreak.hidePopup()
+  },
+  onRestartEnsureTap() {
+    console.log("ensure restart")
+    this.popRestart.hidePopup()
+  },
+  onRestartCancelTap() {
+    console.log("cancel restart")
+    this.popRestart.hidePopup()
+  },
 
 
 
@@ -1687,6 +2024,7 @@ Page({
   onReachBottom: function() {
 
   },
+
 
 
 

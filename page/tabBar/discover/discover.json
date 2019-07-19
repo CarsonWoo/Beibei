@@ -21,7 +21,9 @@
     
     "pop-restart": "/utils/components/popup/discover/mat-pop4",
     
-    "pop-match-success": "/utils/components/popup/discover/mat-pop5"
+    "pop-match-success": "/utils/components/popup/discover/mat-pop5",
+
+    "card-toast":"/utils/components/toast/dating-card-toast"
   },
   "enablePullDownRefresh": true,
   "backgroundColor": "#363943",

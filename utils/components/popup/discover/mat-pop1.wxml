@@ -11,7 +11,7 @@
       <view class='text-lead'>带上复制的相遇码</view>
       <view class='text-lead'>添加月老小呗和Ta相遇</view>
     </view>
-    <view class='toast-copy' hidden='{{toastFlag}}'>已复制相遇码</view>
+    <view class='toast-copy' wx:if='{{isShowToast}}'>{{toastContent}}</view>
 
   </view>
 </view>

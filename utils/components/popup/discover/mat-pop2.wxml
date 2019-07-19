@@ -7,8 +7,8 @@
     <view class='pop-footer'>
       <text class='pop-text'>你真的要走吗！</text>
       <view class='pop-btns'>
-        <button class='btn-sure'>是的</button>
-        <button class='btn-stay'>留下</button>
+        <button class='btn-sure' bindtap='_ensure'>是的</button>
+        <button class='btn-stay' bindtap='_cancel'>留下</button>
       </view>
     </view>
   </view>

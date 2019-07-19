@@ -6,7 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-   
     flag:true,
     photoFlag:false,
     img_photo_example:'',
@@ -28,6 +27,104 @@ Page({
     img_vip_crown: app.globalData.FTP_ICON_HOST + 'img_vip_crown.png',
     img_vip_intro: app.globalData.FTP_ICON_HOST + 'img_vip_intro.png',
     img_wxcode_staff: app.globalData.FTP_ICON_HOST + 'img_wxcode_staff.jpg',
+
+    bg_partner_card: app.globalData.FTP_ICON_HOST + 'bg-firstmeet.png',
+    img_card_title: app.globalData.FTP_ICON_HOST + 'img-firstmeet.png',
+    bg_matchday: app.globalData.FTP_ICON_HOST + 'bg-matchday.png',
+    btn_meetta: app.globalData.FTP_ICON_HOST + 'btn-meetta.png',
+    btn_break: app.globalData.FTP_ICON_HOST + 'btn-break.png',
+    btn_remindta: app.globalData.FTP_ICON_HOST + 'btn-remindta.png',
+    img_stop1: app.globalData.FTP_ICON_HOST + 'img-stop1.png',
+    img_stop2: app.globalData.FTP_ICON_HOST + 'img-stop2.png',
+    ic_heart: app.globalData.FTP_ICON_HOST + 'ic_progress_heart.png',
+    img_restart_text: app.globalData.FTP_ICON_HOST +'img-restart-text.png',
+
+
+    studiedWordsNumber :9,//匹配成功后每个进度中的单词数
+  },
+
+  switchChooseNumberText(number){
+    if(number<10){
+      return "  总背"+number+"/80";
+    }else{
+      return "总背" + number + "/80";
+    }
+  },
+  drawProgressBar(){
+    var rpx;
+    //获取屏幕宽度，获取自适应单位
+    wx.getSystemInfo({
+      success: function (res) {
+        rpx = res.windowWidth / 375;
+      },
+    })
+
+    var scale = this.data.studiedWordsNumber/80; //进度条比例
+    var wordsNumberText = this. switchChooseNumberText(this.data.studiedWordsNumber);
+    
+    var borderHeight = 19*rpx;
+    var borderWidth = 156 * rpx;
+    var strokeWidth = 1.5 * rpx; //外框的线条宽度
+    var tl = strokeWidth/2; //顶部和左边的缝隙
+    var solidWidth = 12 * rpx;//填充条宽度
+    var il = (borderHeight-solidWidth-strokeWidth*2)/2; //填充条与框边的padding值
+    var ctx = wx.createCanvasContext('progressbar-canvas')
+    var pi = Math.PI;
+    
+    //外框绘制
+    ctx.beginPath()
+    ctx.setStrokeStyle("#363e49")
+    ctx.moveTo(borderHeight/2+tl,tl)
+    ctx.setLineWidth(strokeWidth)
+    ctx.lineTo(borderWidth+tl,tl)
+    ctx.arc(borderWidth + tl, borderHeight / 2 + tl, borderHeight / 2, 1.5*pi,0)
+    ctx.arc(borderWidth + tl, borderHeight / 2 + tl, borderHeight / 2,0,0.5*pi)
+    ctx.lineTo(borderHeight / 2 +tl,borderHeight+tl);
+    ctx.arc(borderHeight / 2 + tl, borderHeight / 2 + tl, borderHeight / 2, 0.5*pi, 1 * pi)
+    ctx.arc(borderHeight / 2 + tl, borderHeight / 2 + tl, borderHeight / 2, 1 * pi, 1.5 * pi)
+    ctx.stroke()
+
+    //填充条绘制
+    if(scale>0){
+      ctx.beginPath()
+      ctx.moveTo(borderHeight / 2 + tl, borderHeight / 2 + tl)
+      ctx.setLineCap("round")
+      ctx.setLineWidth(solidWidth)
+      ctx.setStrokeStyle("#8269ff")
+      ctx.lineTo((borderWidth + tl) * scale, borderHeight / 2 + tl)
+      ctx.stroke()
+    }
+
+    //文字绘制
+    ctx.beginPath()
+    ctx.setFontSize(11 * rpx)
+    ctx.fillStyle= "#404751"
+    ctx.fillText(wordsNumberText, 100 * rpx + tl, borderHeight / 2+tl+3.5*rpx);
+    ctx.draw()
+
+    // var context = wx.createCanvasContext('progressbar-canvas')
+
+
+    // context.beginPath();
+    // context.setStrokeStyle("#00ff00")
+    // context.setLineWidth(5)
+    // context.rect(0, 0, 200, 200)
+    // context.stroke()
+
+    // context.beginPath();
+    // context.setStrokeStyle("#ff0000")
+    // context.setLineWidth(2)
+    // context.moveTo(160, 100)
+    // context.arc(100, 100, 60, 0, 2 * Math.PI, true)
+    // context.moveTo(140, 100)
+    // context.arc(100, 100, 40, 0, Math.PI, false)
+    // context.moveTo(85, 80)
+    // context.arc(80, 80, 5, 0, 2 * Math.PI, true)
+    // context.moveTo(125, 80)
+    // context.arc(120, 80, 5, 0, 2 * Math.PI, true)
+    // context.stroke()
+    // context.draw()
+    
   },
 
   
@@ -186,6 +283,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    this.drawProgressBar();
     //绑定弹窗组件id
     this.popup1 = this.selectComponent("#pop-openvip");
     this.popup2 = this.selectComponent("#pop-lead");
@@ -198,7 +296,16 @@ Page({
     this.popup9 = this.selectComponent("#pop-remind");
     this.popup10 = this.selectComponent("#pop-restart");
     this.popup11 = this.selectComponent("#pop-matchsuccess");
+    this.cardToast = this.selectComponent("#card-toast");
   
+  },
+  showCardToast(){
+    this.cardToast.setToastContent("测试一下toast")
+    this.cardToast.showToast(3000)
+  },
+  onSendRemindTap(){
+    console.log('you click send remind')
+    console.log(this.popup9.getRemindText())
   },
 
   /**

@@ -35,5 +35,11 @@ Component({
     _hide() {
       this.triggerEvent("hide")
     },
+    _ensure() {
+      this.triggerEvent("ensure")
+    },
+    _cancel() {
+      this.triggerEvent("cancel")
+    }
   }
 })

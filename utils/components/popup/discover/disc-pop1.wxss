@@ -27,7 +27,7 @@
   transition: all 0.4s ease;
   z-index: 9999;
   padding-bottom: 43rpx;
-  transform: translateY(300%); 
+  transform: translateY(500%); 
   top:274rpx;
   left:116rpx;
 }

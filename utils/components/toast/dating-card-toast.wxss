@@ -1,0 +1,27 @@
+/* utils/components/toast/dating-card-toast.wxss */
+.toast-unshow{
+  display: none;
+}
+.toast-body-show{
+  z-index: 99999;
+  display: block;
+}
+.toast-content{
+  position:fixed;
+  left:50%;
+  bottom: 33.4%;
+  transform:translate(-50%,-50%);
+  z-index:1000;
+	background-color: #000000;
+	border-radius: 19rpx;
+	opacity: 0.6;
+  font-family: PingFang-SC-Medium;
+	font-size: 26rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+  padding-left: 17rpx;
+  padding-right: 16rpx;
+}

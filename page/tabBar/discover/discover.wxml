@@ -95,46 +95,40 @@
   </block>
 
   <!-- 关于运营0.3的基础内容写在partnership里面 以免混淆 -->
-  <view class='partnership' wx:if="{{partner_level == 1}}">
+  <view class='partnership' wx:if='{{!isInLove}}'>
     <!-- 标题栏 -->
     <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
-      <block wx:if='{{!isInLove}}'>
+      <block>
         <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_left.png'></image>
         <text class='partnership-label-text'>我想和你一起背单词</text>
         <view class='partnership-icon-container {{label_should_fixed ? "label-fixed-icon-container" : ""}}'>
-          <image style='margin-right:30rpx' src='{{ic_soundless_like}}'></image>
-          <image src='{{ic_lighten}}'></image>
+          <image style='margin-right:30rpx' src='{{isShowSoundlessLikeCardList?ic_soundless_like_check: ic_soundless_like}}' bindtap='onShowSoundlessLikeYouTap'></image>
+          <image src='{{isSuperLighten?ic_lighten_check:ic_lighten}}' bindtap='onSuperLightenTap'></image>
           <canvas class='partnership-like-toast' canvas-id='partnership_toast_like' wx:if="{{showLikeToast}}" catchtap='closeLikeToastTap'></canvas>
           <canvas class='partnership-lighten-toast' canvas-id='partnership_toast_lighten' wx:if="{{showLightenToast}}" catchtap='closeLightenToastTap'></canvas>
         </view>
       </block>
-      <block wx:elif='{{isInLove}}'>
-        <view style='width:100%;height:{{label_origin_height}};display:flex;justify-content:center;align-items:center;padding-right:{{label_should_fixed ? "10%" : "0"}};z-index:9999;'>
-          <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_left.png'></image>
-          <text class='partnership-label-text'>我想和你一起背单词</text>
-          <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_right.png' style='margin-left:20rpx;'></image>
-        </view>
-
-      </block>
     </view>
     <!-- 卡片 -->
-    <view class='partnership-card-container'>
-      <image class='partnership-base-image'></image>
-      <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}' bindtap='onLikeTap'></image>
-      <image class='partnership-card-cover-image' src='{{ic_super_like}}' bindtap='onSuperLikeTap'></image>
-      <view class='partnership-userinfo-container'>
-        <text class='black partnership-normal-text'>左撇子杰克</text>
-        <image src='{{ic_gender}}'></image>
-        <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁 · 广东外语外贸大学</text>
-      </view>
-      <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
-      <view class='partnership-tag-container'>
-        <view class='tag blue-bg'>好好学习</view>
-        <view class='tag light-blue-bg'>乐观</view>
-        <view class='tag light-pink-bg'>幽默风趣</view>
-      </view>
-    </view>
+    <block>
+      <view class='partnership-card-container'>
+        <image class='partnership-base-image' src='{{top_card.cover}}'></image>
+        <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}' bindtap='onLikeTap'></image>
+        <image class='partnership-card-cover-image' src='{{ic_super_like}}' bindtap='onSuperLikeTap'></image>
+        <view class='partnership-userinfo-container'>
+          <text class='black partnership-normal-text'>{{top_card.wx_name}}</text>
+          <image src='{{top_card.gender===0?ic_gender_male:ic_gender_female}}'></image>
+          <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁·广东外语外贸大学</text>
+        </view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{top_card.signature}}</view>
+        <view class='partnership-tag-container'>
+          <block wx:for='{{top_card.tag}}'>
+            <view class="tag {{index===0?'blue-bg': index===1 ? 'light-blue-bg':index===2?'light-pink-bg':index===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
+          </block>
 
+        </view>
+      </view>
+    </block>
     <block>
       <!-- 微信公众号引导关注view 只有在今日推荐看完以后才会出现 -->
       <view class='partnership-wechat-guide-container'>
@@ -176,7 +170,7 @@
           <view class='watch-more-button' catchtap='onMoreCardsTap'>
             <image src='{{ic_watch_more}}'></image>
             <text class='normal-text'>查看更多卡片</text>
-            <text class='partnership-min-text' style='margin-left:5rpx;'>+5</text>
+            <text class='partnership-min-text' style='margin-left:5rpx;'>+{{more_card_list.length}}</text>
           </view>
         </view>
       </view>
@@ -191,22 +185,24 @@
         <text>查看更多卡片</text>
         <view class='vip-dividing-line'></view>
       </view>
-      <view class='partnership-card-container'>
-        <image class='partnership-base-image'></image>
-        <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
-        <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
-        <view class='partnership-userinfo-container'>
-          <text class='black partnership-normal-text'>左撇子杰克</text>
-          <image src='{{ic_gender}}'></image>
-          <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁 · 广东外语外贸大学</text>
+      <block wx:for='{{more_card_list}}'>
+        <view class='partnership-card-container'>
+          <image class='partnership-base-image' src='{{item.cover}}'></image>
+          <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}' bindtap='onLikeTap' data-userid='{{item.user_id}}'></image>
+          <image class='partnership-card-cover-image' src='{{ic_super_like}}' bindtap='onSuperLikeTap' data-userid='{{item.user_id}}'></image>
+          <view class='partnership-userinfo-container'>
+            <text class='black partnership-normal-text'>{{item.wx_name}}</text>
+            <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
+            <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':'·'+item.institutions}}</text>
+          </view>
+          <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
+          <view class='partnership-tag-container'>
+            <block wx:for='{{item.tag}}' wx:index='tagIndex'>
+              <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
+            </block>
+          </view>
         </view>
-        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
-        <view class='partnership-tag-container'>
-          <view class='tag blue-bg'>好好学习</view>
-          <view class='tag light-blue-bg'>乐观</view>
-          <view class='tag light-pink-bg'>幽默风趣</view>
-        </view>
-      </view>
+      </block>
     </block>
 
     <!-- 时光倒流机释放 -->
@@ -217,58 +213,110 @@
         <text>时光倒流机</text>
         <view class='vip-dividing-line'></view>
       </view>
+      <block wx:for='{{time_reversal_list}}'>
       <view class='partnership-card-container'>
-        <image class='partnership-base-image'></image>
-        <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}'></image>
-        <image class='partnership-card-cover-image' src='{{ic_super_like}}'></image>
+        <image class='partnership-base-image' src='{{item.cover}}'></image>
+        <image class='img-super-like-you' wx:if='{{true}}' src='{{img_super_like_you}}'></image>
+        <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{ic_like}}' data-userid='{{item.user_id}}' bindtap='onLikeTap'></image>
+        <image class='partnership-card-cover-image' src='{{ic_super_like}}' data-userid='{{item.user_id}}' bindtap='onSuperLikeTap'></image>
         <view class='partnership-userinfo-container'>
-          <text class='black partnership-normal-text'>左撇子杰克</text>
-          <image src='{{ic_gender}}'></image>
-          <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>20岁 · 广东外语外贸大学</text>
+          <text class='black partnership-normal-text'>{{item.wx_name}}</text>
+          <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
+          <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':'·'+item.institutions}}</text>
         </view>
-        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>当神很忙时，我们必须自己拯救自己</view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
         <view class='partnership-tag-container'>
-          <view class='tag blue-bg'>好好学习</view>
-          <view class='tag light-blue-bg'>乐观</view>
-          <view class='tag light-pink-bg'>幽默风趣</view>
+          <block wx:for='{{item.tag}}' wx:index='tagIndex'>
+              <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
+            </block>
         </view>
+        </view>
+      </block>
+  
+  </block>
+
+</view>
+<!-- 这是匹配成功后的页面 -->
+<view class='partnership' wx:elif="{{isInLove}}">
+  <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
+    <block>
+      <view style='width:100%;height:{{label_origin_height}};display:flex;justify-content:center;align-items:center;padding-right:{{label_should_fixed ? "10%" : "0"}};z-index:9999;'>
+        <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_left.png'></image>
+        <text class='partnership-label-text'>我想和你一起背单词</text>
+        <image class='partnership-label-small-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/label_partnership_right.png' style='margin-left:20rpx;'></image>
       </view>
+
     </block>
+  </view>
+  <view class='partner-card-container' style='margin-top:29rpx;'>
+    <image class='bg-partner-card' src='{{bg_partner_card}}'>
+    </image>
+    <view class='card-content-body'>
+      <image class='img-card-title' src='{{img_card_title}}'></image>
+      <view class='users-photo-container'>
+        <!--匹配双方的头像-->
+        <image class='img-circle-photo' src='{{img_photo_example}}'></image>
+        <image class='img-heart' src='{{ic_heart}}'></image>
+        <image class='img-circle-photo' src='{{img_photo_example}}'></image>
+      </view>
+
+      <text class='text-match-days'>你和哈哈哈哈走过的第[999]天</text>
+      <image class='btn-meet-ta' src='{{btn_meetta}}' bindtap='onMeetTaTap'></image>
+      <image class='btn-remind-ta' src='{{btn_remindta}}' bindtap='onRemindTaTap'></image>
+      <image class='btn-break' src='{{btn_break}}' bindtap='onBreakTap'></image>
+      <block wx:if='{{!isShowRestartBtn}}'>
+        <canvas canvas-id='progressbar-canvas' class='word-progressbar'></canvas>
+      </block>
+      <block wx:elif='{{isShowRestartBtn}}'>
+        <view class='btn-restart' bindtap='onRestartTap'>
+          <text class='text-totalnumber'>总背33000</text>
+          <image class='img-restart-text' src='{{img_restart_text}}'></image>
+        </view>
+      </block>
+
+      <block wx:if='{{false}}'>
+        <view class='btn-restart'>
+          <text class='text-totalnumber'>总背33000</text>
+          <image class='img-restart-text' src='{{img_restart_text}}'></image>
+        </view>
+      </block>
+
+    </view>
 
   </view>
-  <!-- 这是匹配成功后的页面 -->
-  <view class='partnership' wx:elif="{{partner_level == 2}}"></view>
 
-  <swiper class='king-swiper' previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange' style='margin-top: 20rpx;'>
-    <block wx:for="{{card_list}}">
-      <swiper-item>
-        <view class='icon'>
-          <image class='icon-download-image' src='/images/ic_download.png' catchtap='onDownloadTap' data-url='{{item.daily_pic}}'></image>
-          <image class='icon-image' src='{{item.daily_pic}}'></image>
-        </view>
-      </swiper-item>
-    </block>
-  </swiper>
-  <!-- <ad unit-id="adunit-a8e6b7e4a651af7b" style="margin-bottom:36rpx;"></ad> -->
-  <view class='dialog' catchtouchmove='stopPageScroll' wx:if="{{isShowDialog}}">
-    <block wx:if="{{showInfo}}">
-      <view class='book-dialog-container' animation="{{animDialog}}">
-        <view style='display:flex;flex-direction:row;align-items:center;z-index: 9999;width:100%;margin-top:52rpx;justify-content:center'>
-          <image src='{{book_info_pic}}'></image>
-          <view style='display:flex;flex-direction:column;margin-left:40rpx;z-index: 9999;'>
-            <view class='book-dialog-title'>{{book_info_name}}</view>
-            <view class='book-dialog-author'>作者：{{book_info_author}}</view>
-          </view>
-        </view>
-        <view style='margin-top:60rpx;font-size:40rpx;color:#222c38;z-index: 9999;margin-left:45rpx'>简介</view>
-        <view style='font-size:24rpx;word-break:break-all;text-overflow:wrap; flex-wrap: wrap;color:#222c38;margin-top:20rpx;z-index: 9999;width:100%;display:flex;justify-content:center'>
-          <text style='margin-left:40rpx;margin-right:40rpx;line-height:34rpx;'>{{book_info_introduction}}</text>
-        </view>
+</view>
 
+<swiper class='king-swiper' previous-margin='60rpx' next-margin='30rpx' current='{{currentPos}}' bindchange='onSwiperChange' style='margin-top: 20rpx;'>
+  <block wx:for="{{card_list}}">
+    <swiper-item>
+      <view class='icon'>
+        <image class='icon-download-image' src='/images/ic_download.png' catchtap='onDownloadTap' data-url='{{item.daily_pic}}'></image>
+        <image class='icon-image' src='{{item.daily_pic}}'></image>
       </view>
-      <image class='close-img' src='/images/ic_close.png' catchtap='onCloseDialog'></image>
-    </block>
-    <!-- <block wx:elif="{{showRedPacket}}">
+    </swiper-item>
+  </block>
+</swiper>
+<!-- <ad unit-id="adunit-a8e6b7e4a651af7b" style="margin-bottom:36rpx;"></ad> -->
+<view class='dialog' catchtouchmove='stopPageScroll' wx:if="{{isShowDialog}}">
+  <block wx:if="{{showInfo}}">
+    <view class='book-dialog-container' animation="{{animDialog}}">
+      <view style='display:flex;flex-direction:row;align-items:center;z-index: 9999;width:100%;margin-top:52rpx;justify-content:center'>
+        <image src='{{book_info_pic}}'></image>
+        <view style='display:flex;flex-direction:column;margin-left:40rpx;z-index: 9999;'>
+          <view class='book-dialog-title'>{{book_info_name}}</view>
+          <view class='book-dialog-author'>作者：{{book_info_author}}</view>
+        </view>
+      </view>
+      <view style='margin-top:60rpx;font-size:40rpx;color:#222c38;z-index: 9999;margin-left:45rpx'>简介</view>
+      <view style='font-size:24rpx;word-break:break-all;text-overflow:wrap; flex-wrap: wrap;color:#222c38;margin-top:20rpx;z-index: 9999;width:100%;display:flex;justify-content:center'>
+        <text style='margin-left:40rpx;margin-right:40rpx;line-height:34rpx;'>{{book_info_introduction}}</text>
+      </view>
+
+    </view>
+    <image class='close-img' src='/images/ic_close.png' catchtap='onCloseDialog'></image>
+  </block>
+  <!-- <block wx:elif="{{showRedPacket}}">
       <view style='width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center'>
         <block wx:if="{{isPacked}}">
           <image class='bg-red-packet' src='/images/bg_red_packet_packed.png' mode='widthFix'></image>
@@ -291,17 +339,17 @@
       </view>
 
     </block> -->
-    <block wx:elif="{{showAssistSuccess}}">
-      <image class='image-SupportSuccess' src='/images/SupportSuccess.png' catchtap='onCloseDialog'></image>
-    </block>
-    <block wx:elif="{{showDownloadImage}}">
-      <view class='download-img-container'>
-        <image class='sign-image' mode='widthFix' src='{{"https://file.ourbeibei.com/l_e/static/images/book_sign_day_" + begin_day + ".jpg"}}'></image>
-      </view>
-      <view class='download-text'>{{download_success ? "下载成功" : "分享卡片下载中..."}}</view>
-    </block>
-  </view>
- 
+  <block wx:elif="{{showAssistSuccess}}">
+    <image class='image-SupportSuccess' src='/images/SupportSuccess.png' catchtap='onCloseDialog'></image>
+  </block>
+  <block wx:elif="{{showDownloadImage}}">
+    <view class='download-img-container'>
+      <image class='sign-image' mode='widthFix' src='{{"https://file.ourbeibei.com/l_e/static/images/book_sign_day_" + begin_day + ".jpg"}}'></image>
+    </view>
+    <view class='download-text'>{{download_success ? "下载成功" : "分享卡片下载中..."}}</view>
+  </block>
+</view>
+
 
 </view>
 
@@ -324,7 +372,7 @@
 
     <!--自定义Dots样式的swiper 用于资料未完善时的footer1 -->
     <view class='footer1' wx:if='{{!isExistInfor}}'>
-      <swiper class='swiper-box' bindchange='swiperChange' current='{{currentItem}}' >
+      <swiper class='swiper-box' bindchange='swiperChange' current='{{currentItem}}'>
         <!--两个资料卡片 body -->
         <swiper-item class='swiper-body1'>
           <text class='text-title'>性别</text>
@@ -351,7 +399,7 @@
         <view class="dot{{1 == swiperCurrent ? ' active' : ''}}"></view>
       </view>
     </view>
-    
+
 
     <!--提示更换照片footer -->
     <view class='footer2' wx:if='{{isNeedChangePhoto}}'>
@@ -364,14 +412,37 @@
   </view>
 </view>
 
- <!--vip开通成功弹窗 显示3秒后隐藏-->
+<!--vip开通成功弹窗 显示3秒后隐藏-->
 <pop-openvip id='pop-openvip' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-openvip>
 
 <!--vip功能介绍弹窗 底部按钮绑定开通vip触碰事件 -->
- <pop-vipintro id='pop-vipintro' bind:hide='hidePopup' bind:openVip='openVip' catchtouchmove='stopPageScroll' vipContent='{{vipContent}}' ></pop-vipintro>
+<pop-vipintro id='pop-vipintro' bind:hide='hidePopup' bind:openVip='openVip' catchtouchmove='stopPageScroll' vipContent='{{vipContent}}'></pop-vipintro>
 
 <!-- ios用户引导支付弹窗-->
 <pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:addStaff='addStaff'></pop-lead>
 
 <!-- 完善更多资料弹窗-->
-<pop-wxcode-blue id='pop-bluewxcode' bind:hide='hidePopup'   bind:download='onDownloadWxCodeTap' catchtouchmove='stopPageScroll' ></pop-wxcode-blue>
+<pop-wxcode-blue id='pop-bluewxcode' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:download='onDownloadWxCodeTap'></pop-wxcode-blue>
+
+<!--toast组件-->
+<card-toast id='card-toast'> </card-toast>
+
+<!--相遇码弹窗-->
+<pop-meetcode id='pop-meetcode' bind:hide='hidePopup' catchtouchmove='stopPageScroll'>
+</pop-meetcode>
+
+<!--提醒背单词弹窗-->
+<pop-remindta id='pop-remind' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:send='onSendRemindTap'>
+</pop-remindta>
+
+<!--解除关系弹窗-->
+<pop-break id='pop-break' bind:ensure='onBreakEnsureTap' bind:cancel='onBreakCancelTap' bind:hide='hidePopup' catchtouchmove='stopPageScroll'>
+</pop-break>
+
+<!--重温回忆弹窗-->
+<pop-restart id='pop-restart' bind:ensure='onRestartEnsureTap' bind:cancel='onRestartCancelTap' bind:hide='hidePopup' catchtouchmove='stopPageScroll'>
+</pop-restart>
+
+<!--匹配成功弹窗-->
+<pop-match-success id='pop-matchsuccess' bind:hide='hidePopup' catchtouchmove='stopPageScroll'>
+</pop-match-success>

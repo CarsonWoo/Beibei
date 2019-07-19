@@ -19,10 +19,13 @@
   display: block;
 }
 .pop-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: fixed;
   top: 65rpx;
   left:52rpx;
-  transform: translateY(300%);
+  transform: translateY(500%);
   transition: all 0.4s ease;
   z-index: 9999;
   width: 645rpx;
@@ -31,13 +34,15 @@
   /* 本地base编码 尝试--读取ftp服务器再转换base流放到wxss中 */
   background: url('https://file.ourbeibei.com/l_e/static/mini_program_icons/img_vip_intro.png');
   background-size: 100% 100%;
+  -moz-background-size:100% 100%;
+  background-repeat: no-repeat;
 }
 
 .pop-footer{
   display: flex;
   flex-direction: row;
   margin-top: 985rpx;
-  width:640rpx;
+  width:98.9%;
   height: 104rpx;
   background-image: linear-gradient(90deg, 
 		#5c3cff 31%, 

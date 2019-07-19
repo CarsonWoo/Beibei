@@ -13,8 +13,8 @@
     <view class='text-description'>将清零匹配天数及总背单词数，</view>
     <view class='text-description'>从你们相遇的第一天开始~</view>
     <view class='btns-row'>
-      <button class='btn-cancel'>取消</button>
-      <button class='btn-sure'>确认</button>
+      <button class='btn-cancel' bindtap='_cancel'>取消</button>
+      <button class='btn-sure'bindtap='_ensure'>确认</button>
     </view>
   </view>
 </view>

@@ -10,10 +10,10 @@
     </view>
     <view class='pop-footer'>
       <view class='bg-et'>
-        <textarea class='et-tixing' placeholder='快来和我一起背单词吧！'  maxlength='11'>
-        </textarea>
+        <input type='text' placeholder='快来和我一起背单词吧!' placeholder-class='center-placeholder' auto-focus='true' bindinput='_input'>
+        </input>
       </view>
-      <button class='btn-send'>发送</button>
+      <button class='btn-send' bindtap='_send'>发送</button>
     </view>
   </view>
 </view>

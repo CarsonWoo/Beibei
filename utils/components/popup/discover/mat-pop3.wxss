@@ -1,5 +1,7 @@
 /* utils/components/popup/discover/mat-pop3.wxss */
+
 /* components/match/mat-pop3.wxss */
+
 .pop-mask {
   position: fixed;
   top: 0;
@@ -19,48 +21,53 @@
   display: block;
 }
 
-.pop-container{
+.pop-container {
   display: flex;
   flex-direction: column;
   align-items: center;
- position: fixed;
-  top:297rpx;
+  position: fixed;
+  top: 297rpx;
   left: 116rpx;
-  transform: translateY(300%);
+  transform: translateY(500%);
   transition: all 0.4s ease;
   z-index: 9999;
 }
-.pop-head{
+
+.pop-head {
   position: relative;
   width: 517rpx;
   height: 256rpx;
 }
-.bg-img{
+
+.bg-img {
   width: 100%;
   height: 100%;
 }
-.bg-text{
+
+.bg-text {
   left: 0;
   position: absolute;
   bottom: 0;
-  background-color:  rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, 0.4);
   width: 517rpx;
   height: 44rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.text-tixing{
+
+.text-tixing {
   margin-top: 10rpx;
   font-family: PingFang-SC-Medium;
-	font-size: 26rpx;
-	font-weight: normal;
-	font-stretch: normal;
-	line-height: 26rpx;
-	letter-spacing: 0rpx;
-	color: #ffffff;
+  font-size: 26rpx;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 26rpx;
+  letter-spacing: 0rpx;
+  color: #fff;
 }
-.pop-footer{
+
+.pop-footer {
   height: 212rpx;
   width: 517rpx;
   border-bottom-left-radius: 20rpx;
@@ -70,40 +77,50 @@
   flex-direction: column;
   align-items: center;
 }
-.bg-et{
+
+.bg-et {
   margin-top: 31rpx;
   width: 441rpx;
-	height: 66rpx;
-	background-color: #f4f4f4;
-	border-radius: 10rpx;
-	border: solid 1rpx #e5e5e5;
+  height: 66rpx;
+  background-color: #f4f4f4;
+  border-radius: 10rpx;
+  border: solid 1rpx #e5e5e5;
 }
-.et-tixing{
-  font-family: PingFang-SC-Regular;
-	font-size: 28rpx;
+
+input {
+  margin-top: 7rpx;
+  font-size: 28rpx;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 28rpx;
+	line-height: 42rpx;
 	letter-spacing: 0rpx;
 	color: #8b8b8b;
-  margin-left: 77rpx;
-  margin-top: 17rpx;
-  margin-right: 76rpx;
-  margin-bottom: 20rpx;
+  text-align: center;
+  caret-color: #6170ff;
 }
-.btn-send{
+.center-placeholder{
+  font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 42rpx;
+	letter-spacing: 0rpx;
+	color: #8b8b8b;
+  text-align: center;
+}
+
+.btn-send {
   margin-top: 25rpx;
   padding-top: 15rpx;
   width: 197rpx;
-	height: 59rpx;
-	background-color: #ffffff;
-	border-radius: 30rpx;
-	border: solid 1rpx #826aff;
+  height: 59rpx;
+  background-color: #fff;
+  border-radius: 30rpx;
+  border: solid 1rpx #826aff;
   font-family: PingFang-SC-Regular;
-	font-size: 28rpx;
-	font-weight: normal;
-	font-stretch: normal;
-	line-height: 28rpx;
-	letter-spacing: 0rpx;
-	color: #826aff;
+  font-size: 28rpx;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 28rpx;
+  letter-spacing: 0rpx;
+  color: #826aff;
 }

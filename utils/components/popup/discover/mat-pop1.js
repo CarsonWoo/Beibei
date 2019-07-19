@@ -13,7 +13,9 @@ Component({
    */
   data: {
     flag: true,
-    meetCode: 52520,
+    meetCode:'00000',
+    toastContent:'',
+    isShowToast:false,
     img_girls2: app.globalData.FTP_ICON_HOST + 'img_girls2.png',
     
   },
@@ -31,6 +33,23 @@ Component({
       this.setData({
         flag: !this.data.flag
       })
+    },
+    setMeetCode(code){
+      this.setData({
+        meetCode:code
+      })
+    },
+    showToast(content){
+      let self = this
+      this.setData({
+        toastContent:content,
+        isShowToast:true
+      })
+      setTimeout(function(){
+        self.setData({
+          isShowToast:false
+        })
+      },3000)
     },
 
     //内部私有事件最好用下划线_开头

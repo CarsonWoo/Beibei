@@ -273,3 +273,150 @@
   margin-bottom: 33rpx;
 }
 /* 以上为 完善资料弹窗 wxss类 */
+
+.partnership {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20rpx;
+}
+
+/*匹配成功后的关系卡片 */
+.partner-card-container{
+  width: 702rpx;
+  position: relative;
+  height: 791rpx;
+}
+.bg-partner-card{
+  width: 100%;
+  height: 791rpx;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 10;
+}
+.card-content-body{
+  width: 100%;
+  height: 100%;
+ position: absolute;
+ top:0;
+ left:0;
+ z-index:19;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+.img-card-title{
+  width: 290rpx;
+	height: 76rpx;
+  margin-top: 29rpx;
+}
+
+ .users-photo-container{
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+} 
+.img-circle-photo{
+  width: 56rpx;
+	height: 56rpx;
+  margin-left: 3.5rpx;
+  margin-right: 3.5rpx;
+  border-radius: 28rpx;
+}
+.img-heart{
+  width: 56rpx;
+	height: 56rpx;
+  margin-left: 3.5rpx;
+  margin-right: 3.5rpx;
+}
+.text-match-days{
+  margin-top: 18rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url(https://file.ourbeibei.com/l_e/static/mini_program_icons/bg-matchday.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size:100% 100%;
+	height: 43rpx;
+  font-family: PingFang-SC-Medium;
+	font-size: 26rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 52rpx;
+	letter-spacing: 1rpx;
+	color: #ffffff;
+  
+  padding-bottom: 9rpx;
+  padding-left: 16rpx;
+  padding-right: 28rpx;
+}
+
+.btn-meet-ta{
+  width: 199rpx;
+  height: 80rpx;
+  position: absolute;
+  bottom: 141rpx;
+  left: 25rpx;
+}
+.btn-remind-ta{
+  width: 245rpx;
+	height: 61rpx;
+  position: absolute;
+  bottom: 57rpx;
+  left: 25rpx;
+}
+.btn-break{
+  width: 164rpx;
+	height: 59rpx;
+  position: absolute;
+  right:27rpx;
+  bottom: 135rpx;
+}
+
+.word-progressbar{
+  position: absolute;
+  right: 27rpx;
+  bottom: 58rpx;
+  width: 335rpx;
+  height: 45rpx;
+}
+
+.btn-restart{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  right: 27rpx;
+  bottom: 49rpx;
+  width: 259rpx;
+	height: 59rpx;
+	background-image: linear-gradient(90deg, 
+		#ffffff 37%, 
+		#e6e6e6 100%), 
+	linear-gradient(
+		#ffffff, 
+		#ffffff);
+	background-blend-mode: normal, 
+		normal;
+	border-radius: 28rpx;
+	border: solid 3rpx #363e49;
+}
+.text-totalnumber{
+  font-family: PingFang-SC-Regular;
+	font-size: 22rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 44rpx;
+	letter-spacing: 0rpx;
+	color: #404751;
+  margin-left: 19rpx;
+}
+.img-restart-text{
+  width: 111rpx;
+	height: 27rpx;
+  position: absolute;
+  right: 23rpx;
+}

@@ -30,7 +30,7 @@
   border-radius: 20rpx;
   position: fixed;
   bottom: 0rpx;
-  transform: translateY(300%);
+  transform: translateY(500%);
   transition: all 0.4s ease;
   z-index: 9999;
 }
@@ -110,7 +110,7 @@
 	line-height: 28rpx;
 	letter-spacing: 0rpx;
 	color: #535353;
-  padding-top: 16rpx;
+  padding-top: 18rpx;
 }
 .btn-sure{
   width: 184rpx;
@@ -125,5 +125,5 @@
 	line-height: 28rpx;
 	letter-spacing: 0rpx;
 	color: #826aff;
-  padding-top: 16rpx;
+  padding-top: 18rpx;
 }

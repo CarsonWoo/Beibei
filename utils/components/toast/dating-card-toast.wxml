@@ -1,0 +1,4 @@
+<!--utils/components/toast/dating-card-toast.wxml-->
+<view class=" {{isShowToast?'toast-show':'toast-unshow'}}">
+<text class='toast-content'>{{toastContent}}</text>
+</view>

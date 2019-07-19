@@ -21,6 +21,8 @@
    
     "pop-restart": "/utils/components/popup/discover/mat-pop4",
     
-    "pop-matchsuccess": "/utils/components/popup/discover/mat-pop5"
+    "pop-matchsuccess": "/utils/components/popup/discover/mat-pop5",
+
+    "card-toast":"/utils/components/toast/dating-card-toast"
   }
 }

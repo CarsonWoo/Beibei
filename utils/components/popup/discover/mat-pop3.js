@@ -14,6 +14,7 @@ Component({
   data: {
     flag: true,
     img_couple: app.globalData.FTP_ICON_HOST + 'img_couple.png',
+    inputRemindText:'快来和我一起背单词吧!'
 
   },
 
@@ -31,10 +32,22 @@ Component({
         flag: !this.data.flag
       })
     },
+    getRemindText(){
+      return this.data.inputRemindText
+    },
 
     //内部私有事件最好用下划线_开头
     _hide() {
       this.triggerEvent("hide")
     },
+    _send(){
+      this.triggerEvent('send')
+    },
+    _input:function(e){
+      var text = e.detail.value
+      this.setData({
+        inputRemindText:text
+      })
+    }
   }
 })

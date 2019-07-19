@@ -26,7 +26,7 @@
   position: fixed;
   top:297rpx;
   left:116rpx;
-  transform: translateY(300%);
+  transform: translateY(500%);
   transition: all 0.4s ease;
   z-index: 9999;
 }
