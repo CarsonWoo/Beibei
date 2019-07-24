@@ -41,7 +41,7 @@ canvas {
   width: 100%;
   justify-content: center;
   z-index: 9999;
-  margin-top: 220rpx;
+  margin-top: 176rpx;
 }
 
 .student-number {

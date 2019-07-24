@@ -167,9 +167,14 @@
       <text>小游戏</text>
     </view> -->
 
-    <view class='welfare-item' catchtap='onPrizeTap'>
+    <!-- <view class='welfare-item' catchtap='onPrizeTap'>
       <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
       <text>赢奖品</text>
+    </view> -->
+
+    <view class='welfare-item' catchtap='onCetTap'>
+      <image class='welfare-img' src='/images/ic_home_improve.png'></image>
+      <text>提高班</text>
     </view>
 
   </view>
