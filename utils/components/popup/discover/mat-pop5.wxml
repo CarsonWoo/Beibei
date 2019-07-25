@@ -10,10 +10,10 @@
 <view class='pop-text2'>和Ta一起加油吧！</view>
 <view class='progress-body'>
 <!--该进度条部分属性只能在组件库2.4.0及以上正常显示 -->
-<progress percent="50" stroke-width='26rpx' border-radius='13rpx' backgroundColor='#fff' activeColor='#8269ff' active></progress>
+<progress percent="100" stroke-width='26rpx' border-radius='13rpx' backgroundColor='#fff' activeColor='#8269ff' active></progress>
 <image src='{{ic_progress_heart}}' class='img-heart'></image>
 </view>
-<button class='btn-enter'>点击进入旅程</button>
+<button class='btn-enter' bindtap='_hide'>点击进入旅程</button>
 </view>
 </view>
 

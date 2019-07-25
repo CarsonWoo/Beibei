@@ -1,6 +1,13 @@
 /* utils/components/popup/test.wxss */
 
-
+.animation-canvas-text{
+  width: 70rpx;
+  height: 100rpx;
+  position: absolute;
+  bottom: 80rpx;
+  right:208rpx;
+  z-index: 9999;
+}
 
 /* 以下为完善资料弹窗 wxss类 */
 .pop-mask {

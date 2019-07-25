@@ -7,7 +7,7 @@
       <image class='img-head' src='{{img_girls2}}'></image>
     </view>
     <view class='pop-footer'>
-      <text class='text-meetcode'>相遇码{{meetCode}}</text>
+      <text class='text-meetcode'>相遇码 {{meetCode}}</text>
       <view class='text-lead'>带上复制的相遇码</view>
       <view class='text-lead'>添加月老小呗和Ta相遇</view>
     </view>

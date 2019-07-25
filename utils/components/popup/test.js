@@ -50,6 +50,91 @@ Page({
       return "总背" + number + "/80";
     }
   },
+
+  drawAnimationText(){
+    var rpx;
+    //获取屏幕宽度，获取自适应单位
+    wx.getSystemInfo({
+      success: function (res) {
+        rpx = res.windowWidth / 375;
+      },
+    })
+
+    var step = 0;
+    var closeStep = 0;
+    var fontSize = 15*rpx
+    var context = wx.createContext();
+    var maxTime=2000;
+    var time = 0;
+
+    wx.drawCanvas({
+      canvasId: 'animation-canvas',
+      actions: context.getActions()
+    })
+
+    let requestAnimFrame = (function () {
+      return function (callback) {
+        setTimeout(callback, 1000/5);
+      };
+    })();
+    function loop() {
+      time = time + 1000 / 5;
+      if(time<maxTime){
+        if(step===0){
+          drawText(0,3*fontSize,0.38)
+        }else if(step===1){
+          drawText(0, 3 * fontSize,0.38)
+          drawText(5, 2 * fontSize,1)
+        }else{
+          if(step%2==0){
+            drawText(0, 3 * fontSize, 0.38)
+            drawText(5, 2 * fontSize, 1)
+            drawText(0, 1 * fontSize, 0.38)
+          }else{
+            drawText(0, 3 * fontSize, 1)
+            drawText(5, 2 * fontSize, 0.38)
+            drawText(0, 1 * fontSize, 1)
+          }
+        }
+        step = step + 1;
+        console.log("step:"+step)
+      }else{
+         //逐渐消失
+        if(closeStep ===0){
+          drawText(5, 2 * fontSize, 1)
+          drawText(0, 1 * fontSize, 0.38)
+        }else if(closeStep===1){
+          drawText(0, 1 * fontSize, 0.38)
+        }
+        closeStep ++;
+      }
+     
+      wx.drawCanvas({
+        canvasId: 'animation-canvas',
+        actions: context.getActions()
+      })
+
+      requestAnimFrame(loop);
+    }
+
+    /*
+    * 根据坐标和透明度绘制文字
+    */
+    function drawText(x, y, transparencyValue){
+  
+      context.globalAlpha = transparencyValue
+      context.font = parseInt(fontSize)+'px Arial'
+      context.setFillStyle('#ffffff')
+      context.fillText("+20",x, y)
+      context.setStrokeStyle("#8269ff")
+      context.strokeText("+20", x, y)
+      
+      context.fill()
+      console.log("value:"+transparencyValue)
+    }
+    loop();  
+  },
+
   drawProgressBar(){
     var rpx;
     //获取屏幕宽度，获取自适应单位
@@ -102,29 +187,83 @@ Page({
     ctx.fillText(wordsNumberText, 100 * rpx + tl, borderHeight / 2+tl+3.5*rpx);
     ctx.draw()
 
-    // var context = wx.createCanvasContext('progressbar-canvas')
-
-
-    // context.beginPath();
-    // context.setStrokeStyle("#00ff00")
-    // context.setLineWidth(5)
-    // context.rect(0, 0, 200, 200)
-    // context.stroke()
-
-    // context.beginPath();
-    // context.setStrokeStyle("#ff0000")
-    // context.setLineWidth(2)
-    // context.moveTo(160, 100)
-    // context.arc(100, 100, 60, 0, 2 * Math.PI, true)
-    // context.moveTo(140, 100)
-    // context.arc(100, 100, 40, 0, Math.PI, false)
-    // context.moveTo(85, 80)
-    // context.arc(80, 80, 5, 0, 2 * Math.PI, true)
-    // context.moveTo(125, 80)
-    // context.arc(120, 80, 5, 0, 2 * Math.PI, true)
-    // context.stroke()
-    // context.draw()
+   
     
+  },
+
+  drawSecondProgressBar(){
+    var rpx;
+    //获取屏幕宽度，获取自适应单位
+    wx.getSystemInfo({
+      success: function (res) {
+        rpx = res.windowWidth / 375;
+      },
+    })
+   
+    var scale = this.data.studiedWordsNumber / 80; //进度条比例
+    var wordsNumberText = this.switchChooseNumberText(this.data.studiedWordsNumber);
+
+    var borderHeight = 19 * rpx;
+    var borderWidth = 156 * rpx;
+    var strokeWidth = 1.5 * rpx; //外框的线条宽度
+    var tl = strokeWidth / 2; //顶部和左边的缝隙
+    var solidWidth = 12 * rpx;//填充条宽度
+    var il = (borderHeight - solidWidth - strokeWidth * 2) / 2; //填充条与框边的padding值
+    var ctx = wx.createCanvasContext('progressbar-canvas')
+    var pi = Math.PI;
+
+    
+ 
+    var lastNumer = this.data.studiedWordsNumber - 20;
+    console.log('lastNumber' + lastNumer)
+    var lastScale = lastNumer / 80;
+    var nowScale = lastScale
+    var newScale = this.data.studiedWordsNumber / 80;
+
+    //填充条绘制
+    
+    
+      var timer = setInterval(function () {
+      //  ctx.clearRect(borderHeight / 2 + tl, borderHeight / 2 + tl, borderWidth + tl, borderHeight / 2 + tl);
+        if(nowScale < newScale){ 
+          clearInterval(timer)
+        }
+        draw(nowScale)
+        nowScale = nowScale+ 0.000001
+      }, 1000)
+   
+
+    function draw(nowScale){
+      //外框绘制
+      ctx.beginPath()
+      ctx.setStrokeStyle("#363e49")
+      ctx.moveTo(borderHeight / 2 + tl, tl)
+      ctx.setLineWidth(strokeWidth)
+      ctx.lineTo(borderWidth + tl, tl)
+      ctx.arc(borderWidth + tl, borderHeight / 2 + tl, borderHeight / 2, 1.5 * pi, 0)
+      ctx.arc(borderWidth + tl, borderHeight / 2 + tl, borderHeight / 2, 0, 0.5 * pi)
+      ctx.lineTo(borderHeight / 2 + tl, borderHeight + tl);
+      ctx.arc(borderHeight / 2 + tl, borderHeight / 2 + tl, borderHeight / 2, 0.5 * pi, 1 * pi)
+      ctx.arc(borderHeight / 2 + tl, borderHeight / 2 + tl, borderHeight / 2, 1 * pi, 1.5 * pi)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(borderHeight / 2 + tl, borderHeight / 2 + tl)
+      ctx.setLineCap("round")
+      ctx.setLineWidth(solidWidth)
+      ctx.setStrokeStyle("#8269ff")
+      ctx.lineTo((borderWidth + tl) * nowScale, borderHeight / 2 + tl)
+      ctx.stroke()
+     
+
+      //文字绘制
+      ctx.beginPath()
+      ctx.setFontSize(11 * rpx)
+      ctx.fillStyle = "#404751"
+      ctx.fillText(wordsNumberText, 100 * rpx + tl, borderHeight / 2 + tl + 3.5 * rpx);
+      ctx.draw()
+    }
+
   },
 
   
@@ -284,6 +423,7 @@ Page({
    */
   onReady: function () {
     this.drawProgressBar();
+    
     //绑定弹窗组件id
     this.popup1 = this.selectComponent("#pop-openvip");
     this.popup2 = this.selectComponent("#pop-lead");
@@ -300,12 +440,27 @@ Page({
   
   },
   showCardToast(){
-    this.cardToast.setToastContent("测试一下toast")
+    this.cardToast.setToastContent("测试一下toast哈哈哈哈哈哈啊实打实大师as")
     this.cardToast.showToast(3000)
   },
   onSendRemindTap(){
     console.log('you click send remind')
     console.log(this.popup9.getRemindText())
+  },
+  onProgressBarTap(){
+    this.drawAnimationText()
+    this.setData({
+      studiedWordsNumber: this.data.studiedWordsNumber + 20
+    })
+    this.drawSecondProgressBar()
+    
+  },
+  onBreakTap() { 
+    this.setData({
+      studiedWordsNumber: this.data.studiedWordsNumber + 20
+    })
+    this.drawSecondProgressBar()
+    
   },
 
   /**

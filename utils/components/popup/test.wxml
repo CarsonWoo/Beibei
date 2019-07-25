@@ -14,6 +14,7 @@
   <button id='btn-pop-matchsuccess' bindtap='showPopup'>匹配成功进度条弹窗</button>
   <button id='btn-pop-postinfor' bindtap='showInforPop'>完善修改资料并提交弹窗</button>
   <button id='btn-toast' bindtap='showCardToast'> 展示toast</button>
+  
   <view class='partnership'>
     <view class='partner-card-container'>
       <image class='bg-partner-card' src='{{bg_partner_card}}'>
@@ -29,10 +30,12 @@
          <text class='text-match-days'>你和哈哈哈哈走过的第[999]天</text>
         <image class='btn-meet-ta' src='{{btn_meetta}}'></image>
         <image class='btn-remind-ta' src='{{btn_remindta}}'></image>
-        <image class='btn-break' src='{{btn_break}}'></image>
+        <image class='btn-break' src='{{btn_break}}' bindtap='onBreakTap'></image>
         <block wx:if='false'>
-          <canvas canvas-id='progressbar-canvas' class='word-progressbar'></canvas>
+          <canvas canvas-id='progressbar-canvas' class='word-progressbar' bindtap='onProgressBarTap'></canvas>
         </block>
+
+        <canvas canvas-id='animation-canvas' class='animation-canvas-text'></canvas>
 
         <block wx:if='{{false}}'>
           <view class='btn-restart'>
@@ -44,6 +47,8 @@
       </view>
 
     </view>
+
+     
 
   </view>
 
@@ -60,7 +65,10 @@
   <pop-restart id='pop-restart' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-restart>
   <pop-matchsuccess id='pop-matchsuccess' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-matchsuccess>
   <card-toast id='card-toast'> </card-toast>
+ 
+
 </view>
+
 
 
 <!--发现页 完善、修改资料提交弹窗-->

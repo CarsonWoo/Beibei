@@ -3,15 +3,16 @@
   display: none;
 }
 .toast-body-show{
-  z-index: 99999;
+  z-index: 9999;
   display: block;
 }
 .toast-content{
+  z-index: 9999;
+  text-align: center;
   position:fixed;
   left:50%;
   bottom: 33.4%;
-  transform:translate(-50%,-50%);
-  z-index:1000;
+  transform:translate(-50% ,-50% );
 	background-color: #000000;
 	border-radius: 19rpx;
 	opacity: 0.6;
