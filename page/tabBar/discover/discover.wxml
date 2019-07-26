@@ -139,7 +139,7 @@
       <!--超级喜欢你列表 -->
       <view class='partnership-card-container' wx:for='{{super_like_list}}' wx:key='key'>
         <image class='partnership-base-image' src='{{item.cover}}'></image>
-        <image class='img-super-like-you' wx:if='{{item.type==="1"?true:false}}' src='{{img_super_like_you}}'></image>
+        <image class='img-super-like-you' src='{{img_super_like_you}}'></image>
         <!--当第一次参与活动时 引导页面 控制 index=0的 第一张卡片的按钮至于顶层 并关闭按钮的点击效果-->
         <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
         <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
