@@ -5,16 +5,16 @@
   </view>
   <view class='portrait-container'>
     <view class='portrait'>
-      <image src="{{user_info[0].portrait == ''}}"></image>
-      <text>?</text>
+      <text wx:if="{{!user_info[0].portrait}}">?</text>
+      <image src="{{user_info[0].portrait}}"></image>
     </view>
     <view class='portrait'>
-      <image src="{{user_info[1].portrait == ''}}"></image>
-      <text>?</text>
+      <text wx:if="{{!user_info[1].portrait}}">?</text>
+      <image src="{{user_info[1].portrait}}"></image>
     </view>
     <view class='portrait'>
-      <image src="{{user_info[2].portrait == ''}}"></image>
-      <text>?</text>
+      <text wx:if="{{!user_info[2].portrait}}">?</text>
+      <image src="{{user_info[2].portrait}}"></image>
     </view>
   </view>
   <button class='button-container' open-type='share'>邀请好友助力</button>

@@ -68,6 +68,7 @@ page {
   text-align: center;
   border-radius: 50px;
   margin-top: 40rpx;
+  margin-bottom:30rpx;
   color: white;
   margin-left: 293rpx;
   background-color: #5ee1c9;

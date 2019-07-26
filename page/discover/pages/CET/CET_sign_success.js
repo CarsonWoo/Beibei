@@ -17,8 +17,10 @@ Page({
     let my_bg_url = ''
     if (types == 'origin') {
       my_bg_url = 'https://file.ourbeibei.com/l_e/static/images/bg_class_success_sign.png'
+
     } else {
       my_bg_url = 'https://file.ourbeibei.com/l_e/static/images/bg_class_success_assist.png'
+
     }
     this.setData({
       my_background_url: my_bg_url,

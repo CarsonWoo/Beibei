@@ -161,7 +161,7 @@ Page({
     let series_id = wx.getStorageSync('book_series_id')
     let HOST = app.globalData.HOST
     let token = app.globalData.token
-    //原价支付
+    //二次支付
     wx.request({
       url: app.globalData.HOST + '/various/readChallengeHelpPaySecond.do',
       method: 'POST',

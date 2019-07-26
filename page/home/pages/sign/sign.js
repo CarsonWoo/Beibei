@@ -394,7 +394,7 @@ Page({
 
 
     //打卡分享图 
-    var num_share_imgs = 30
+    var num_share_imgs = 60
     var share_imgs = new Array()
     for(var i=0;i<num_share_imgs;i++){
       var share_img = "https://file.ourbeibei.com/l_e/share_pic/sign_share_img" + String(i+1) + ".png"

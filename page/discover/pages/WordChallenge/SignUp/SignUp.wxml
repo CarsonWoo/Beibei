@@ -37,6 +37,7 @@ src="https://file.ourbeibei.com/l_e/common/Challenge13_ios.png" mode="widthFix" 
   <view class='white-bcview' catchtap='ToRule'>
     <text class='text-rule'>规则详情</text>
   </view>
+  <text class='text-invate' catchtap='ToIntvitionRank'>邀请排行榜</text>
   <text class='text-mark'>最终解释权归背呗背单词所有</text>
   <image wx:if='{{platform == "ios"}}' class='image-start-challenge' src='/images/Challenge_sign_up.png' catchtap='showSignDialog'mode ='widthFix'></image>
   <image wx:else class='image-start-challenge' src='/images/Challenge_sign_up.png' catchtap='SignUpChallenge'mode ='widthFix'></image>

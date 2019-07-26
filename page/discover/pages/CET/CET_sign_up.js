@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    img_urls: ['https://file.ourbeibei.com/l_e/static/images/bg_cet_1.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_2.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_3.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_4.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_5.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_6.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_7.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_8.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_9.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_10.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_11.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_12.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_13.png'],
+    img_urls: ['https://file.ourbeibei.com/l_e/static/images/bg_cet_1.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_2.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_3.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_4.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_5.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_6.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_7.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_8.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_9.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_10.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_11.png'],
     vidx: 0,
     isShowDialog: false,
     translateAnimation: '',
@@ -39,16 +39,22 @@ Page({
         console.log(res)
         if (res.data.status == 200) {
           let rawData = res.data.data
+          console.log(rawData)
           let st = rawData.st
           st = st.split(' ')[0]
           let dates = st.split('/')
-          st = dates[0] + "年" + dates[1] + '月' + dates[2] + '日'
+          st = dates[1] + '月' + dates[2] + '日'
+          let et = rawData.et
+          et = et.split(' ')[0]
+          dates = et.split('/')
+          et = dates[1] + '月' + dates[2] + '日'
           let people = rawData.people
           let status = rawData.status
           let virtualUser = rawData.virtualUser
           let user_id = rawData.user_id
           this.setData({
             st: st,
+            et: et,
             people: people,
             status: status,
             virtualUser: virtualUser,

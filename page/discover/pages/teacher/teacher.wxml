@@ -37,19 +37,15 @@
     </view>
     <view class='rule'>
       <text class='rule-title'>· 怎样才是“成功打卡”？</text>
-      <text class='rule-content'>完成当日阅读内容，点击“打卡领红包”，\n分享到微信群，即为“成功打卡”；</text>
+      <text class='rule-content'>每天完成当天的学习任务（即当天更新的章节）\n即为“成功打卡”;</text>
     </view>
     <view class='rule'>
       <text class='rule-title'>· 打卡有什么奖励？</text>
-      <text class='rule-content'>每天完成打卡都会获得一个现金红包，红包总额\n等于学费金额。</text>
+      <text class='rule-content'>课程60天中有50天成功打卡可以领取全额奖学金\n（即报名费），直接找老师领取即可。</text>
     </view>
     <view class='rule'>
       <text class='rule-title'>· 打卡时间有限制吗？</text>
       <text class='rule-content'>打卡只限当天，\n即北京时间00：00 ~ 23：59.\n如超时，则视为隔天的打卡。</text>
-    </view>
-    <view class='rule'>
-      <text class='rule-title'>· 没有按时打卡怎么办？</text>
-      <text class='rule-content'>没有按时打卡也可以对更新的课程进行阅读，\n但是不能领取红包。</text>
     </view>
     <view class='rule'>
       <text class='rule-title'>· 看完的章节可以回看吗？</text>
