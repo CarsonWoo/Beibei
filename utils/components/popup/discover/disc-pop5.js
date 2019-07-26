@@ -13,7 +13,7 @@ Component({
    */
   data: {
     flag: true,
-    img_follow_us: app.globalData.FTP_ICON_HOST + 'img_follow_us.png',
+    img_follow_us: app.globalData.FTP_ICON_HOST + 'bg-contact-us.png',
   },
 
   /**
@@ -36,5 +36,12 @@ Component({
     _hide() {
       this.triggerEvent("hide")
     },
+
+    _contact(){
+      this.triggerEvent("contact")
+    },
+    _handlecontact(){
+      this.triggerEvent("handlecontact")
+    }
   }
 })

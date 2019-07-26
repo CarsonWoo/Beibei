@@ -49,6 +49,7 @@ Page({
 
     isShowSoundlessLikeCardList: false, //展示偷偷喜欢你的卡片列表
     isSuperLighten: false, //超级曝光是否开启
+    isNeedChangePhoto: false, //已存在用户资料 但需要更换照片提升可能
 
 
     //用来设置vip与普通用户的图标
@@ -119,14 +120,14 @@ Page({
     img_restart_text: app.globalData.FTP_ICON_HOST + 'img-restart-text.png',
 
     dating_card_list: [],
-    like_you_list:[],
-    super_like_list:[],
+    like_you_list: [],
+    super_like_list: [],
     common_card_list: [],
     more_card_list: [],
     time_reversal_list: [],
     partner_level: 1, //匹配卡片的等级 80单词进度完成一次提升一级  卡片更换一次  6次更换后 可以进行重温回忆
     match_type: 0, //  0代表男女，1女女，2男男
-    studiedWordsTotalNumber: 9, //匹配成功后的总单词数  单词总数达到6X80 = 480时 进度条消失，重温回忆按钮出现
+    studiedWordsTotalNumber: 0, //匹配成功后的总单词数  单词总数达到6X80 = 480时 进度条消失，重温回忆按钮出现
     wordMaxNumberInLevel: 80, //当前匹配等级的进度条上限
     isShowRestartBtn: false,
     img_my_photo: '',
@@ -701,6 +702,7 @@ Page({
         photoFlag: true,
         img_photo_example: app.globalData.cropPhotoSrc
       })
+      console.log("截取的照片路径：" + this.data.img_photo_example)
       this.hideTopToast()
     }
 
@@ -1250,7 +1252,7 @@ Page({
             isExistCompleteInfor: data.infoComplete === 0 ? false : true,
             isFirstTime: data.firstTime === 0 ? false : true,
             isTodayFirstTimeTapLiekOrSuperLike: data.todayFirstTime === '0' ? false : true,
-            userInfoStatus: data.userStatus === undefined ? '' : data.userStatus,
+            userInfoStatus: data.userStatus,
           });
 
           console.log("所有卡片列表：" + JSON.stringify(selfData.dating_card_list))
@@ -1285,7 +1287,7 @@ Page({
               lover_name: loverInfo.username,
               lover_vip: data.lover_vip,
               match_day_number: data.loveDays,
-              studiedWordsTotalNumber: 339
+              studiedWordsTotalNumber: data.wordNumber
             })
             //此处还有一个 判断是否有来自对方的提醒
             console.log(selfData.img_my_photo)
@@ -1390,6 +1392,7 @@ Page({
     }
 
     if (this.data.userInfoStatus === 0) {
+      console.log(this.data.userInfoStatus)
       //未上传基本资料（头像、性别、意愿） 或者资料审核失败
       this.setData({
         isShowInforPop: !this.data.isShowInforPop
@@ -1409,27 +1412,30 @@ Page({
           console.log(res.data)
           if (res.data.status === 200) {
             //如果无人喜欢 则弹出更换照片提示
-            if (JSON.stringify(res.data.data.likeMe) === '[]' && JSON.stringify(res.data.data.superLikeMe )==='[]') {
+            if (JSON.stringify(res.data.data.likeMe) === '[]' && JSON.stringify(res.data.data.superLikeMe) === '[]') {
               if (self.data.userInfoStatus != 0) {
                 self.setData({
                   topToastContent: '更换靓照，提升魅力',
                   isShowInforPop: !self.data.isShowInforPop,
                   sexFlag: 999,
                   wantFlag: 999, //此处设999用于顶部toast隐藏的条件判断
+                  isNeedChangePhoto: true
                 })
+
               } else {
                 self.showCardToast("基本资料未完善")
               }
+              return
             }
             self.showCardToast("查看有谁喜欢你")
             self.setData({
-              like_you_list:res.data.data.likeMe,
-              super_like_list:res.data.data.superLikeMe
+              like_you_list: res.data.data.likeMe,
+              super_like_list: res.data.data.superLikeMe
             })
             self.deleteSuperLikeInLike(self.data.like_you_list, self.data.super_like_list)
             self.setData({
               isShowSoundlessLikeCardList: !self.data.isShowSoundlessLikeCardList,
-              like_you_list: self.data.like_you_list//更新数据
+              like_you_list: self.data.like_you_list //更新数据
             })
           }
         },
@@ -1542,12 +1548,10 @@ Page({
       })
       return;
     }
-
-
     //没有添加小呗完善信息,并且当天第一次点击 展示弹窗
     if (this.data.isTodayFirstTimeTapLiekOrSuperLike) {
       //调用记录当天第一次点击喜欢和超级喜欢接口
-      this.recordClickLikeBtn()
+      this.recordClickLikeBtn(dataset, 1)
 
       if (!this.data.isExistCompleteInfor) {
         this.popBlueWxCode.showPopup();
@@ -1568,33 +1572,17 @@ Page({
       }),
       success(res) {
         if (res.data.status === 200) {
-          //三个数组的索引"cml_index" "mrl_index" "trl_index"
-          //该索引用来 确定哪个卡片点击喜欢或者超级喜欢按钮后的本地check状态，在下一次载入数据后 check状态则由后台数据来决定
-          if (dataset.hasOwnProperty('cml_index')) { //判断数组中是否存在该键
-            //临时字符串组成-用来设置数组对象属性
-            var temp_str = 'common_card_list[' + dataset.cml_index + '].isMyLike'
-            self.setData({
-              [temp_str]: self.data.common_card_list[dataset.cml_index].isMyLike === '0' ? '1' : '0'
-            })
-          }
-          if (dataset.hasOwnProperty('mrl_index')) {
-            var temp_str = 'more_card_list[' + dataset.mrl_index + '].isMyLike'
-            self.setData({
-              [temp_str]: self.data.more_card_list[dataset.mrl_index].isMyLike === '0' ? '1' : '0'
-            })
-          }
-          if (dataset.hasOwnProperty('trl_index')) {
-            var temp_str = 'time_reversal_list[' + dataset.trl_index + '].isMyLike'
-            self.setData({
-              [temp_str]: self.data.time_reversal_list[dataset.trl_index].isMyLike === '0' ? '1' : '0'
-            })
-          }
+          self.setArrayIsLikeData(dataset,1)
           if (res.data.msg === '成功') {
             self.showCardToast('你喜欢Ta')
           } else if (res.data.msg === '成功取消喜欢') {
             self.showCardToast('已取消喜欢')
           }
         } else if (res.data.status === 400) {
+          if (res.data.msg === "该用户已与人匹配") {
+            self.showCardToast(res.data.msg)
+            return
+          }
           //非vip或者点击超过三次？
           self.showCardToast(res.data.msg)
           self.showVipIntroPop()
@@ -1623,7 +1611,7 @@ Page({
     //没有添加小呗完善信息,并且当天第一次点击 展示弹窗
     if (this.data.isTodayFirstTimeTapLiekOrSuperLike) {
       //调用记录当天第一次点击喜欢和超级喜欢接口
-      this.recordClickLikeBtn()
+      this.recordClickLikeBtn(dataset, 2)
 
       if (!this.data.isExistCompleteInfor) {
         this.popBlueWxCode.showPopup();
@@ -1644,24 +1632,7 @@ Page({
       }),
       success(res) {
         if (res.data.status === 200) {
-          if (dataset.hasOwnProperty('cml_index')) {
-            var temp_str = 'common_card_list[' + dataset.cml_index + '].isMySuperLike'
-            self.setData({
-              [temp_str]: self.data.common_card_list[dataset.cml_index].isMySuperLike === '0' ? '1' : '0'
-            })
-          }
-          if (dataset.hasOwnProperty('mrl_index')) {
-            var temp_str = 'more_card_list[' + dataset.mrl_index + '].isMySuperLike'
-            self.setData({
-              [temp_str]: self.data.more_card_list[dataset.mrl_index].isMySuperLike === '0' ? '1' : '0'
-            })
-          }
-          if (dataset.hasOwnProperty('trl_index')) {
-            var temp_str = 'time_reversal_list[' + dataset.trl_index + '].isMySuperLike'
-            self.setData({
-              [temp_str]: self.data.time_reversal_list[dataset.trl_index].isMySuperLike === '0' ? '1' : '0'
-            })
-          }
+          self.setArrayIsLikeData(dataset,2)
           if (res.data.msg === '成功') {
             self.showCardToast('你超级喜欢Ta')
           } else if (res.data.msg === '成功取消超级喜欢') {
@@ -1676,8 +1647,9 @@ Page({
 
   },
   //调用记录用户当天第一次喜欢或者超级喜欢按钮
-  recordClickLikeBtn() {
+  recordClickLikeBtn(dataset, likeType) {
     let self = this;
+
     wx.request({
       url: app.globalData.HOST + '/operation/recordUserClickButton.do',
       method: 'POST',
@@ -1692,6 +1664,9 @@ Page({
             //本地的数据也置0
             isTodayFirstTimeTapLiekOrSuperLike: false
           })
+          self.setArrayIsLikeData(dataset,likeType)
+        }else{
+          self.showCardToast(res.data.msg)
         }
       },
       fail(res) {
@@ -1797,6 +1772,7 @@ Page({
           isShowBottomToast: false
         })
       }, 3000)
+      return
     }
 
     var photoUrl = app.globalData.cropPhotoSrc
@@ -1808,23 +1784,24 @@ Page({
       case 'btn-post-infor':
         console.log('you post infor')
         //请求信息提交接口
-        wx.request({
+        wx.uploadFile({
           url: app.globalData.HOST + '/operation/uploadDatingCard.do',
           header: ({
             'content-type': 'application/x-www-form-urlencoded',
             'token': app.globalData.token
           }),
+          filePath: photoUrl,
+          name: 'cover',
           method: 'POST',
-          data: ({
+          formData: ({
             'gender': gender,
             'intention': intention,
-            'cover': photoUrl
           }),
           success(res) {
             console.log(res.data)
             if (res.data.status === 200) {
               self.showCardToast("成功提交!")
-              if(!isExistCompleteInfor){
+              if (!self.data.isExistCompleteInfor) {
                 self.hideInforPop()
                 self.popBlueWxCode.showPopup();
               }
@@ -1842,27 +1819,31 @@ Page({
       case 'btn-post-photo':
         //来自更换照片弹窗的提交
         console.log('you post photo')
+        this.showCardToast("正在上传照片···")
         //请求更换照片提交接口  成功回调后判断是否存在完善资料 否this.popBlueWxCode.showPopup();
-        wx.request({
+        wx.uploadFile({
           url: app.globalData.HOST + '/lzy/update_cover.do',
           header: ({
             'content-type': 'application/x-www-form-urlencoded',
           }),
+          filePath: photoUrl,
+          name: 'cover',
           method: 'POST',
-          data: ({
-            'cover': photoUrl,
+          formData: ({
             'id': app.globalData.MyUserId
           }),
           success(res) {
-            console.log(res.data)
-            if (res.data.status === 200) {
+            var str = JSON.stringify(res.data)
+            var status = str.substring(13, 16)
+            console.log("上传照片status:" + status)
+            if (status === '200') {
               self.showCardToast("成功提交!")
-              if (!isExistCompleteInfor) {
+              if (!self.data.isExistCompleteInfor) {
                 self.hideInforPop()
                 self.popBlueWxCode.showPopup();
-              } 
+              }
             } else {
-              self.showCardToast("提交失败!" + res.data.msg)
+              self.showCardToast("提交失败!")
             }
           },
           fail(res) {
@@ -2076,7 +2057,7 @@ Page({
   //将卡片组拆为普通卡片组和更多卡片组 
   getCommonFromList(arr) {
     if (!JSON.stringify(arr) === '[]') {
-      if (JSON.stringify(arr[5])==='{}'||arr[5]===null ) {
+      if (JSON.stringify(arr[5]) === '{}' || arr[5] === null) {
         console.log("刚好长度为5的卡片列")
         return arr
       } else {
@@ -2094,17 +2075,17 @@ Page({
   },
   //删除喜欢数组中 在超级喜欢数组中的已存在用户
   deleteSuperLikeInLike(likeList, superList) {
-    console.log("like length"+likeList.length +"super length"+superList.length)
+    console.log("like length" + likeList.length + "super length" + superList.length)
     //遍历likeList
-    for (var i =0 ; i <likeList.length; i++) {
-      console.log("i:"+i)
-      for(var j=0;j<superList.length;j++){
-        console.log("j:"+j)
-        console.log("user_id:"+superList[j].user_id)
-        if (superList[j].user_id === likeList[i].user_id){
+    for (var i = 0; i < likeList.length; i++) {
+      console.log("i:" + i)
+      for (var j = 0; j < superList.length; j++) {
+        console.log("j:" + j)
+        console.log("user_id:" + superList[j].user_id)
+        if (superList[j].user_id === likeList[i].user_id) {
           var target = likeList.splice(i, 1)
-          console.log("iii"+JSON.stringify(target))
-          
+          console.log("iii" + JSON.stringify(target))
+
           i--;
         }
       }
@@ -2605,6 +2586,65 @@ Page({
     }
   },
 
+  onGoToFollowTap() {
+    this.popContactUs.showPopup()
+  },
+
+  onContactUsTap() {
+    console.log("you click contact us")
+  },
+  onContactBackHandle: function(event) {
+    console.log("back event：" + JSON.stringify(event))
+  },
+
+  setArrayIsLikeData(dataset, likeType) {//likeType 1为喜欢  2为超级喜欢
+    let self = this;
+    switch (likeType) {
+      case 1:
+        //三个数组的索引"cml_index" "mrl_index" "trl_index"
+        //该索引用来 确定哪个卡片点击喜欢或者超级喜欢按钮后的本地check状态，在下一次载入数据后 check状态则由后台数据来决定
+        if (dataset.hasOwnProperty('cml_index')) { //判断数组中是否存在该键
+          //临时字符串组成-用来设置数组对象属性
+          var temp_str = 'common_card_list[' + dataset.cml_index + '].isMyLike'
+          self.setData({
+            [temp_str]: self.data.common_card_list[dataset.cml_index].isMyLike === '0' ? '1' : '0'
+          })
+        }
+        if (dataset.hasOwnProperty('mrl_index')) {
+          var temp_str = 'more_card_list[' + dataset.mrl_index + '].isMyLike'
+          self.setData({
+            [temp_str]: self.data.more_card_list[dataset.mrl_index].isMyLike === '0' ? '1' : '0'
+          })
+        }
+        if (dataset.hasOwnProperty('trl_index')) {
+          var temp_str = 'time_reversal_list[' + dataset.trl_index + '].isMyLike'
+          self.setData({
+            [temp_str]: self.data.time_reversal_list[dataset.trl_index].isMyLike === '0' ? '1' : '0'
+          })
+        }
+        break
+      case 2:
+        if (dataset.hasOwnProperty('cml_index')) {
+          var temp_str = 'common_card_list[' + dataset.cml_index + '].isMySuperLike'
+          self.setData({
+            [temp_str]: self.data.common_card_list[dataset.cml_index].isMySuperLike === '0' ? '1' : '0'
+          })
+        }
+        if (dataset.hasOwnProperty('mrl_index')) {
+          var temp_str = 'more_card_list[' + dataset.mrl_index + '].isMySuperLike'
+          self.setData({
+            [temp_str]: self.data.more_card_list[dataset.mrl_index].isMySuperLike === '0' ? '1' : '0'
+          })
+        }
+        if (dataset.hasOwnProperty('trl_index')) {
+          var temp_str = 'time_reversal_list[' + dataset.trl_index + '].isMySuperLike'
+          self.setData({
+            [temp_str]: self.data.time_reversal_list[dataset.trl_index].isMySuperLike === '0' ? '1' : '0'
+          })
+        }
+        break
+    }
+  },
 
 
 

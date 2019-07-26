@@ -7,7 +7,7 @@
     <view class='pop-footer'>
       <view class='pop-text'>联系客服回复“1”</view>
       <view class='pop-text'>关注公众号第一时间收到更新推送</view>
-      <button class='btn-kefu'>联系客服</button>
+      <button open-type='contact' bindcontact="_handlecontact" class='btn-kefu' bindtap='_contact'>联系客服</button>
     </view>
   </view>
 </view>

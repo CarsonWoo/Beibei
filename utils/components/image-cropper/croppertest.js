@@ -9,7 +9,7 @@ Page({
     max_height: 400,
     disable_rotate: true,//是否禁用旋转
     disable_ratio: true,//锁定比例
-    limit_move: false,//是否限制移动
+    limit_move: true,//是否限制移动
   },
   onLoad: function (options) {
     this.cropper = this.selectComponent("#image-cropper");
