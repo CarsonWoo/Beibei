@@ -134,6 +134,6 @@
   </form>
   <view class="view-mask-pronunciation" bindtap='onPronunciationTap'></view>
   <view class="view-mask" catchtap='onvideoAdTap'>
-  <image class="view-image" src='/images/DiamondVIP.png' mode='widthFix'></image>
+  <image class="view-image" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/DiamondVIP.png' mode='widthFix'></image>
   </view>
 </view> -->

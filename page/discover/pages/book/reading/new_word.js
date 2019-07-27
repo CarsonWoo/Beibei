@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    empty_image: '/images/ic_loading_new_word.png',
+    empty_image: 'https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_loading_new_word.png',
     empty_text: '听说，新单词大军即将出现！\nloading...'
   },
 
