@@ -10,7 +10,7 @@
     </view>
     <view class='pop-footer'>
       <view class='bg-et'>
-        <input type='text' placeholder='快来和我一起背单词吧!' placeholder-class='center-placeholder' auto-focus='true' bindinput='_input'>
+        <input type='text' placeholder='快来和我一起背单词吧!' placeholder-class='center-placeholder' bindinput='_input'>
         </input>
       </view>
       <button class='btn-send' bindtap='_send'>发送</button>

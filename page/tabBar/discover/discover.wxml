@@ -186,23 +186,6 @@
 
 
     <block >
-      <!-- 微信公众号引导关注view 只有在没有关注公众号的用户以后才会出现 -->
-      <view class='partnership-wechat-guide-container' wx:if='{{!isFollowPublicAccount}}'>
-        <view class='partnership-wechat-guide-text-container'>
-          <text class='black' style='font-size:28rpx;'>今日的每日推荐已看完，请期待明天的更新...</text>
-          <text class='partnership-min-text lighter-gray' style='margin-top:10rpx'>关注公众号可以第一时间收到更新推送</text>
-        </view>
-        <view class='partnership-wechat-guide-button-container'>
-          <button class='partnership-wechat-guide-follow-button' bindtap='onGoToFollowTap'>去关注</button>
-        </view>
-      </view>
-
-      <!-- 非vip且看完了当日推荐才会出现 -->
-      <view class='guide-open-vip-text' wx:if='{{!is_vip}}' bindtap='showVipIntroPop'>
-        <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
-        <text>开启VIP,寻觅更多好友</text>
-      </view>
-
       <view style='width:100%;display:flex;margin-top:60rpx;' wx:if='{{!is_show_time_reversal || !is_show_more_cards}}'>
         <!-- 时光倒流机 -->
         <view class='{{!is_show_time_reversal && is_show_more_cards ? "full-width-container" : "half-width-container"}}' style='display: {{is_show_time_reversal ? "none" : "flex"}}'>
@@ -213,9 +196,9 @@
             <text class='partnership-min-text' style='margin-left:5rpx;'>+{{time_reversal_list.length}}</text>
 
             <!-- 漂浮的用户label 不一定有 详见prd -->
-            <view class='time-reversal-user-float-container'>
-              <image></image>
-              <text>伯舒小姐使用了该功能</text>
+            <view class='time-reversal-user-float-container' wx:if='{{isShowTimeReversalToast}}'>
+              <image src='{{virtualUserCover}}'></image>
+              <text>{{virtualUserName}}使用了该功能</text>
             </view>
           </view>
 
@@ -227,6 +210,10 @@
             <image src='{{ic_watch_more}}'></image>
             <text class='normal-text'>查看更多卡片</text>
             <text class='partnership-min-text' style='margin-left:5rpx;'>+{{more_card_list.length}}</text>
+             <view class='time-reversal-user-float-container' wx:if='{{isShowMoreCardToast}}'>
+              <image src='{{virtualUserCover}}'></image>
+              <text>{{virtualUserName}}使用了该功能</text>
+            </view>
           </view>
         </view>
       </view>
@@ -294,6 +281,23 @@
 
     </block>
 
+    <!-- 微信公众号引导关注view 只有在没有关注公众号的用户以后才会出现 -->
+      <view class='partnership-wechat-guide-container' wx:if='{{!isFollowPublicAccount}}'>
+        <view class='partnership-wechat-guide-text-container'>
+          <text class='black' style='font-size:28rpx;'>今日的每日推荐已看完，请期待明天的更新...</text>
+          <text class='partnership-min-text lighter-gray' style='margin-top:10rpx'>关注公众号可以第一时间收到更新推送</text>
+        </view>
+        <view class='partnership-wechat-guide-button-container'>
+          <button class='partnership-wechat-guide-follow-button' bindtap='onGoToFollowTap'>去关注</button>
+        </view>
+      </view>
+
+      <!-- 非vip且看完了当日推荐才会出现 -->
+      <view class='guide-open-vip-text' wx:if='{{!is_vip}}' bindtap='showVipIntroPop'>
+        <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/vip_crown.png'></image>
+        <text>开启VIP,寻觅更多好友</text>
+      </view>
+
   </view>
   <!-- 这是匹配成功后的页面 -->
   <view class='partnership' wx:elif="{{isInLove}}">
@@ -333,14 +337,6 @@
             <image class='img-restart-text' src='{{img_restart_text}}'></image>
           </view>
         </block>
-
-        <block wx:if='{{false}}'>
-          <view class='btn-restart'>
-            <text class='text-totalnumber'>总背33000</text>
-            <image class='img-restart-text' src='{{img_restart_text}}'></image>
-          </view>
-        </block>
-
       </view>
 
     </view>

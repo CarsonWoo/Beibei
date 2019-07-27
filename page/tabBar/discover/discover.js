@@ -27,7 +27,7 @@ Page({
     // showRedPacket: true,
     // isShowDialog: true
 
-    showLikeToast: true,
+    showLikeToast: false,
     is_show_more_cards: false,
     is_show_time_reversal: false,
     is_vip: false,
@@ -42,7 +42,7 @@ Page({
     ic_time_reversal: app.globalData.FTP_ICON_HOST + 'time_reversal.png',
     ic_watch_more: app.globalData.FTP_ICON_HOST + 'watch_more_white.png',
     bg_lead_text: app.globalData.FTP_ICON_HOST + 'bg-match-lead.png',
-    sc_next: app.globalData.FTP_ICON_HOST + 'ic-next.png',
+    ic_next: app.globalData.FTP_ICON_HOST + 'ic-next.png',
     img_like_intro: app.globalData.FTP_ICON_HOST + 'img-like-intro.png',
     img_superlike_intro: app.globalData.FTP_ICON_HOST + 'img-superlike-intro.png',
 
@@ -136,6 +136,53 @@ Page({
     lover_name: '',
     lover_vip: 0,
     match_day_number: 999,
+    
+    //模拟虚拟用户列表
+    timeReverseUserList:[{
+      cover:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564214299363&di=e9102b012bc03040aa2de8b661e4309f&imgtype=0&src=http%3A%2F%2Fimg.9ku.com%2Fgeshoutuji%2Fsingertuji%2F3%2F33425%2F33425_1.jpg',
+      name:'海龟',
+    },{
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564808960&di=c4ca01856c4d84ac10434ff8d008dbb0&imgtype=jpg&er=1&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201507%2F06%2F20150706123803_4WcLm.thumb.700_0.png',
+        name: '晒红脸',
+    },{
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564213603907&di=394e713004b01a2d2f80535365670882&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201710%2F02%2F20171002103056_JseEA.thumb.700_0.jpeg',
+        name: '嘿嘿嘿灰',
+    },{
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564809057&di=6a74cdcdba5f87011fe6f6aec20a64ae&imgtype=jpg&er=1&src=http%3A%2F%2Fimg1.gtimg.com%2F9%2F940%2F94088%2F9408820_640x640_0.jpg',
+        name: '洛城泡椒',
+    },{
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564214338303&di=2dfffe04d797c5047045cd870a0d9d3a&imgtype=0&src=http%3A%2F%2Fpic3.zhimg.com%2F50%2Fv2-40135aa64c934769ec65e34621732c86_hd.jpg',
+        name: '贝壳和你',
+    },{
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564214338306&di=a0f1c87c616a15c2f2050c3afca44191&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F189fa850760d43ac493ac5d9bad472b02880cd93.jpg',
+        name: '斯多贝利',
+    }],
+
+    moreCardUserList: [{
+      cover: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=247709105,3771367742&fm=15&gp=0.jpg',
+      name: '刺猬',
+    }, {
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564213603909&di=eb71db2acdb12cf87f72ff927dec14e8&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F02%2F20190202232517_NQPUW.thumb.700_0.png',
+        name: '乐乐乐了',
+      }, {
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564213603907&di=394e713004b01a2d2f80535365670882&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201710%2F02%2F20171002103056_JseEA.thumb.700_0.jpeg',
+        name: '慢切斯特',
+      }, {
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564213603906&di=33175647b7ee659751b057ec5ae272c1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201709%2F28%2F20170928040302_EQXki.jpeg',
+        name: '虎皮波霸',
+      }, {
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564213727019&di=9c5551ac0d568f0e1ea3552eacc25735&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201711%2F05%2F20171105194003_L4XMt.thumb.700_0.jpeg',
+        name: '2先生',
+      }, {
+        cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564213603903&di=3df405cf0d6f2fba0860c3d93e459b31&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201610%2F10%2F20161010141613_jQFwm.jpeg',
+        name: '伯舒小姐',
+      }],
+
+    virtualUserCover:'',
+    virtualUserName:'',
+    isShowTimeReversalToast:false,
+    isShowMoreCardToast:false,
+    userIndex:-1,
   },
 
 
@@ -1243,15 +1290,15 @@ Page({
           let data = res.data.data
           let selfData = self.data;
           self.setData({
-            dating_card_list: data.datingCards,
-            common_card_list: self.getCommonFromList(data.datingCards),
-            is_vip: data.datingVip === 0 ? false : true,
-            is_show_more_cards: data.datingVip === 0 ? false : true,
-            is_show_time_reversal: data.datingVip === 0 ? false : true,
-            isInLove: data.isInLove === 0 ? false : true,
-            isExistCompleteInfor: data.infoComplete === 0 ? false : true,
-            isFirstTime: data.firstTime === 0 ? false : true,
-            isTodayFirstTimeTapLiekOrSuperLike: data.todayFirstTime === '0' ? false : true,
+            dating_card_list:data.datingCards!=undefined ? data.datingCards:[],
+            common_card_list: data.datingCards != undefined ? self.getCommonFromList(data.datingCards) : [],
+            is_vip: data.datingVip === 1?true:false,
+            is_show_more_cards: data.datingVip === 1?true:false,
+            is_show_time_reversal: data.datingVip === 1?true:false,
+            isInLove: data.isInLove === 1?true:false,
+            isExistCompleteInfor: data.infoComplete === 1?true:false,
+            isFirstTime: data.firstTime === 1?true:false,
+            isTodayFirstTimeTapLiekOrSuperLike: data.todayFirstTime === '1' ? true : false,
             userInfoStatus: data.userStatus,
           });
 
@@ -1308,7 +1355,11 @@ Page({
             self.setData({
               showLikeToast: false
             })
-            //获取更多卡片
+            //获取更多卡片??
+          }else{
+            //非vip的情况下的时光倒流机和查看更多卡片轮播
+            self.setTimeReversalToast()
+            
           }
           //设置图标
           self.setIconStyle();
@@ -2031,7 +2082,7 @@ Page({
     wx.downloadFile({
       //先将二维码下载至项目本地临时路径
       //小呗二维码下载路径
-      url: app.globalData.FTP_ICON_HOST + 'img_wxcode_staff.jpg',
+      url: app.globalData.FTP_ICON_HOST + 'img_save_wxcode.png',
       success: function(res) {
         if (res.statusCode === 200) {
           let img = res.tempFilePath;
@@ -2385,7 +2436,7 @@ Page({
   onMeetTaTap() {
     let self = this;
     //只有背单词总数到达80 or 双方其中一个是vip时才能获取相遇码
-    if (this.data.studiedWordsTotalNumber > 79 || is_vip || lover_is_vip) {
+    if (this.data.studiedWordsTotalNumber > 79 || this.data.is_vip || this.data.lover_vip) {
       var meetCode;
       wx.request({
         url: app.globalData.HOST + '/operation/twoMeet.do',
@@ -2451,7 +2502,7 @@ Page({
         'msg': self.popRemind.getRemindText()
       },
       method: 'POST',
-      success(res) {
+      sucess(res) {
         if (res.data.status === 200) {
           self.popRemind.hidePopup()
           self.showCardToast("已提醒对方背单词")
@@ -2529,8 +2580,10 @@ Page({
     console.log("cancel restart")
     this.popRestart.hidePopup()
   },
-
+  
+  //第一次进入发现页活动的引导
   onNextBtnTap: function(event) {
+    let self = this;
     console.log(event)
     switch (event.currentTarget.id) {
       case 'btn-next-page1':
@@ -2545,7 +2598,19 @@ Page({
         this.setData({
           isShowLeadPage2: false,
           isSuperLikeBtnTop: false,
+          showLikeToast:true,
         })
+        setTimeout(function(){
+          self.setData({
+            showLikeToast:false,
+            showLightenToast : true,
+          })
+          setTimeout(function(){
+            self.setData({
+              showLightenToast: false,
+            })
+          },3000)
+        },3000)
         break
     }
   },
@@ -2645,7 +2710,73 @@ Page({
         break
     }
   },
+  
+  /*
+  *  通过设置间隔2分钟时间的定时器,定时切换虚拟用户列展示toast
+  */
+  setTimeReversalToast(){
+    let self = this;
+    var i = self.data.userIndex
+    self.setData({
+      userIndex:0,
+      virtualUserCover:self.data.timeReverseUserList[0].cover,
+      virtualUserName: self.data.timeReverseUserList[0].name,
+      isShowTimeReversalToast:true
+    })
+    setTimeout(function(){
+      self.setData({
+        isShowTimeReversalToast: false,
+      })
+      setTimeout(function(){
+        self.setData({
+          virtualUserCover: self.data.moreCardUserList[0].cover,
+          virtualUserName: self.data.moreCardUserList[0].name,
+          isShowMoreCardToast: true
+        })
+        setTimeout(function(){
+          self.setData({
+            isShowMoreCardToast: false,
+          })
+        },10000)
+      },5000)
+    },10000)
 
+    setInterval(function(){
+      if(i<5){
+        self.setData({
+          userIndex:i+1
+        })
+        i=i+1
+      }else if(i===5){
+        self.setData({
+          userIndex: 0
+        })
+        i=0
+      }
+      self.setData({
+        isShowTimeReversalToast:true,
+        virtualUserCover:self.data.timeReverseUserList[i].cover,
+        virtualUserName:self.data.timeReverseUserList[i].name
+      })
+      setTimeout(function () {
+        self.setData({
+          isShowTimeReversalToast: false,
+        })
+        setTimeout(function () {
+          self.setData({
+            virtualUserCover: self.data.moreCardUserList[i].cover,
+            virtualUserName: self.data.moreCardUserList[i].name,
+            isShowMoreCardToast: true
+          })
+          setTimeout(function () {
+            self.setData({
+              isShowMoreCardToast: false,
+            })
+          }, 10000)
+        }, 5000)
+      }, 10000)
+    },120000)
+  },
 
 
   /**
