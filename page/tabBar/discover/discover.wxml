@@ -324,7 +324,7 @@
           <image class='img-circle-photo' src='{{img_lover_photo}}'></image>
         </view>
 
-        <text class='text-match-days'>你和{{lover_name}}走过的[第{{match_day_number}}天]</text>
+        <text class='text-match-days'>你和{{lover_name}}走过的[第{{match_day_number+1}}天]</text>
         <image class='btn-meet-ta' src='{{btn_meetta}}' bindtap='onMeetTaTap'></image>
         <image class='btn-remind-ta' src='{{btn_remindta}}' bindtap='onRemindTaTap'></image>
         <image class='btn-break' src='{{btn_break}}' bindtap='onBreakTap'></image>
@@ -507,7 +507,7 @@
 </pop-restart>
 
 <!--匹配成功弹窗-->
-<pop-match-success id='pop-matchsuccess' bind:hide='hidePopup' catchtouchmove='stopPageScroll'>
+<pop-match-success id='pop-matchsuccess' bind:enter='onEnterMatchSuccessPageTap' bind:hide='hidePopup' catchtouchmove='stopPageScroll'>
 </pop-match-success>
 
 <!--蒙版引导页面层1-->

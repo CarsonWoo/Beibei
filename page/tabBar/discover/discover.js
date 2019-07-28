@@ -1644,9 +1644,9 @@ Page({
           self.setArrayIsLikeData(dataset,1)
           if (res.data.msg === '成功') {
             self.showCardToast('你喜欢Ta')
-            //判断对方是否也喜欢或者超级喜欢你  如果是 重载页面
-            if(dataset.type==='1'||dataset.type==='2'){
-              self.onLoad()
+            //判断对方是否也喜欢或者超级喜欢你  如果是 展示成功页面 ，进入旅程则重载页面
+            if(dataset.type==="1"||dataset.type==="2"){
+              self.popMatchSuccess.showPopup()
             }
 
           } else if (res.data.msg === '成功取消喜欢') {
@@ -1716,8 +1716,8 @@ Page({
           if (res.data.msg === '成功') {
             self.showCardToast('你超级喜欢Ta')
             //判断对方是否也喜欢或者超级喜欢你  如果是 重载页面
-            if (dataset.type === '1' || dataset.type === '2') {
-              self.onLoad()
+            if (dataset.type === "1" || dataset.type === "2") {
+              self.popMatchSuccess.showPopup()
             }
           } else if (res.data.msg === '成功取消超级喜欢') {
             self.showCardToast('已取消超级喜欢')
@@ -2023,6 +2023,14 @@ Page({
         this.setData({
           isHideProgressBar : false
         })
+        //vip功能展现
+        this.setData({
+          is_vip:true,
+          more_card_list: this.getMoreFromList(this.data.dating_card_list)
+        })
+        //vip获取倒流卡片
+        self.getTimeReservalList();
+        this.setIconStyle()
         break;
       case 'pop-lead':
         this.popLead.hidePopup();
@@ -2900,6 +2908,10 @@ Page({
         }, 5000)
       }, 10000)
     },120000)
+  },
+
+  onEnterMatchSuccessPageTap(){
+    this.onLoad()
   },
 
 
