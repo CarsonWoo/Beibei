@@ -147,28 +147,32 @@
 
   <view class='home-plan-container' wx:else>
     <image class='text-img' src='/images/home_header_text.png'></image>
-    <image class='fish-img' src='/images/ic_3d_fish.png'></image>
+    <image class='fish-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_3d_fish.png'></image>
     <button class='button-container start' catchtap='onPlanTap'>开始背单词</button>
   </view>
 
   <view class='welfare-container'>
     <view class='welfare-item' catchtap='onMoneyTap'>
-      <image class='welfare-img' src='/images/ic_home_game.png'></image>
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_game.png'></image>
       <text>单词挑战</text>
     </view>
 
     <view class='welfare-item' catchtap='onBookTap'>
-      <image class='welfare-img' src='/images/ic_home_reading.png'></image>
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_reading.png'></image>
       <text>语境阅读</text>
     </view>
 
     <!-- <view class='welfare-item' catchtap='onGameTap'>
-      <image class='welfare-img' src='/images/ic_home_game.png'></image>
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_game.png'></image>
       <text>小游戏</text>
     </view> -->
 
     <!-- <view class='welfare-item' catchtap='onPrizeTap'>
+<<<<<<< HEAD
       <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
+=======
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_challenge.png'></image>
+>>>>>>> master
       <text>赢奖品</text>
     </view> -->
 
@@ -185,7 +189,7 @@
     <swiper class='swiper-prize' previous-margin='30rpx' next-margin='30rpx' bindchange='onSwiperChange' circular='true' autoplay='true'>
       <swiper-item class="{{swiperIndex == 0 ? 'swiper-item-center' : swiperIndex == 1 ? 'swiper-item-left' : 'swiper-item-right'}}">
 
-        <image class='slide-image {{swiperIndex == 0 ? "active" : "quiet"}}' mode='aspectFill' src='/images/banner_reading.png' catchtap='onBookTap'>
+        <image class='slide-image {{swiperIndex == 0 ? "active" : "quiet"}}' mode='aspectFill' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_reading.png' catchtap='onBookTap'>
         </image>
 
 
@@ -193,7 +197,7 @@
 
       <swiper-item class="{{swiperIndex == 1 ? 'swiper-item-center' : swiperIndex == 2 ? 'swiper-item-left' : 'swiper-item-right'}}">
         <view style='background-color:transparent;position:relative'>
-          <image class='slide-image {{swiperIndex == 1 ? "active" : "quiet"}}' mode='aspectFill' src='/images/banner_challenge.png' catchtap='onMoneyTap'>
+          <image class='slide-image {{swiperIndex == 1 ? "active" : "quiet"}}' mode='aspectFill' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_challenge.png' catchtap='onMoneyTap'>
           </image>
           <view style='position: absolute;bottom:{{swiperIndex == 1 ? "40rpx" : "45rpx"}};left:{{swiperIndex == 1 ? "50rpx": "90rpx"}};display:flex'>
             <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_4}}'></image>
@@ -204,7 +208,7 @@
       </swiper-item>
       <swiper-item class="{{swiperIndex == 2 ? 'swiper-item-center' : swiperIndex == 0 ? 'swiper-item-left' : 'swiper-item-right'}}">
         <view style='background-color:transparent;position:relative'>
-          <image class="slide-image {{swiperIndex == 2 ? 'active' : 'quiet'}}" mode='aspectFill' src='/images/banner_prize.png' catchtap='onPrizeTap'>
+          <image class="slide-image {{swiperIndex == 2 ? 'active' : 'quiet'}}" mode='aspectFill' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_prize.png' catchtap='onPrizeTap'>
           </image>
           <view style='position: absolute;bottom:{{swiperIndex == 2 ? "40rpx" : "45rpx"}};left:{{swiperIndex == 2 ? "50rpx": "90rpx"}};display:flex'>
             <image class='prize-container-item-avatar-container-image' src='{{user_default_portrait_1}}'></image>
@@ -222,12 +226,8 @@
 
   </view> -->
 
-  <!-- <view class='teacher-welfare' catchtap='onCetTap'>
-    <image src='/images/banner_home_teacher.png'></image>
-  </view> -->
-
   <button class='teacher-welfare' open-type="contact">
-    <image src='/images/banner_home_customer_service.png'></image>
+    <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_home_customer_service.png'></image>
   </button>
 
 
@@ -269,11 +269,11 @@
 
       </view>
       <view class='feeds-divider'></view>
-      <image class='banner-img' wx:if="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 1}}" src='/images/banner_reading.png' catchtap='onBookTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 2}}" src='/images/banner_challenge.png' catchtap='onMoneyTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 3}}" src='/images/banner_prize.png' catchtap='onPrizeTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 4}}" src='/images/banner_class.png' catchtap='onCetTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 0}}" src='/images/banner_game.png' catchtap='onGameTap'></image>
+      <image class='banner-img' wx:if="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 1}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_reading.png' catchtap='onBookTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 2}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_challenge.png' catchtap='onMoneyTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 3}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_prize.png' catchtap='onPrizeTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 4}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_class.png' catchtap='onCetTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 0}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_game.png' catchtap='onGameTap'></image>
       <ad unit-id="adunit-a8e6b7e4a651af7b"  wx:if="{{index % 5 == 0 && index != 0}}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
     </block>
   </view>
@@ -433,7 +433,7 @@
 <!-- 1.2 运营活动 -->
 <cover-view class='mask-container' catchtouchmove='stopPageScroll' wx:if='{{showScope == true}}'>
   <cover-view class='scope-image-container' animation="{{scopeAnimation}}">
-    <cover-image src='/images/bg_scope.png'></cover-image>
+    <cover-image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_scope.png'></cover-image>
     <cover-view class='scope-text' style='margin-top:560rpx'>欢迎使用背呗背单词</cover-view>
     <cover-view class='scope-text'>授权信息保存学习记录</cover-view>
     <cover-view class='scope-text'>背呗与你一起学习</cover-view>

@@ -55,9 +55,9 @@
 
 <view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
   <view class='sign-dialog-container'>
-    <image class='first-img' src='/images/dialog_img_1.png' mode='widthFix'></image>
-    <image class='fill-img' src='/images/dialog_img_2.png' mode='widthFix' style='margin-top:-40rpx'></image>
-    <image class='fill-img' src='/images/dialog_img_3.png' mode='widthFix'></image>
+    <image class='first-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_1.png' mode='widthFix'></image>
+    <image class='fill-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_2.png' mode='widthFix' style='margin-top:-40rpx'></image>
+    <image class='fill-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_3.png' mode='widthFix'></image>
     <view class='cancel-button' catchtap='cancelDialog'>确定</view>
   </view>
 </view>

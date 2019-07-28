@@ -13,7 +13,7 @@
 <progress percent="100" stroke-width='26rpx' border-radius='13rpx' backgroundColor='#fff' activeColor='#8269ff' active></progress>
 <image src='{{ic_progress_heart}}' class='img-heart'></image>
 </view>
-<button class='btn-enter' bindtap='_hide'>点击进入旅程</button>
+<button class='btn-enter' bindtap='_enter'>点击进入旅程</button>
 </view>
 </view>
 

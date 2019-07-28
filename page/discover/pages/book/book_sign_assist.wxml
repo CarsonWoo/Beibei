@@ -1,5 +1,5 @@
 <view class='container'>
-  <image src='/images/bg_assist.png' class='background-img' mode='widthFix'></image>
+  <image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_assist.png' class='background-img' mode='widthFix'></image>
   <view class='label-text'>
     <text>快快邀请好友参与助力吧！\n完成就可以参与课程啦！</text>
   </view>

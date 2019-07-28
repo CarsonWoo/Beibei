@@ -28,6 +28,8 @@ Page({
     // isShowDialog: true
 
     showLikeToast: false,
+    setLikeTimer:'', //关于偷偷喜欢你和超级曝光toast展示的两个定时器
+    setLightenTimer:'',
     is_show_more_cards: false,
     is_show_time_reversal: false,
     is_vip: false,
@@ -180,10 +182,14 @@ Page({
 
     virtualUserCover:'',
     virtualUserName:'',
+    moreUserCover:'',
+    moreUserName:'',
     isShowTimeReversalToast:false,
     isShowMoreCardToast:false,
-    userIndex:-1,
+
+    isHideProgressBar:false,
   },
+
 
 
 
@@ -213,7 +219,7 @@ Page({
     }
 
     //vip续费通知
-    if (options.isNeedRemindContinue === 1 || options.isMatch === '1') {
+    if (options.isNeedRemindContinue === 1 || options.isNeedRemindContinue === '1') {
       //当用户为vip时改变弹窗文字内容
       this.setData({
         vipContent: '立即续费VIP'
@@ -1358,7 +1364,10 @@ Page({
             //获取更多卡片??
           }else{
             //非vip的情况下的时光倒流机和查看更多卡片轮播
-            self.setTimeReversalToast()
+            var randomTime = Math.random() *3000;
+            setTimeout(function(){
+              self.setTimeReversalToast()
+            },randomTime)
             
           }
           //设置图标
@@ -1533,15 +1542,23 @@ Page({
   },
 
   closeLikeToastTap: function(e) {
-    this.setData({
-      showLikeToast: false,
-      showLightenToast: true
+    let self = this;
+    clearTimeout(self.data.setLikeTimer)
+    self.setData({
+      showLikeToast : false,
+      showLightenToast : true,
     })
+    self.data.setLightenTimer = setTimeout(function () {
+      self.setData({
+        showLightenToast: false,
+      })
+    }, 3000)
   },
 
   closeLightenToastTap: function(e) {
+    clearTimeout(this.data.setLightenTimer)
     this.setData({
-      showLightenToast: false
+      showLightenToast : false
     })
   },
 
@@ -1602,7 +1619,7 @@ Page({
     //没有添加小呗完善信息,并且当天第一次点击 展示弹窗
     if (this.data.isTodayFirstTimeTapLiekOrSuperLike) {
       //调用记录当天第一次点击喜欢和超级喜欢接口
-      this.recordClickLikeBtn(dataset, 1)
+      this.recordClickLikeBtn()
 
       if (!this.data.isExistCompleteInfor) {
         this.popBlueWxCode.showPopup();
@@ -1623,20 +1640,31 @@ Page({
       }),
       success(res) {
         if (res.data.status === 200) {
+          console.log(res.data)
           self.setArrayIsLikeData(dataset,1)
           if (res.data.msg === '成功') {
             self.showCardToast('你喜欢Ta')
+            //判断对方是否也喜欢或者超级喜欢你  如果是 重载页面
+            if(dataset.type==='1'||dataset.type==='2'){
+              self.onLoad()
+            }
+
           } else if (res.data.msg === '成功取消喜欢') {
             self.showCardToast('已取消喜欢')
           }
         } else if (res.data.status === 400) {
+          console.log(res.data)
           if (res.data.msg === "该用户已与人匹配") {
             self.showCardToast(res.data.msg)
             return
           }
+          if (res.data.msg === "还未审核通过卡片") {
+            self.showCardToast(res.data.msg)
+            return
+          }
           //非vip或者点击超过三次？
-          self.showCardToast(res.data.msg)
           self.showVipIntroPop()
+          self.showCardToast(res.data.msg)
           wx.hideTabBar({})
         }
       },
@@ -1662,7 +1690,7 @@ Page({
     //没有添加小呗完善信息,并且当天第一次点击 展示弹窗
     if (this.data.isTodayFirstTimeTapLiekOrSuperLike) {
       //调用记录当天第一次点击喜欢和超级喜欢接口
-      this.recordClickLikeBtn(dataset, 2)
+      this.recordClickLikeBtn()
 
       if (!this.data.isExistCompleteInfor) {
         this.popBlueWxCode.showPopup();
@@ -1683,9 +1711,14 @@ Page({
       }),
       success(res) {
         if (res.data.status === 200) {
+          console.log(res.data)
           self.setArrayIsLikeData(dataset,2)
           if (res.data.msg === '成功') {
             self.showCardToast('你超级喜欢Ta')
+            //判断对方是否也喜欢或者超级喜欢你  如果是 重载页面
+            if (dataset.type === '1' || dataset.type === '2') {
+              self.onLoad()
+            }
           } else if (res.data.msg === '成功取消超级喜欢') {
             self.showCardToast('已取消超级喜欢')
           }
@@ -1698,7 +1731,7 @@ Page({
 
   },
   //调用记录用户当天第一次喜欢或者超级喜欢按钮
-  recordClickLikeBtn(dataset, likeType) {
+  recordClickLikeBtn() {
     let self = this;
 
     wx.request({
@@ -1715,9 +1748,8 @@ Page({
             //本地的数据也置0
             isTodayFirstTimeTapLiekOrSuperLike: false
           })
-          self.setArrayIsLikeData(dataset,likeType)
         }else{
-          self.showCardToast(res.data.msg)
+          console.log(res.data.msg)
         }
       },
       fail(res) {
@@ -1827,12 +1859,15 @@ Page({
     }
 
     var photoUrl = app.globalData.cropPhotoSrc
-    var gender = this.sexFlag
-    var intention = this.wantFlag
+    var gender = this.data.sexFlag
+    var intention = this.data.wantFlag
+    console.log("gender:"+gender)
+    console.log("intent:" +intention)
 
     switch (event.currentTarget.id) {
       //上传信息
       case 'btn-post-infor':
+        this.showCardToast("正在上传信息···")
         console.log('you post infor')
         //请求信息提交接口
         wx.uploadFile({
@@ -1849,15 +1884,17 @@ Page({
             'intention': intention,
           }),
           success(res) {
-            console.log(res.data)
-            if (res.data.status === 200) {
+            var jsonObj = JSON.parse(res.data)
+            if (jsonObj.status === 200) {
+              console.log(res.data)
               self.showCardToast("成功提交!")
               if (!self.data.isExistCompleteInfor) {
                 self.hideInforPop()
                 self.popBlueWxCode.showPopup();
               }
             } else {
-              self.showCardToast("提交失败!" + res.data.msg)
+              console.log(res.data)
+              self.showCardToast("提交失败!"+jsonObj.msg)
             }
           },
           fail(res) {
@@ -1865,11 +1902,11 @@ Page({
             self.showCardToast("提交异常!" + res.data.msg)
           }
         })
+        break
         // 如果不存在更多完善资料 弹出完善更多资料二维码窗 
         //上传更换的照片
       case 'btn-post-photo':
         //来自更换照片弹窗的提交
-        console.log('you post photo')
         this.showCardToast("正在上传照片···")
         //请求更换照片提交接口  成功回调后判断是否存在完善资料 否this.popBlueWxCode.showPopup();
         wx.uploadFile({
@@ -1884,17 +1921,16 @@ Page({
             'id': app.globalData.MyUserId
           }),
           success(res) {
-            var str = JSON.stringify(res.data)
-            var status = str.substring(13, 16)
-            console.log("上传照片status:" + status)
-            if (status === '200') {
+            var jsonObj = JSON.parse(res.data)
+            if (jsonObj.status === 200) {
               self.showCardToast("成功提交!")
               if (!self.data.isExistCompleteInfor) {
                 self.hideInforPop()
                 self.popBlueWxCode.showPopup();
               }
             } else {
-              self.showCardToast("提交失败!")
+              console.log(res.data)
+              self.showCardToast("提交失败!"+jsonObj.msg)
             }
           },
           fail(res) {
@@ -1922,9 +1958,15 @@ Page({
   showOpenVipSuccessPop: function() {
     console.log('openvipSuccess');
     this.popOpenVip.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   showLeadPop: function() {
     this.popLead.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   showVipIntroPop: function() {
     this.popVipIntro.showPopup();
@@ -1933,6 +1975,9 @@ Page({
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
+    })
+    this.setData({
+      isHideProgressBar: true
     })
   },
   showPinkWxCodePop: function() {
@@ -1943,32 +1988,56 @@ Page({
   },
   showMeetCodePop: function() {
     this.popMeetCode.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   showBreakPop: function() {
     this.popBreak.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   showRemindPop: function() {
     this.popRemind.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   showRestartPop: function() {
     this.popRestart.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   showMatchSuccessPop: function() {
     this.popMatchSuccess.showPopup();
+    this.setData({
+      isHideProgressBar: true
+    })
   },
   hidePopup: function(event) {
     switch (event.currentTarget.id) {
       case 'pop-openvip':
         this.popOpenVip.hidePopup();
+        this.setData({
+          isHideProgressBar : false
+        })
         break;
       case 'pop-lead':
         this.popLead.hidePopup();
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
       case 'pop-vipintro':
         this.popVipIntro.hidePopup();
         wx.showTabBar({
           aniamtion: true
         });
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
       case 'pop-bluewxcode':
         this.popBlueWxCode.hidePopup();
@@ -1981,18 +2050,34 @@ Page({
         break;
       case 'pop-meetcode':
         this.popMeetCode.hidePopup();
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
+        
       case 'pop-break':
-        this.popBreak.hidePopup();
+        this.popBreak.hidePopup()
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
       case 'pop-remind':
         this.popRemind.hidePopup();
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
       case 'pop-restart':
         this.popRestart.hidePopup();
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
       case 'pop-matchsuccess':
         this.popMatchSuccess.hidePopup();
+        this.setData({
+          isHideProgressBar: false
+        })
         break;
     }
   },
@@ -2475,6 +2560,7 @@ Page({
     } else {
       wx.hideTabBar({})
       this.showVipIntroPop()
+      
     }
 
   },
@@ -2502,21 +2588,31 @@ Page({
         'msg': self.popRemind.getRemindText()
       },
       method: 'POST',
-      sucess(res) {
+      success(res) {
+        console.log(res.data)
         if (res.data.status === 200) {
           self.popRemind.hidePopup()
+          this.setData({
+            isHideProgressBar: false
+          })
           self.showCardToast("已提醒对方背单词")
         } else {
           self.popRemind.hidePopup()
-          self.showCardToast(res.data.msg + "!\r\n请求出错,请稍后重试")
+          this.setData({
+            isHideProgressBar: false
+          })
+          self.showCardToast(res.data.msg )
         }
       },
       fail(res) {
         self.popRemind.hidePopup()
+        this.setData({
+          isHideProgressBar: false
+        })
         self.showCardToast("请求失败,请稍后重试")
       }
     })
-
+    console.log("do some")
   },
   onBreakEnsureTap() {
     //确认解除关系
@@ -2532,16 +2628,25 @@ Page({
       success(res) {
         if (res.data.status === 200) {
           self.popBreak.hidePopup()
+          this.setData({
+            isHideProgressBar: false
+          })
           self.showCardToast("解除关系成功")
           self.onLoad() //刷新当前页面重新获取用户信息 
 
         } else {
           self.popBreak.hidePopup()
+          this.setData({
+            isHideProgressBar: false
+          })
           self.showCardToast("解除关系请求出错,\r\n请您再三考虑")
         }
       },
       fail(res) {
         self.popBreak.hidePopup()
+        this.setData({
+          isHideProgressBar: false
+        })
         self.showCardToast("解除关系请求失败,\r\n请您再三考虑")
       }
     })
@@ -2549,6 +2654,9 @@ Page({
   onBreakCancelTap() {
     console.log("cancel break")
     this.popBreak.hidePopup()
+    this.setData({
+      isHideProgressBar: false
+    })
   },
   onRestartEnsureTap() {
     console.log("ensure restart")
@@ -2563,15 +2671,24 @@ Page({
       success(res) {
         if (res.data.status === 200) {
           self.popRestart.hidePopup()
+          this.setData({
+            isHideProgressBar: false
+          })
           self.showCardToast("重温回忆已提交,\r\n等待对方响应")
 
         } else {
           self.popRestart.hidePopup()
+          this.setData({
+            isHideProgressBar: false
+          })
           self.showCardToast("请求出错,请稍后重试")
         }
       },
       fail(res) {
         self.popRestart.hidePopup()
+        this.setData({
+          isHideProgressBar: false
+        })
         self.showCardToast("请求失败,请检查网络")
       }
     })
@@ -2579,6 +2696,9 @@ Page({
   onRestartCancelTap() {
     console.log("cancel restart")
     this.popRestart.hidePopup()
+    this.setData({
+      isHideProgressBar: false
+    })
   },
   
   //第一次进入发现页活动的引导
@@ -2600,12 +2720,12 @@ Page({
           isSuperLikeBtnTop: false,
           showLikeToast:true,
         })
-        setTimeout(function(){
+        self.data.setLikeTimer = setTimeout(function(){
           self.setData({
             showLikeToast:false,
             showLightenToast : true,
           })
-          setTimeout(function(){
+          self.data.setLightenTimer = setTimeout(function(){
             self.setData({
               showLightenToast: false,
             })
@@ -2641,6 +2761,9 @@ Page({
         },
         fail(res) {
           self.popRestart.hidePopup()
+          this.setData({
+            isHideProgressBar: false
+          })
           self.showCardToast("请求失败,请稍后重试")
         }
       })
@@ -2648,6 +2771,7 @@ Page({
     } else {
       this.showVipIntroPop()
       wx.hideTabBar({})
+      
     }
   },
 
@@ -2715,12 +2839,13 @@ Page({
   *  通过设置间隔2分钟时间的定时器,定时切换虚拟用户列展示toast
   */
   setTimeReversalToast(){
+    //获取一个0-6随机整数
+    var i = Math.floor(Math.random() * 7 );
+    var j = Math.floor(Math.random() * 7);
     let self = this;
-    var i = self.data.userIndex
     self.setData({
-      userIndex:0,
-      virtualUserCover:self.data.timeReverseUserList[0].cover,
-      virtualUserName: self.data.timeReverseUserList[0].name,
+      virtualUserCover:self.data.timeReverseUserList[i].cover,
+      virtualUserName: self.data.timeReverseUserList[i].name,
       isShowTimeReversalToast:true
     })
     setTimeout(function(){
@@ -2729,8 +2854,8 @@ Page({
       })
       setTimeout(function(){
         self.setData({
-          virtualUserCover: self.data.moreCardUserList[0].cover,
-          virtualUserName: self.data.moreCardUserList[0].name,
+          moreUserCover: self.data.moreCardUserList[j].cover,
+          moreUserName: self.data.moreCardUserList[j].name,
           isShowMoreCardToast: true
         })
         setTimeout(function(){
@@ -2743,15 +2868,14 @@ Page({
 
     setInterval(function(){
       if(i<5){
-        self.setData({
-          userIndex:i+1
-        })
         i=i+1
       }else if(i===5){
-        self.setData({
-          userIndex: 0
-        })
         i=0
+      }
+      if(j<5){
+        j=j+1
+      }else if(j===5){
+        j=0
       }
       self.setData({
         isShowTimeReversalToast:true,
@@ -2764,8 +2888,8 @@ Page({
         })
         setTimeout(function () {
           self.setData({
-            virtualUserCover: self.data.moreCardUserList[i].cover,
-            virtualUserName: self.data.moreCardUserList[i].name,
+            moreUserCover: self.data.moreCardUserList[j].cover,
+            moreUserName: self.data.moreCardUserList[j].name,
             isShowMoreCardToast: true
           })
           setTimeout(function () {

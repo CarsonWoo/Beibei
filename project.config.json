@@ -12,9 +12,9 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.2",
+	"libVersion": "2.7.7",
 	"appid": "wx915c7b2ebc140ee6",
-	"projectname": "%E8%83%8C%E5%91%97%E8%83%8C%E5%8D%95%E8%AF%8D1.2.8",
+	"projectname": "%E8%83%8C%E5%91%97%E8%83%8C%E5%8D%95%E8%AF%8D1.2.6",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -135,23 +135,23 @@
 					"scene": null
 				},
 				{
-					"id": 14,
-					"name": "弹窗测试",
-					"pathName": "utils/components/popup/test",
+					"id": -1,
+					"name": "web",
+					"pathName": "page/discover/pages/book/book_sign_up",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "头像剪裁测试",
-					"pathName": "utils/components/image-cropper/croppertest",
+					"name": "teacher",
+					"pathName": "page/discover/pages/teacher/teacher",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "发现页",
-					"pathName": "page/tabBar/discover/discover",
+					"name": "feed",
+					"pathName": "page/home/pages/feed/feed",
 					"query": "",
 					"scene": null
 				}

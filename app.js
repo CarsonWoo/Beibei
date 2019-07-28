@@ -59,11 +59,11 @@ App({
     appid: 'wx915c7b2ebc140ee6',
     token: null,
    
-   // HOST: 'https://www.ourbeibei.com',
+    HOST: 'https://www.ourbeibei.com',
     FTP_ICON_HOST: 'https://file.ourbeibei.com/l_e/static/mini_program_icons/',
     code: null,
     // 测试服务器 开发时用此
-     HOST: 'http://47.102.152.102:8080',
+    // HOST: 'http://47.102.152.102:8080',
 
     //-----1.1----------
     //群聊邀请者的id

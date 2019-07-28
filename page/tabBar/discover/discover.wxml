@@ -1,3 +1,4 @@
+
 <!--pages/discover/discover.wxml-->
 <view class='container'>
   <!-- <view class='daily-card-container'>
@@ -27,7 +28,7 @@
         <canvas canvas-id='ic_sign_up'></canvas>
       </view>
     </view>
-    <image class='reading-image' src='/images/ic_read_group.png'></image>
+    <image class='reading-image' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_read_group.png'></image>
   </view>
 
   <block wx:else>
@@ -115,8 +116,8 @@
         <image class='partnership-base-image' src='{{item.cover}}'></image>
         <image class='img-super-like-you' wx:if='{{item.type==="1"?true:false}}' src='{{img_super_like_you}}'></image>
         <!--当第一次参与活动时 引导页面 控制 index=0的 第一张卡片的按钮至于顶层 并关闭按钮的点击效果-->
-        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-cml_index='{{index}}' data-userid='{{item.user_id}}'></image>
-        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
+        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-cml_index='{{index}}'  data-type='{{item.type}}' data-userid='{{item.user_id}}'></image>
+        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}"  data-type='{{item.type}}' data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>{{item.wx_name}}</text>
           <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
@@ -126,7 +127,7 @@
         <view class='partnership-tag-container'>
           <!--给上限为4个的标签组循环3种颜色-->
           <block wx:for='{{item.tag}}' wx:key="key" wx:for-index='tagIndex'>
-            <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':'blue-bg'}}">{{item}}</view>
+            <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
           </block>
 
         </view>
@@ -141,8 +142,8 @@
         <image class='partnership-base-image' src='{{item.cover}}'></image>
         <image class='img-super-like-you' src='{{img_super_like_you}}'></image>
         <!--当第一次参与活动时 引导页面 控制 index=0的 第一张卡片的按钮至于顶层 并关闭按钮的点击效果-->
-        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
-        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
+        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-type='1' data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
+        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}" data-type='1'   data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>{{item.wx_name}}</text>
           <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
@@ -152,7 +153,7 @@
         <view class='partnership-tag-container'>
           <!--给上限为4个的标签组循环3种颜色-->
           <block wx:for='{{item.tag}}' wx:key="key" wx:for-index='tagIndex'>
-            <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':'blue-bg'}}">{{item}}</view>
+            <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
           </block>
 
         </view>
@@ -165,8 +166,8 @@
         <image class='partnership-base-image' src='{{item.cover}}'></image>
         <image class='img-super-like-you' wx:if='{{item.type==="1"?true:false}}' src='{{img_super_like_you}}'></image>
         <!--当第一次参与活动时 引导页面 控制 index=0的 第一张卡片的按钮至于顶层 并关闭按钮的点击效果-->
-        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
-        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}" data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
+        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}"  data-type='2' data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
+        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}"  data-type='2' data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>{{item.wx_name}}</text>
           <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
@@ -176,7 +177,7 @@
         <view class='partnership-tag-container'>
           <!--给上限为4个的标签组循环3种颜色-->
           <block wx:for='{{item.tag}}' wx:key="key" wx:for-index='tagIndex'>
-            <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':'blue-bg'}}">{{item}}</view>
+            <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
           </block>
 
         </view>
@@ -211,8 +212,8 @@
             <text class='normal-text'>查看更多卡片</text>
             <text class='partnership-min-text' style='margin-left:5rpx;'>+{{more_card_list.length}}</text>
              <view class='time-reversal-user-float-container' wx:if='{{isShowMoreCardToast}}'>
-              <image src='{{virtualUserCover}}'></image>
-              <text>{{virtualUserName}}使用了该功能</text>
+              <image src='{{moreUserCover}}'></image>
+              <text>{{moreUserName}}使用了该功能</text>
             </view>
           </view>
         </view>
@@ -232,8 +233,8 @@
         <view class='partnership-card-container'>
           <image class='partnership-base-image' src='{{item.cover}}'></image>
           <image class='img-super-like-you' wx:if='{{item.type==="1"?true:false}}' src='{{img_super_like_you}}'></image>
-          <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap='onLikeTap' data-userid='{{item.user_id}}' data-mrl_index='{{index}}'></image>
-          <image class='partnership-card-cover-image' src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap='onSuperLikeTap' data-userid='{{item.user_id}}' data-mrl_index='{{index}}'></image>
+          <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap='onLikeTap' data-userid='{{item.user_id}}'  data-type='{{item.type}}' data-mrl_index='{{index}}'></image>
+          <image class='partnership-card-cover-image' src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap='onSuperLikeTap' data-userid='{{item.user_id}}'  data-type='{{item.type}}' data-mrl_index='{{index}}'></image>
           <view class='partnership-userinfo-container'>
             <text class='black partnership-normal-text'>{{item.wx_name}}</text>
             <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
@@ -242,7 +243,7 @@
           <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
           <view class='partnership-tag-container'>
             <block wx:for='{{item.tag}}' wx:for-index='tagIndex' wx:key="key">
-              <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':'blue-bg'}}">{{item}}</view>
+              <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
             </block>
           </view>
           <image class='img-vip-card' wx:if='{{item.isVip==="0"?false:true}}' src='{{bg_vip_crown}}'></image>
@@ -262,8 +263,8 @@
         <view class='partnership-card-container'>
           <image class='partnership-base-image' src='{{item.cover}}'></image>
           <image class='img-super-like-you' wx:if='{{item.type==="1"?true:false}}' src='{{img_super_like_you}}'></image>
-          <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' data-userid='{{item.user_id}}' data-trl_index='{{index}}' bindtap='onLikeTap'></image>
-          <image class='partnership-card-cover-image' src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' data-userid='{{item.user_id}}' data-trl_index='{{index}}' bindtap='onSuperLikeTap'></image>
+          <image class='partnership-card-cover-image' style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' data-userid='{{item.user_id}}'  data-type='{{item.type}}' data-trl_index='{{index}}' bindtap='onLikeTap'></image>
+          <image class='partnership-card-cover-image' src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' data-userid='{{item.user_id}}'  data-type='{{item.type}}' data-trl_index='{{index}}' bindtap='onSuperLikeTap'></image>
           <view class='partnership-userinfo-container'>
             <text class='black partnership-normal-text'>{{item.wx_name}}</text>
             <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
@@ -271,8 +272,8 @@
           </view>
           <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
           <view class='partnership-tag-container'>
-            <block wx:for='{{item.tag}}' wx:for-index='tagIndex' wx:key="key">
-              <view class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':'blue-bg'}}">{{item}}</view>
+            <block wx:for='{{item.tag}}' wx:for-index='tagIndex' wx:key="key" >
+              <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
             </block>
           </view>
           <image class='img-vip-card' wx:if='{{item.isVip==="0"?false:true}}' src='{{bg_vip_crown}}'></image>
@@ -329,7 +330,7 @@
         <image class='btn-break' src='{{btn_break}}' bindtap='onBreakTap'></image>
         <canvas canvas-id='animation-canvas' class='animation-canvas-text'></canvas>
         <block wx:if='{{!isShowRestartBtn}}'>
-          <canvas canvas-id='progressbar-canvas' class='word-progressbar' bindtap='onWordProgressBarTap'></canvas>
+          <canvas hidden='{{isHideProgressBar}}' canvas-id='progressbar-canvas' class='word-progressbar' bindtap='onWordProgressBarTap'></canvas>
         </block>
         <block wx:elif='{{isShowRestartBtn}}'>
           <view class='btn-restart' bindtap='onRestartTap'>
@@ -472,7 +473,9 @@
 <pop-openvip id='pop-openvip' bind:hide='hidePopup' catchtouchmove='stopPageScroll'> </pop-openvip>
 
 <!--vip功能介绍弹窗 底部按钮绑定开通vip触碰事件 -->
+
 <pop-vipintro id='pop-vipintro' bind:hide='hidePopup' bind:openVip='openVip' catchtouchmove='stopPageScroll' vipContent='{{vipContent}}'></pop-vipintro>
+
 
 <!-- ios用户引导支付弹窗-->
 <pop-lead id='pop-lead' bind:hide='hidePopup' catchtouchmove='stopPageScroll' bind:addStaff='addStaff'></pop-lead>

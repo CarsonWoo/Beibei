@@ -36,5 +36,8 @@ Component({
     _hide() {
       this.triggerEvent("hide")
     },
+    _enter(){
+      this.triggerEvent("enter")
+    }
   }
 })
