@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": 17,
 			"list": [
 				{
 					"id": -1,
@@ -153,6 +153,12 @@
 					"name": "feed",
 					"pathName": "page/home/pages/feed/feed",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "popTest",
+					"pathName": "utils/components/popup/test",
 					"scene": null
 				}
 			]

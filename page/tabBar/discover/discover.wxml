@@ -116,14 +116,16 @@
         <image class='partnership-base-image' src='{{item.cover}}'></image>
         <image class='img-super-like-you' wx:if='{{item.type==="1"?true:false}}' src='{{img_super_like_you}}'></image>
         <!--当第一次参与活动时 引导页面 控制 index=0的 第一张卡片的按钮至于顶层 并关闭按钮的点击效果-->
-        <image class="{{isLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-cml_index='{{index}}'  data-type='{{item.type}}' data-userid='{{item.user_id}}'></image>
-        <image class="{{isSuperLikeBtnTop?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}"  data-type='{{item.type}}' data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
+        <image wx:if='{{isShowLeadPage1}}' class='like-lead-intro-text' src='{{img_like_intro}}'></image>
+        <image class="{{isShowLeadPage1?'top-btn':'partnership-card-cover-image'}}" style="margin-right:130rpx" src='{{item.isMyLike==="0"?ic_like:ic_like_check}}' bindtap="{{isLikeBtnTop?'':'onLikeTap'}}" data-cml_index='{{index}}'  data-type='{{item.type}}' data-userid='{{item.user_id}}'></image>
+        <image wx:if='{{isShowLeadPage2}}' class='superlike-lead-intro-text' src='{{img_superlike_intro}}'></image>
+        <image class="{{isShowLeadPage2?'top-btn':'partnership-card-cover-image'}}" src='{{item.isMySuperLike ==="0" ? ic_super_like:ic_super_like_check}}' bindtap="{{isSuperLikeBtnTop?'':'onSuperLikeTap'}}"  data-type='{{item.type}}' data-userid='{{item.user_id}}' data-cml_index='{{index}}'></image>
         <view class='partnership-userinfo-container'>
           <text class='black partnership-normal-text'>{{item.wx_name}}</text>
           <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
           <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':' · '+item.institutions}}</text>
         </view>
-        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature==null?'':item.signature}}</view>
         <view class='partnership-tag-container'>
           <!--给上限为4个的标签组循环3种颜色-->
           <block wx:for='{{item.tag}}' wx:key="key" wx:for-index='tagIndex'>
@@ -149,7 +151,7 @@
           <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
           <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':' · '+item.institutions}}</text>
         </view>
-        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature==null?'':item.signature}}</view>
         <view class='partnership-tag-container'>
           <!--给上限为4个的标签组循环3种颜色-->
           <block wx:for='{{item.tag}}' wx:key="key" wx:for-index='tagIndex'>
@@ -173,7 +175,7 @@
           <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
           <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':' · '+item.institutions}}</text>
         </view>
-        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
+        <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature==null?'':item.signature}}</view>
         <view class='partnership-tag-container'>
           <!--给上限为4个的标签组循环3种颜色-->
           <block wx:for='{{item.tag}}' wx:key="key" wx:for-index='tagIndex'>
@@ -240,7 +242,7 @@
             <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
             <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':' · '+item.institutions}}</text>
           </view>
-          <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
+          <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature==null?'':item.signature}}</view>
           <view class='partnership-tag-container'>
             <block wx:for='{{item.tag}}' wx:for-index='tagIndex' wx:key="key">
               <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
@@ -270,7 +272,7 @@
             <image src='{{item.gender===0?ic_gender_male:ic_gender_female}}'></image>
             <text class='light-gray partnership-sub-normal-text' style='margin-left:20rpx;'>{{item.age===null?'':item.age+'岁'}}{{item.institutions===null?'':' · '+item.institutions}}</text>
           </view>
-          <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature}}</view>
+          <view class='gray partnership-sub-normal-text' style='margin-top:15rpx;margin-left:20rpx;'>{{item.signature==null?'':item.signature}}</view>
           <view class='partnership-tag-container'>
             <block wx:for='{{item.tag}}' wx:for-index='tagIndex' wx:key="key" >
               <view wx:if="{{item===''?false:true}}" class="tag {{tagIndex===0?'blue-bg':tagIndex===1 ? 'light-blue-bg':tagIndex===2?'light-pink-bg':tagIndex===3?'blue-bg':'light-blue-bg'}}">{{item}}</view>
@@ -517,7 +519,6 @@
     </image>
     <text class='text-lead-title'>匹配成功,解锁漫画风剧情哟~</text>
   </view>
-  <image class='lead-intro-text' src='{{img_like_intro}}'></image>
 
   <view class='btn-next-body' bindtap='onNextBtnTap' id='btn-next-page1'>
     <text class='btn-next-text'>下一步</text>
@@ -531,7 +532,6 @@
     </image>
     <text class='text-lead-title'>匹配成功,解锁漫画风剧情哟~</text>
   </view>
-  <image class='lead-intro-text' src='{{img_superlike_intro}}'></image>
 
   <view class='btn-next-body' bindtap='onNextBtnTap' id='btn-next-page2'>
     <text class='btn-next-text'>下一步</text>

@@ -1558,11 +1558,11 @@
 
 /*蒙版引导页wxss */
 .lead-page-container{
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, .8);
   z-index: 9998;
   display: flex;
   flex-direction: column;
@@ -1591,11 +1591,21 @@
   top: 42rpx;
   left:88rpx;
 }
-.lead-intro-text{
-  margin-top: 566rpx;
-  margin-left:282rpx;
+.like-lead-intro-text{
+  position: absolute;
   width: 346rpx;
   height: 210rpx;
+   top: 370rpx;
+   right: 36rpx;
+   z-index: 9999;
+}
+.superlike-lead-intro-text{
+  position: absolute;
+  width: 346rpx;
+  height: 210rpx;
+   top: 370rpx;
+   right: 5rpx;
+   z-index: 9999;
 }
 .lead-btn-like{
   margin-top: -8rpx;
@@ -1615,7 +1625,7 @@
 .btn-next-body{
   position: absolute;
   left:329rpx;
-  top:570rpx; 
+  bottom: 56rpx;
   width: 196rpx;
   height: 65rpx;
   display: flex;

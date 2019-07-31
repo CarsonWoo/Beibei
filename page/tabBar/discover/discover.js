@@ -89,8 +89,6 @@ Page({
     isFirstTime: true,
     isShowLeadPage1: false,
     isShowLeadPage2: false,
-    isLikeBtnTop: false,
-    isSuperLikeBtnTop: false,
     isTodayFirstTimeTapLiekOrSuperLike: false,
     userInfoStatus: 0, //用户基本信息的上传状态  0代表未上传，1代表资料审核中，2代表审核通过
     isShowInforPop: false, //是否展示完善资料弹窗
@@ -188,6 +186,8 @@ Page({
     isShowMoreCardToast:false,
 
     isHideProgressBar:false,
+
+    firstOffsetHeight:0,
   },
 
 
@@ -1310,11 +1310,14 @@ Page({
 
           console.log("所有卡片列表：" + JSON.stringify(selfData.dating_card_list))
           console.log("普通卡片列表：" + JSON.stringify(selfData.common_card_list))
-          console.log("更多卡片列表：" + JSON.stringify(selfData.more_card_list))
+          
+
+          
+          //如果第一次进入并且没有报名语境阅读
           if (selfData.isFirstTime) {
+            self.setScrollOffset()
             self.setData({
               isShowLeadPage1: true,
-              isLikeBtnTop: true
             })
           }
 
@@ -1342,24 +1345,24 @@ Page({
               match_day_number: data.loveDays,
               studiedWordsTotalNumber: data.wordNumber
             })
-            //此处还有一个 判断是否有来自对方的提醒
+            //canvas绘制匹配页面的进度条
+            self.drawProgressBar();
             console.log(selfData.img_my_photo)
             self.setMatchLevel() //根据背单词总数设置匹配等级
             self.setCardStyle() //根据匹配双方性别和匹配等级来设置Card风格
-            //canvas绘制匹配页面的进度条
-            self.drawProgressBar();
+            
             return
           }
 
           //如果是vip
-          if (data.datingVip === 1) {
-            //展示更多卡片
-            more_card_list: self.getMoreFromList(selfData.dating_card_list)
+          if (data.datingVip === 1) {    
             //vip获取倒流卡片
             self.getTimeReservalList();
             //vip关闭 偷偷喜欢你 曝光提示toast
             self.setData({
-              showLikeToast: false
+              showLikeToast: false,
+              //展示更多卡片
+              more_card_list: self.getMoreFromList(selfData.dating_card_list)
             })
             //获取更多卡片??
           }else{
@@ -1405,11 +1408,11 @@ Page({
             success(res) {
               console.log(res)
               self.popVipIntro.hidePopup()
-              wx.showTabBar({})
               self.showOpenVipSuccessPop()
+              wx.showTabBar({})
             },
             fail(res) {
-              console.log(res)
+              console.log(res)     
             }
           })
         } else {
@@ -1641,8 +1644,9 @@ Page({
       success(res) {
         if (res.data.status === 200) {
           console.log(res.data)
-          self.setArrayIsLikeData(dataset,1)
+          
           if (res.data.msg === '成功') {
+            self.setArrayIsLikeData(dataset, 1,'1')
             self.showCardToast('你喜欢Ta')
             //判断对方是否也喜欢或者超级喜欢你  如果是 展示成功页面 ，进入旅程则重载页面
             if(dataset.type==="1"||dataset.type==="2"){
@@ -1650,6 +1654,7 @@ Page({
             }
 
           } else if (res.data.msg === '成功取消喜欢') {
+            self.setArrayIsLikeData(dataset, 1, '0')
             self.showCardToast('已取消喜欢')
           }
         } else if (res.data.status === 400) {
@@ -1712,14 +1717,16 @@ Page({
       success(res) {
         if (res.data.status === 200) {
           console.log(res.data)
-          self.setArrayIsLikeData(dataset,2)
+          
           if (res.data.msg === '成功') {
+            self.setArrayIsLikeData(dataset, 2,'1')
             self.showCardToast('你超级喜欢Ta')
             //判断对方是否也喜欢或者超级喜欢你  如果是 重载页面
             if (dataset.type === "1" || dataset.type === "2") {
               self.popMatchSuccess.showPopup()
             }
           } else if (res.data.msg === '成功取消超级喜欢') {
+            self.setArrayIsLikeData(dataset, 2,'0')
             self.showCardToast('已取消超级喜欢')
           }
         } else {
@@ -1884,14 +1891,16 @@ Page({
             'intention': intention,
           }),
           success(res) {
+            console.log(res.data)
             var jsonObj = JSON.parse(res.data)
             if (jsonObj.status === 200) {
               console.log(res.data)
-              self.showCardToast("成功提交!")
-              if (!self.data.isExistCompleteInfor) {
-                self.hideInforPop()
-                self.popBlueWxCode.showPopup();
-              }
+              self.showCardToast("成功提交!页面数据刷新")
+              self.onLoad()
+              // if (!self.data.isExistCompleteInfor) {
+              //   self.hideInforPop()
+              //   self.popBlueWxCode.showPopup();
+              // }
             } else {
               console.log(res.data)
               self.showCardToast("提交失败!"+jsonObj.msg)
@@ -1921,6 +1930,7 @@ Page({
             'id': app.globalData.MyUserId
           }),
           success(res) {
+            console.log(res.data)
             var jsonObj = JSON.parse(res.data)
             if (jsonObj.status === 200) {
               self.showCardToast("成功提交!")
@@ -1957,7 +1967,7 @@ Page({
   //多个自定义组件弹窗的弹起与隐藏
   showOpenVipSuccessPop: function() {
     console.log('openvipSuccess');
-    this.popOpenVip.showPopup();
+    this.popOpenVipSuccess.showPopup();
     this.setData({
       isHideProgressBar: true
     })
@@ -2017,35 +2027,22 @@ Page({
     })
   },
   hidePopup: function(event) {
+    this.setData({
+      isHideProgressBar: false
+    })
     switch (event.currentTarget.id) {
       case 'pop-openvip':
-        this.popOpenVip.hidePopup();
-        this.setData({
-          isHideProgressBar : false
-        })
-        //vip功能展现
-        this.setData({
-          is_vip:true,
-          more_card_list: this.getMoreFromList(this.data.dating_card_list)
-        })
-        //vip获取倒流卡片
-        self.getTimeReservalList();
-        this.setIconStyle()
+        this.popOpenVipSuccess.hidePopup();
+        this.onLoad()
         break;
       case 'pop-lead':
         this.popLead.hidePopup();
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
       case 'pop-vipintro':
         this.popVipIntro.hidePopup();
         wx.showTabBar({
           aniamtion: true
         });
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
       case 'pop-bluewxcode':
         this.popBlueWxCode.hidePopup();
@@ -2058,34 +2055,18 @@ Page({
         break;
       case 'pop-meetcode':
         this.popMeetCode.hidePopup();
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
-        
       case 'pop-break':
         this.popBreak.hidePopup()
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
       case 'pop-remind':
         this.popRemind.hidePopup();
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
       case 'pop-restart':
         this.popRestart.hidePopup();
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
       case 'pop-matchsuccess':
         this.popMatchSuccess.hidePopup();
-        this.setData({
-          isHideProgressBar: false
-        })
         break;
     }
   },
@@ -2115,6 +2096,7 @@ Page({
         fail: function(res) {},
         complete: function(res) {},
       });
+      
     } else {
       //获取参数并进行支付
       this.getVipPayInfo();
@@ -2186,7 +2168,7 @@ Page({
             },
             fail: function(res) {
               pop.showToast("二维码保存失败,请稍后重试");
-            },
+            }
           })
         }
       },
@@ -2200,7 +2182,7 @@ Page({
 
   //将卡片组拆为普通卡片组和更多卡片组 
   getCommonFromList(arr) {
-    if (!JSON.stringify(arr) === '[]') {
+    if (JSON.stringify(arr) != '[]') {
       if (JSON.stringify(arr[5]) === '{}' || arr[5] === null) {
         console.log("刚好长度为5的卡片列")
         return arr
@@ -2210,6 +2192,24 @@ Page({
           newArr[i] = arr[i]
         }
         console.log("长度大于5的卡片列")
+        return newArr
+      }
+    } else {
+      console.log("空的卡片列")
+      return arr;
+    }
+  },
+  getMoreFromList(arr) {
+    if (JSON.stringify(arr) != '[]') {
+      if (JSON.stringify(arr[5]) === '{}' || arr[5] === null) {
+        console.log("无更多卡片")
+        return []
+      } else {
+        var newArr = []
+        for (var i = 5; i < arr.length; i++) {
+          newArr[i-5] = arr[i]
+        }
+        console.log("有更多的卡片列")
         return newArr
       }
     } else {
@@ -2235,21 +2235,6 @@ Page({
       }
     }
     console.log("喜欢你的卡片优化" + JSON.stringify(this.data.like_you_list))
-  },
-  getMoreFromList(arr) {
-    if (arr != []) {
-      if (arr[5] === null) {
-        return [];
-      } else {
-        var newArr = [];
-        for (var i = 5; i < arr.length; i++) {
-          newArr[i - 5] = arr[i];
-        }
-        return newArr;
-      }
-    } else {
-      return arr;
-    }
   },
   getStrLength(str) {
     var len = 0;
@@ -2600,13 +2585,13 @@ Page({
         console.log(res.data)
         if (res.data.status === 200) {
           self.popRemind.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast("已提醒对方背单词")
         } else {
           self.popRemind.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast(res.data.msg )
@@ -2614,7 +2599,7 @@ Page({
       },
       fail(res) {
         self.popRemind.hidePopup()
-        this.setData({
+        self.setData({
           isHideProgressBar: false
         })
         self.showCardToast("请求失败,请稍后重试")
@@ -2636,7 +2621,7 @@ Page({
       success(res) {
         if (res.data.status === 200) {
           self.popBreak.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast("解除关系成功")
@@ -2644,7 +2629,7 @@ Page({
 
         } else {
           self.popBreak.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast("解除关系请求出错,\r\n请您再三考虑")
@@ -2652,7 +2637,7 @@ Page({
       },
       fail(res) {
         self.popBreak.hidePopup()
-        this.setData({
+        self.setData({
           isHideProgressBar: false
         })
         self.showCardToast("解除关系请求失败,\r\n请您再三考虑")
@@ -2679,14 +2664,14 @@ Page({
       success(res) {
         if (res.data.status === 200) {
           self.popRestart.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast("重温回忆已提交,\r\n等待对方响应")
 
         } else {
           self.popRestart.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast("请求出错,请稍后重试")
@@ -2694,7 +2679,7 @@ Page({
       },
       fail(res) {
         self.popRestart.hidePopup()
-        this.setData({
+        self.setData({
           isHideProgressBar: false
         })
         self.showCardToast("请求失败,请检查网络")
@@ -2704,7 +2689,7 @@ Page({
   onRestartCancelTap() {
     console.log("cancel restart")
     this.popRestart.hidePopup()
-    this.setData({
+    self.setData({
       isHideProgressBar: false
     })
   },
@@ -2718,14 +2703,11 @@ Page({
         this.setData({
           isShowLeadPage1: false,
           isShowLeadPage2: true,
-          isLikeBtnTop: false,
-          isSuperLikeBtnTop: true,
         })
         break
       case 'btn-next-page2':
         this.setData({
           isShowLeadPage2: false,
-          isSuperLikeBtnTop: false,
           showLikeToast:true,
         })
         self.data.setLikeTimer = setTimeout(function(){
@@ -2769,7 +2751,7 @@ Page({
         },
         fail(res) {
           self.popRestart.hidePopup()
-          this.setData({
+          self.setData({
             isHideProgressBar: false
           })
           self.showCardToast("请求失败,请稍后重试")
@@ -2794,7 +2776,7 @@ Page({
     console.log("back event：" + JSON.stringify(event))
   },
 
-  setArrayIsLikeData(dataset, likeType) {//likeType 1为喜欢  2为超级喜欢
+  setArrayIsLikeData(dataset, likeType,isLikeCheck) {//likeType 1为喜欢  2为超级喜欢
     let self = this;
     switch (likeType) {
       case 1:
@@ -2804,19 +2786,19 @@ Page({
           //临时字符串组成-用来设置数组对象属性
           var temp_str = 'common_card_list[' + dataset.cml_index + '].isMyLike'
           self.setData({
-            [temp_str]: self.data.common_card_list[dataset.cml_index].isMyLike === '0' ? '1' : '0'
+            [temp_str]: isLikeCheck
           })
         }
         if (dataset.hasOwnProperty('mrl_index')) {
           var temp_str = 'more_card_list[' + dataset.mrl_index + '].isMyLike'
           self.setData({
-            [temp_str]: self.data.more_card_list[dataset.mrl_index].isMyLike === '0' ? '1' : '0'
+            [temp_str]: isLikeCheck
           })
         }
         if (dataset.hasOwnProperty('trl_index')) {
           var temp_str = 'time_reversal_list[' + dataset.trl_index + '].isMyLike'
           self.setData({
-            [temp_str]: self.data.time_reversal_list[dataset.trl_index].isMyLike === '0' ? '1' : '0'
+            [temp_str]: isLikeCheck
           })
         }
         break
@@ -2824,19 +2806,19 @@ Page({
         if (dataset.hasOwnProperty('cml_index')) {
           var temp_str = 'common_card_list[' + dataset.cml_index + '].isMySuperLike'
           self.setData({
-            [temp_str]: self.data.common_card_list[dataset.cml_index].isMySuperLike === '0' ? '1' : '0'
+            [temp_str]: isLikeCheck
           })
         }
         if (dataset.hasOwnProperty('mrl_index')) {
           var temp_str = 'more_card_list[' + dataset.mrl_index + '].isMySuperLike'
           self.setData({
-            [temp_str]: self.data.more_card_list[dataset.mrl_index].isMySuperLike === '0' ? '1' : '0'
+            [temp_str]: isLikeCheck
           })
         }
         if (dataset.hasOwnProperty('trl_index')) {
           var temp_str = 'time_reversal_list[' + dataset.trl_index + '].isMySuperLike'
           self.setData({
-            [temp_str]: self.data.time_reversal_list[dataset.trl_index].isMySuperLike === '0' ? '1' : '0'
+            [temp_str]: isLikeCheck
           })
         }
         break
@@ -2847,9 +2829,9 @@ Page({
   *  通过设置间隔2分钟时间的定时器,定时切换虚拟用户列展示toast
   */
   setTimeReversalToast(){
-    //获取一个0-6随机整数
-    var i = Math.floor(Math.random() * 7 );
-    var j = Math.floor(Math.random() * 7);
+    //获取一个0-5随机整数
+    var i = Math.floor(Math.random() * 6 );
+    var j = Math.floor(Math.random() * 6);
     let self = this;
     self.setData({
       virtualUserCover:self.data.timeReverseUserList[i].cover,
@@ -2912,6 +2894,26 @@ Page({
 
   onEnterMatchSuccessPageTap(){
     this.onLoad()
+  },
+   
+
+  /*
+  * 根据laber栏的高度 滑动到label距顶部75px处
+  */
+  setScrollOffset(){
+    var offset = 0 ;
+    let query = wx.createSelectorQuery();
+    query.select('#partnership_label').boundingClientRect(rect => {
+       var y= rect.top;
+      console.log("标签的y坐标" + y);
+      if(y>75){
+        offset=y-75
+      }
+      wx.pageScrollTo({
+        scrollTop: offset,
+        aniamtion:500
+      })
+    }).exec();
   },
 
 

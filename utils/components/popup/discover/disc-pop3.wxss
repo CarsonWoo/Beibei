@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
   z-index: 9998;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, .6);
   display: none;
 }
 
@@ -43,7 +43,7 @@
   flex-direction: row;
   margin-top: 985rpx;
   width:98.9%;
-  height: 104rpx;
+  height: 120rpx;
   background-image: linear-gradient(90deg, 
 		#5c3cff 31%, 
 		#ff5b95 100%), 
