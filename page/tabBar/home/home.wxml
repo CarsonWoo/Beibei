@@ -169,7 +169,11 @@
 
     <!-- <view class='welfare-item' catchtap='onPrizeTap'>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
+=======
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_challenge.png'></image>
+>>>>>>> master
 =======
       <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_challenge.png'></image>
 >>>>>>> master
