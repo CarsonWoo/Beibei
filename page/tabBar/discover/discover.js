@@ -202,30 +202,34 @@ Page({
     // this.setData({
     //   is_today_book_finished: wx.getStorageSync('is_today_book_finished')
     // })
-    if (options != undefined) {
+    if (options != undefined ) {
       this.setData({
         options: options
       })
-    }
 
-    if (options.action != undefined) {
-      this.setData({
-        action: options.action
-      })
-    }
-    //匹配成功通知
-    if (options.isMatch === 1 || options.isMatch === '1') {
-      this.showMatchSuccessPop()
-    }
+      //只有option存在时才能进行以下判断，不然重载页面时出错
+      if (options.action != undefined) {
+        this.setData({
+          action: options.action
+        })
+      }
 
-    //vip续费通知
-    if (options.isNeedRemindContinue === 1 || options.isNeedRemindContinue === '1') {
-      //当用户为vip时改变弹窗文字内容
-      this.setData({
-        vipContent: '立即续费VIP'
-      })
-      this.showVipIntroPop()
+      //匹配成功通知
+      if (options.isMatch === 1 || options.isMatch === '1') {
+        this.showMatchSuccessPop()
+      }
+
+      //vip续费通知
+      if (options.isNeedRemindContinue === 1 || options.isNeedRemindContinue === '1') {
+        //当用户为vip时改变弹窗文字内容
+        this.setData({
+          vipContent: '立即续费VIP'
+        })
+        this.showVipIntroPop()
+      }
+
     }
+    
 
   },
 
@@ -1305,6 +1309,7 @@ Page({
             isExistCompleteInfor: data.infoComplete === 1?true:false,
             isFirstTime: data.firstTime === 1?true:false,
             isTodayFirstTimeTapLiekOrSuperLike: data.todayFirstTime === '1' ? true : false,
+            
             userInfoStatus: data.userStatus,
           });
 
@@ -1896,6 +1901,7 @@ Page({
             if (jsonObj.status === 200) {
               console.log(res.data)
               self.showCardToast("成功提交!页面数据刷新")
+              self.hideInforPop()
               self.onLoad()
               // if (!self.data.isExistCompleteInfor) {
               //   self.hideInforPop()
@@ -1909,6 +1915,9 @@ Page({
           fail(res) {
             console.log('failrequest')
             self.showCardToast("提交异常!" + res.data.msg)
+          },
+          complete(res){
+            console.log(res.data)
           }
         })
         break
@@ -2183,8 +2192,8 @@ Page({
   //将卡片组拆为普通卡片组和更多卡片组 
   getCommonFromList(arr) {
     if (JSON.stringify(arr) != '[]') {
-      if (JSON.stringify(arr[5]) === '{}' || arr[5] === null) {
-        console.log("刚好长度为5的卡片列")
+      if (arr.length<6) {
+        console.log("长度小于5的卡片列")
         return arr
       } else {
         var newArr = []
@@ -2201,7 +2210,7 @@ Page({
   },
   getMoreFromList(arr) {
     if (JSON.stringify(arr) != '[]') {
-      if (JSON.stringify(arr[5]) === '{}' || arr[5] === null) {
+      if (arr.length<6) {
         console.log("无更多卡片")
         return []
       } else {
