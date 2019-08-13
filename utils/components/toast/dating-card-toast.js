@@ -34,6 +34,17 @@ Component({
           isShowToast: false
         })
       }, time)
+    },
+    showLoadingToast(content){
+      this.setData({
+        isShowToast:true,
+        toastContent:content
+      })
+    },
+    hideLoadingToast(){
+      this.setData({
+        isShowToast:false
+      })
     }
   }
 })

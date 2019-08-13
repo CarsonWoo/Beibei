@@ -479,6 +479,80 @@ Page({
     // console.log(e);
   },
 
+
+
+  // 保存图片
+  saveImg: function (image_path,needSign) {
+    // console.log("开始保存图片")
+    //图片保存到本地
+    let that = this
+    wx.saveImageToPhotosAlbum({
+      filePath: image_path,
+      success: function (data) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success'
+        })
+        if (needSign) {
+          console.log('needSign')
+          that.onChapterSign()
+        }
+        that.setData({
+          download_success: true
+        })
+        setTimeout(() => {
+          that.setData({
+            isShowDialog: false,
+            showDownloadImage: false,
+            download_success: false
+          })
+        }, 2000)
+      },
+      fail: function (err) {
+        that.setData({
+          isShowDialog: false,
+          showDownloadImage: false,
+          download_success: false
+        })
+        // console.log("保存失败")
+        if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+          // 微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
+          wx.showModal({
+            title: '提示',
+            content: '需要您授权保存相册',
+            showCancel: false,
+            success: modalSuccess => {
+              wx.openSetting({
+                success(settingdata) {
+                  console.log("settingdata", settingdata)
+                  if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                    wx.showModal({
+                      title: '提示',
+                      content: '获取权限成功,再次点击即可保存',
+                      showCancel: false,
+                    })
+                  } else {
+                    wx.showModal({
+                      title: '提示',
+                      content: '获取权限失败，将无法保存到相册哦~',
+                      showCancel: false,
+                    })
+                  }
+                },
+              })
+            }
+          })
+        }
+        else {
+          console.log(err.errMsg)
+        }
+      },
+    })
+  },
+
+
+
   showPicture: function(e) {
     let imgType = e.currentTarget.dataset.imgtype
     let needSign = e.currentTarget.dataset.needsign == 'true'
@@ -495,106 +569,11 @@ Page({
       download_success: false
     })
     console.log(m_download_img)
-    // 获取用户是否开启用户授权相册
-    wx.getSetting({
+    //下载保存网络图片
+    wx.downloadFile({
+      url: m_download_img,
       success: (res) => {
-        // 如果没有则获取授权
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success: () => {
-
-              //下载保存网络图片
-              wx.downloadFile({
-                url: m_download_img,
-                success: (res) => {
-                  wx.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success: () => {
-                      this.setData({
-                        download_success: true
-                      })
-                      if (needSign) {
-                        console.log('needSign')
-                        this.onChapterSign()
-                      }
-                      setTimeout(() => {
-                        this.setData({
-                          isShowDialog: false,
-                          showDownloadImage: false,
-                          download_success: false
-                        })
-                      }, 2000)
-                    },
-                    fail: () => {
-                      wx.showToast({
-                        title: '保存失败',
-                        icon: 'none'
-                      })
-                      setTimeout(() => {
-                        this.setData({
-                          isShowDialog: false,
-                          showDownloadImage: false,
-                          download_success: false
-                        })
-                      }, 2000)
-                    }
-                  })
-                }
-              })
-            },
-            fail: () => {
-              setTimeout(() => {
-                this.setData({
-                  isShowDialog: false,
-                  showDownloadImage: false,
-                  download_success: false
-                })
-              }, 2000)
-            }
-          })
-        } else {
-          // 有则直接保存
-          //下载保存网络图片
-          wx.downloadFile({
-            url: m_download_img,
-            success: (res) => {
-              wx.saveImageToPhotosAlbum({
-                filePath: res.tempFilePath,
-                success: () => {
-                  if (needSign) {
-                    console.log('need sign')
-                    this.onChapterSign()
-                  }
-                  this.setData({
-                    download_success: true
-                  })
-                  setTimeout(() => {
-                    this.setData({
-                      isShowDialog: false,
-                      showDownloadImage: false,
-                      download_success: false
-                    })
-                  }, 2000)
-                },
-                fail: () => {
-                  wx.showToast({
-                    title: '保存失败',
-                    icon: 'none',
-                    duration: 2000
-                  })
-                  setTimeout(() => {
-                    this.setData({
-                      isShowDialog: false,
-                      showDownloadImage: false,
-                      download_success: false
-                    })
-                  }, 2000)
-                }
-              })
-            }
-          })
-        }
+          this.saveImg(res.tempFilePath,needSign)
       }
     })
 

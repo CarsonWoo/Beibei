@@ -377,7 +377,7 @@
     <!-- <block wx:elif="{{showRedPacket}}">
       <view style='width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center'>
         <block wx:if="{{isPacked}}">
-          <image class='bg-red-packet' src='/images/bg_red_packet_packed.png' mode='widthFix'></image>
+          <image class='bg-red-packet' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_red_packet_packed.png' mode='widthFix'></image>
           <view style='display:flex;flex-direction:column;align-items:center;position:absolute;top:340rpx;text-align:center;width:100%'>
             <text style='font-size:20rpx;color:#95865d;'>背呗背单词\n发您一个红包</text>
             <view class='money-text'>{{read_class_red_packet}}</view>
@@ -387,7 +387,7 @@
           <image src='/images/ic_close.png' class='close-img' style='margin-top:5rpx;' catchtap='onCloseDialog'></image>
         </block>
         <block wx:else>
-          <image class='bg-red-packet' src='/images/bg_red_packet_unpack.png' mode='widthFix' style='margin-top:50rpx;'></image>
+          <image class='bg-red-packet' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_red_packet_unpack.png' mode='widthFix' style='margin-top:50rpx;'></image>
           <view style='display:flex;justify-content:center;position:absolute;top:750rpx;width:100%;'>
             <view class='pack-button' catchtap='onPacketOn'>
               <text>立即拆开</text>

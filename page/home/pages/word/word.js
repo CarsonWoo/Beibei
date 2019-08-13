@@ -506,7 +506,7 @@ Page({
 
       if (this.data.currentPointer < this.data.totalSize) {
 
-        setTimeout(this.onGraphSuccess, 600)
+        setTimeout(this.onGraphSuccess, 100)
       } else {
         this.setData({
           progressPercentage: 100,

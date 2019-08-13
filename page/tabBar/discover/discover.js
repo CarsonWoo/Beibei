@@ -890,8 +890,75 @@ Page({
       })
     }
   },
+  
+  // 保存图片
+  saveImg: function (image_path) {
+    // console.log("开始保存图片")
+    //图片保存到本地
+    let that = this
+    wx.saveImageToPhotosAlbum({
+      filePath: image_path,
+      success: function (data) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success'
+        })
+        that.onSignChapter()
+        that.setData({
+          download_success: true
+        })
+        setTimeout(() => {
+          that.setData({
+            isShowDialog: false,
+            showDownloadImage: false,
+            download_success: false
+          })
+        }, 2000)
+      },
+      fail: function (err) {
+        that.setData({
+          isShowDialog: false,
+          showDownloadImage: false,
+          download_success: false
+        })
+        // console.log("保存失败")
+        if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+          // 微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
+          wx.showModal({
+            title: '提示',
+            content: '需要您授权保存相册',
+            showCancel: false,
+            success: modalSuccess => {
+              wx.openSetting({
+                success(settingdata) {
+                  console.log("settingdata", settingdata)
+                  if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                    wx.showModal({
+                      title: '提示',
+                      content: '获取权限成功,再次点击即可保存',
+                      showCancel: false,
+                    })
+                  } else {
+                    wx.showModal({
+                      title: '提示',
+                      content: '获取权限失败，将无法保存到相册哦~',
+                      showCancel: false,
+                    })
+                  }
+                },
+              })
+            }
+          })
+        }
+        else {
+          console.log(err.errMsg)
+        }
+      },
+    })
+  },
 
-  showPicture: function(e) {
+  showPicture: function (e) {
     // let that = this;
     this.setData({
       isShowDialog: true,
@@ -899,106 +966,15 @@ Page({
     })
     let m_download_img = 'https://file.ourbeibei.com/l_e/static/images/book_sign_day_' + this.data.begin_day + '.jpg'
     console.log(m_download_img)
-    // 获取用户是否开启用户授权相册
-    wx.getSetting({
+    //下载保存网络图片
+    wx.downloadFile({
+      url: m_download_img,
       success: (res) => {
-        // 如果没有则获取授权
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success: () => {
-
-              //下载保存网络图片
-              wx.downloadFile({
-                url: m_download_img,
-                success: (res) => {
-                  wx.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success: () => {
-                      this.setData({
-                        download_success: true
-                      })
-                      this.onSignChapter()
-                      setTimeout(() => {
-                        this.setData({
-                          isShowDialog: false,
-                          showDownloadImage: false,
-                          download_success: false
-                        })
-                      }, 2000)
-                    },
-                    fail: () => {
-                      wx.showToast({
-                        title: '保存失败',
-                        icon: 'none'
-                      })
-                      setTimeout(() => {
-                        this.setData({
-                          isShowDialog: false,
-                          showDownloadImage: false,
-                          download_success: false
-                        })
-                      }, 2000)
-                    }
-                  })
-                }
-              })
-            },
-            fail: () => {
-              setTimeout(() => {
-                this.setData({
-                  isShowDialog: false,
-                  showDownloadImage: false,
-                  download_success: false
-                })
-              }, 2000)
-            }
-          })
-        } else {
-          // 有则直接保存
-          //下载保存网络图片
-          wx.downloadFile({
-            url: m_download_img,
-            success: (res) => {
-              wx.saveImageToPhotosAlbum({
-                filePath: res.tempFilePath,
-                success: () => {
-                  this.onSignChapter()
-                  this.setData({
-                    download_success: true
-                  })
-                  setTimeout(() => {
-                    this.setData({
-                      isShowDialog: false,
-                      showDownloadImage: false,
-                      download_success: false
-                    })
-                  }, 2000)
-                },
-                fail: () => {
-                  wx.showToast({
-                    title: '保存失败',
-                    icon: 'none',
-                    duration: 2000
-                  })
-                  setTimeout(() => {
-                    this.setData({
-                      isShowDialog: false,
-                      showDownloadImage: false,
-                      download_success: false
-                    })
-                  }, 2000)
-                }
-              })
-            }
-          })
-        }
+        this.saveImg(res.tempFilePath)
       }
     })
-
-
-
   },
+
 
   //点击红包立即打开按钮
   onPacketOn: function(e) {
@@ -1309,7 +1285,6 @@ Page({
             isExistCompleteInfor: data.infoComplete === 1?true:false,
             isFirstTime: data.firstTime === 1?true:false,
             isTodayFirstTimeTapLiekOrSuperLike: data.todayFirstTime === '1' ? true : false,
-            
             userInfoStatus: data.userStatus,
           });
 
@@ -1467,6 +1442,11 @@ Page({
       })
       return;
     }
+    if (this.data.userInfoStatus === 1) {
+      this.showCardToast("你的卡片还未通过审核");
+      return;
+    }
+
     if (!this.data.isShowSoundlessLikeCardList) {
       let self = this;
       wx.request({
@@ -1879,7 +1859,7 @@ Page({
     switch (event.currentTarget.id) {
       //上传信息
       case 'btn-post-infor':
-        this.showCardToast("正在上传信息···")
+        self.cardToast.showLoadingToast("正在上传,请耐心等待")
         console.log('you post infor')
         //请求信息提交接口
         wx.uploadFile({
@@ -1896,6 +1876,7 @@ Page({
             'intention': intention,
           }),
           success(res) {
+            self.cardToast.hideLoadingToast()
             console.log(res.data)
             var jsonObj = JSON.parse(res.data)
             if (jsonObj.status === 200) {
@@ -1913,6 +1894,7 @@ Page({
             }
           },
           fail(res) {
+            self.cardToast.hideLoadingToast()
             console.log('failrequest')
             self.showCardToast("提交异常!" + res.data.msg)
           },
@@ -1925,7 +1907,7 @@ Page({
         //上传更换的照片
       case 'btn-post-photo':
         //来自更换照片弹窗的提交
-        this.showCardToast("正在上传照片···")
+        self.cardToast.showLoadingToast("正在上传,请耐心等待")
         //请求更换照片提交接口  成功回调后判断是否存在完善资料 否this.popBlueWxCode.showPopup();
         wx.uploadFile({
           url: app.globalData.HOST + '/lzy/update_cover.do',
@@ -1939,6 +1921,7 @@ Page({
             'id': app.globalData.MyUserId
           }),
           success(res) {
+            self.cardToast.hideLoadingToast()
             console.log(res.data)
             var jsonObj = JSON.parse(res.data)
             if (jsonObj.status === 200) {
@@ -1953,6 +1936,7 @@ Page({
             }
           },
           fail(res) {
+            self.cardToast.hideLoadingToast()
             console.log('failrequest')
             self.showCardToast("提交异常!" + res.data.msg)
           }
@@ -2730,6 +2714,7 @@ Page({
             })
           },3000)
         },3000)
+        this.recordClickLikeBtn()
         break
     }
   },
@@ -2902,6 +2887,7 @@ Page({
   },
 
   onEnterMatchSuccessPageTap(){
+    this.popMatchSuccess.hidePopup()
     this.onLoad()
   },
    
