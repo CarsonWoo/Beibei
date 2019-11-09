@@ -25,7 +25,7 @@ Page({
   onLoad: function (options) {
 
     var that = this
-    var imageData = 'https://file.ourbeibei.com/l_e/common/JiaNan.png' //这里添加图片的地址
+    var imageData = app.globalData.FTP_ICON_HOST +'pay_contact.png' //这里添加图片的地址
     that.setData({
       imageData: imageData
     })
@@ -109,7 +109,7 @@ Page({
 
               //下载保存网络图片
               wx.downloadFile({
-                url: 'https://file.ourbeibei.com/l_e/common/JiaNan.png', 
+                url: that.data.imageData, 
                 success: function (res) {
                   wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,
@@ -140,7 +140,7 @@ Page({
           // 有则直接保存
           //下载保存网络图片
           wx.downloadFile({
-            url: 'https://file.ourbeibei.com/l_e/common/JiaNan.png',
+            url: that.data.imageData,
             success: function (res) {
               wx.saveImageToPhotosAlbum({
                 filePath: res.tempFilePath,

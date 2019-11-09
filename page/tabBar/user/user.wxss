@@ -506,3 +506,20 @@ page {
   background-color: rgba(0, 0, 0, 0.4);
   top: 0;
 }
+.id-container{
+  margin-top: 22rpx;
+  width: 176rpx;
+	height: 42rpx;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 21rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+.id-container text{
+  margin-top: 5rpx;
+  color: #fff;
+  font-size: 26rpx;
+  z-index: 10;
+}

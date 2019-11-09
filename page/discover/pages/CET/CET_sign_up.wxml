@@ -16,13 +16,16 @@
 
     <view class='button-container'>
       <block wx:if="{{status == 'no'}}">
-        <view class='origin-pay-container white normal-size bold' catchtap='onOriginPay'>
+        <view wx:if="{{platform!='ios'}}" class='origin-pay-container white normal-size bold' catchtap='onOriginPay'>
           <text>￥129.9</text>
           <text>立即支付</text>
         </view>
-        <view class='assist-pay-container white normal-size bold' catchtap='onAssistPay'>
+        <view wx:if="{{platform!='ios'}}" class='assist-pay-container white normal-size bold' catchtap='onAssistPay'>
           <text>￥59.9</text>
           <text>发起助力</text>
+        </view>
+        <view wx:if="{{platform =='ios'}}" class="ios-lead-button-container" bindtap="onLeadBtnTap">
+          <text>了解详情</text>
         </view>
       </block>
       <block wx:elif="{{status == 'yes'}}">
@@ -53,11 +56,39 @@
   <image class="close-img" src="https://file.ourbeibei.com/l_e/static/images/ic_dialog_close.png" catchtap="onCloseDialog"></image>
 </view>
 
-<view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
+<!-- <view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
   <view class='sign-dialog-container'>
     <image class='first-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_1.png' mode='widthFix'></image>
     <image class='fill-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_2.png' mode='widthFix' style='margin-top:-40rpx'></image>
     <image class='fill-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_3.png' mode='widthFix'></image>
     <view class='cancel-button' catchtap='cancelDialog'>确定</view>
   </view>
+</view> -->
+
+<view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
+    <view class='lead-dialog-container'>
+      <view class="lead-container">
+        <view class="label-container">
+          <view class="first-label">1</view>
+          <view class="second-label">2</view>
+          <view class="third-label">3</view>
+        </view>
+        <view class="img-container">
+          <view class="rect-text" style="margin-top:38rpx;width:373rpx;">微信搜索背呗背单词</view>
+          <image class="lead-img1" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page1.png"></image>
+          <image class="lead-img2" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page2.png"></image>
+
+          <view class="rect-text" style="margin-top:59rpx;width:289rpx;position:relative;">点击关注公众号
+          <image src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_arrow1.png" class="arrow-img1"></image>
+          </view>
+
+          <image class="lead-img3" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page3.png"></image>
+          <view class="rect-text" style="margin-top:43rpx;margin-left:61rpx;width:408rpx;position:relative;">点击【学习】报名活动
+            <image class="arrow-img2" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_arrow2.png"></image>
+          </view>
+        </view>
+      </view>
+      
+      </view>
+      <text class='button-cancel' catchtap='cancelDialog'>确定</text>
 </view>

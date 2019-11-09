@@ -208,3 +208,10 @@ page {
   margin-top: 10rpx;
   text-align: center;
 }
+
+.tips-big-text{
+  font-size: 30rpx;
+  color: #484848;
+  margin-top: 10rpx;
+  text-align: center;
+}

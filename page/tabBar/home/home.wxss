@@ -6,7 +6,7 @@
 }
 
 .mask {
-  background: transparent;
+  background: rgba(0, 0, 0, .5);
   position: fixed;
   top: 0;
   left: 0;
@@ -1193,12 +1193,31 @@ page {
   width: 33.33%;
 }
 
+.welfare-item2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
 .welfare-img {
   width: 130rpx;
   height: 130rpx;
 }
+.welfare-img2 {
+  width: 160rpx;
+  height: 130rpx;
+  margin-left: 20rpx;
+}
 
 .welfare-item text {
+  font-size: 24rpx;
+  color: #363943;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-top: 5rpx;
+}
+
+.welfare-item2 text {
   font-size: 24rpx;
   color: #363943;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;

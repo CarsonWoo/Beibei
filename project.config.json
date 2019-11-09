@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 18,
+			"current": 21,
 			"list": [
 				{
 					"id": -1,
@@ -166,6 +166,27 @@
 					"id": -1,
 					"name": "弹窗",
 					"pathName": "utils/components/popup/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/home/pages/sign/sign",
+					"pathName": "page/home/pages/sign/sign",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/user/pages/wallet/wechat_pay/wechat_pay",
+					"pathName": "page/user/pages/wallet/wechat_pay/wechat_pay",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/user/pages/wallet/wechat_pay_successed/wechat_pay_successed",
+					"pathName": "page/user/pages/wallet/wechat_pay_successed/wechat_pay_successed",
 					"scene": null
 				}
 			]

@@ -151,41 +151,37 @@
     <button class='button-container start' catchtap='onPlanTap'>开始背单词</button>
   </view>
 
-  <view class='welfare-container'>
+  <view class='welfare-container' wx:if='{{isAttendWordChallenge}}'>
     <view class='welfare-item' catchtap='onMoneyTap'>
       <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_game.png'></image>
       <text>单词挑战</text>
     </view>
 
-    <view class='welfare-item' catchtap='onBookTap'>
+    <view class="welfare-item" catchtap='onBookTap'>
       <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_reading.png'></image>
       <text>语境阅读</text>
     </view>
 
-    <!-- <view class='welfare-item' catchtap='onGameTap'>
-      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_game.png'></image>
+    <!-- <view wx:if='{{!isAttendWordChallenge}}' class='welfare-item' catchtap='onGameTap'>
+      <image class='welfare-img2' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_game.png'></image>
       <text>小游戏</text>
     </view> -->
 
-    <!-- <view class='welfare-item' catchtap='onPrizeTap'>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <image class='welfare-img' src='/images/ic_home_challenge.png'></image>
-=======
-      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_challenge.png'></image>
->>>>>>> master
-=======
-      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_challenge.png'></image>
->>>>>>> master
-=======
-      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_challenge.png'></image>
->>>>>>> 本地master
-      <text>赢奖品</text>
-    </view> -->
+    <view class="welfare-item" catchtap='onCetTap'>
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_improve.png'></image>
+      <text>提高班</text>
+    </view>
 
-    <view class='welfare-item' catchtap='onCetTap'>
-      <image class='welfare-img' src='/images/ic_home_improve.png'></image>
+  </view>
+
+  <view class='welfare-container' wx:if='{{!isAttendWordChallenge}}'>
+    <view class="welfare-item2" catchtap='onBookTap'>
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_reading.png'></image>
+      <text>语境阅读</text>
+    </view>
+
+    <view class="welfare-item2" catchtap='onCetTap'>
+      <image class='welfare-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_home_improve.png'></image>
       <text>提高班</text>
     </view>
 
@@ -261,7 +257,7 @@
               <text style='color:{{item.is_favour == 0 ? "#999d9e" : "#0bc9a1"}}'>{{item.likes}}</text>
             </view>
           </view>
-          
+
         </view>
 
         <!-- <view class='author-avatar-name-container'>
@@ -277,12 +273,12 @@
 
       </view>
       <view class='feeds-divider'></view>
-      <image class='banner-img' wx:if="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 1}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_reading.png' catchtap='onBookTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 2}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_challenge.png' catchtap='onMoneyTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 3}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_prize.png' catchtap='onPrizeTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 4}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_class.png' catchtap='onCetTap'></image>
-      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 0}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_game.png' catchtap='onGameTap'></image>
-      <ad unit-id="adunit-a8e6b7e4a651af7b"  wx:if="{{index % 5 == 0 && index != 0}}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
+      <image class='banner-img' wx:if="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 2}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_reading.png' catchtap='onBookTap'></image>
+      <!-- <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 2}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_challenge.png' catchtap='onMoneyTap'></image> -->
+      <!-- <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 3}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_prize.png' catchtap='onPrizeTap'></image> -->
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5  % 5 == 1}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_class.png' catchtap='onCetTap'></image>
+      <image class='banner-img' wx:elif="{{index % 5 == 0 && index != 0 && index / 5 % 5 == 4}}" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/banner_game.png' catchtap='onGameTap'></image>
+      <ad unit-id="adunit-a8e6b7e4a651af7b" wx:if="{{index % 5 == 0 && index != 0}}" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
     </block>
   </view>
 </view>
@@ -438,16 +434,18 @@
   <canvas canvas-id="myCanvas" style="width:100%;height:{{screenHeight}}px;"></canvas>
 </view>
 
-<!-- 1.2 运营活动 -->
-<cover-view class='mask-container' catchtouchmove='stopPageScroll' wx:if='{{showScope == true}}'>
-  <cover-view class='scope-image-container' animation="{{scopeAnimation}}">
-    <cover-image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_scope.png'></cover-image>
-    <cover-view class='scope-text' style='margin-top:560rpx'>欢迎使用背呗背单词</cover-view>
-    <cover-view class='scope-text'>授权信息保存学习记录</cover-view>
-    <cover-view class='scope-text'>背呗与你一起学习</cover-view>
-    <button open-type='getUserInfo' class='scope-button' bindgetuserinfo='bindGetUserInfo' wx:if='{{canIUse}}'>去授权</button>
-    <cover-view wx:else class='error-scope'>
-      请更新微信版本
+<!-- 1.2 运营活动 引导用户授权弹窗 -->
+<block wx:if='{{showScope == true}}'>
+  <cover-view class='mask-container' catchtouchmove='stopPageScroll' bindtap="hideAuthDialog">
+    <cover-view class='scope-image-container' animation="{{scopeAnimation}}">
+      <cover-image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_scope.png'></cover-image>
+      <cover-view class='scope-text' style='margin-top:560rpx'>欢迎使用背呗背单词</cover-view>
+      <cover-view class='scope-text'>授权信息保存学习记录</cover-view>
+      <cover-view class='scope-text'>背呗与你一起学习</cover-view>
+      <button open-type='getUserInfo' class='scope-button' bindgetuserinfo='bindGetUserInfo' wx:if='{{canIUse}}'>去授权</button>
+      <cover-view wx:else class='error-scope'>
+        请更新微信版本
+      </cover-view>
     </cover-view>
   </cover-view>
-</cover-view>
+</block>

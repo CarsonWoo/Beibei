@@ -1,1 +1,77 @@
 <!--utils/components/popup/test.wxml-->
+<view class="container">
+  
+
+  <view wx:if='{{false}}'>
+    <view class="pop-mask"></view>
+    <view class="pop-container">
+      <image class="btn-close-pop" src="{{ic_close}}"></image>
+      <view class="card-container">
+        <image class="bg-card-img" src="img_share_sign_card.png"></image>
+        <view class="card-content">
+          <text class="time-text" style="margin-top:38rpx;margin-left:37rpx;">2019.08.15</text>
+          <text class="study-time-num" style="margin-top:58rpx;margin-right:300rpx;">120</text>
+          <text class="word-num-text" style="margin-right:170rpx;">2000</text>
+          <text class="day-num-text" style="margin-right:50rpx;">120</text>
+        </view>
+      </view>
+      <image class="btn-share" src="{{btn_share_study}}"></image>
+      <view class="getbook-container">
+        <image src="{{img_muchbook}}"></image>
+        <text>免费获得阅读书籍</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="share-card-container">
+
+  </view>
+
+
+  <view class='mask' wx:if='{{true}}' catchtouchmove='stopPageScroll'>
+    <view class="lead-contact-container">
+      <view class="text1">已复制老师微信号</view>
+      <view class="text2">快速联系老师了解详情吧!</view>
+      <image src="{{img_lead_contact}}"></image>
+    </view>
+  </view>
+
+
+
+
+
+
+  <!--语境阅读和单词挑战ios报名引导页-->
+  <view class='mask' wx:if='{{false}}' catchtouchmove='stopPageScroll'>
+
+    <view class='dialog-container'>
+      <view class="lead-container">
+        <view class="label-container">
+          <view class="first-label">1</view>
+          <view class="second-label">2</view>
+          <view class="third-label">3</view>
+        </view>
+        <view class="img-container">
+          <view class="rect-text" style="margin-top:38rpx;width:373rpx;">微信搜索背呗背单词</view>
+          <image class="lead-img1" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page1.png"></image>
+          <image class="lead-img2" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page2.png"></image>
+
+          <view class="rect-text" style="margin-top:59rpx;width:289rpx;position:relative;">点击关注公众号
+            <image src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_arrow1.png" class="arrow-img1"></image>
+          </view>
+
+          <image class="lead-img3" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page3.png"></image>
+          <view class="rect-text" style="margin-top:43rpx;margin-left:61rpx;width:408rpx;position:relative;">点击【学习】报名活动
+            <image class="arrow-img2" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_arrow2.png"></image>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <text class='button-cancel' catchtap='cancelDialog'>确定</text>
+  </view>
+
+  <canvas canvas-id="img-canvas" style="width:100%;height:{{(1334/750)*screenWidth}}px;"></canvas>
+
+
+</view>

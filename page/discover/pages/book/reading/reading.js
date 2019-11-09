@@ -17,9 +17,11 @@ Page({
     is_current_chapter_sign: false,
     is_next_tap: false,
     is_signing: false,
-    showDownloadImage: false
+    showDownloadImage: false,
+    is_show_next_chapter:false,
+    is_show_former_chapter:true,
+    chapter_list:[],
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -91,6 +93,40 @@ Page({
       this.setData({
         fromPage: 'book_list'
       })
+
+      var chapter_list = wx.getStorageSync("chapter_list")
+      console.log(chapter_list)
+      this.setData({
+        chapter_list: chapter_list
+      })
+      var chapter_index = options.chapter_index
+      var buttons_type = options.buttons_type // 0代表不显示，1代表只有下一章,2代表只有上一章，3代表上一章+下一章
+      this.setData({
+        chapter_index: chapter_index,
+        buttons_type: buttons_type
+      })
+      var next_buttons_type = 2
+      var last_buttons_type = 1
+      if (chapter_index - 1 > 0) {
+        last_buttons_type = 3
+      }
+      if (chapter_index - 1 == 0) {
+        last_buttons_type = 1
+      }
+      var next_chapter_index = parseInt(chapter_index) + 1
+      if (next_chapter_index < chapter_list.length - 1) {
+        console.log(next_chapter_index)
+        console.log(chapter_list[next_chapter_index + 1].is_able)
+        if (chapter_list[next_chapter_index + 1].is_able > 0) {
+          next_buttons_type = 3
+        } else {
+          next_buttons_type = 2
+        }
+      }
+      this.setData({
+        last_buttons_type: last_buttons_type,
+        next_buttons_type: next_buttons_type
+      })
     }
     this.loadData(book_id, chapter_id)
   },
@@ -118,6 +154,7 @@ Page({
           var data = res.data.data
           var audio = data.chapterMP3
           var book_content = data.chapterInner
+      
           this.setData({
             book_content: book_content,
             audio: audio
@@ -328,7 +365,7 @@ Page({
             chapter_name = '第' + (chapter_name - 1) + '章'
             let isFirstChapter = start_chapter_id == chapter_id ? "true" : "false"
             wx.redirectTo({
-              url: 'reading?chapter_name=' + chapter_name + "&chapterId=" + chapter_id + "&bookId=" + book_id + "&end_chapter_id=" + this.data.end_chapter_id + "&start_chapter_id=" + start_chapter_id + "&isCurrentChapter=false" + "&isFirstChapter=" + isFirstChapter,
+              url: 'reading?chapter_name=' + chapter_name + "&chapterId=" + chapter_id + "&bookId=" + book_id + "&end_chapter_id=" + this.data.end_chapter_id + "&start_chapter_id=" + start_chapter_id + "&isCurrentChapter=false" + "&isFirstChapter=" + isFirstChapter + "&buttons_type=" + this.data.last_buttons_type + "&chapter_index=" + (parseInt(this.data.chapter_index)-1),
             })
           }
         }
@@ -355,7 +392,7 @@ Page({
             chapter_name = '第' + (chapter_name + 1) + '章'
             let isCurrentChapter = end_chapter_id == chapter_id ? 'true' : 'false'
             wx.redirectTo({
-              url: 'reading?chapter_name=' + chapter_name + "&chapterId=" + chapter_id + "&bookId=" + book_id + "&end_chapter_id=" + end_chapter_id + "&start_chapter_id=" + this.data.start_chapter_id + "&isCurrentChapter=" + isCurrentChapter + "&isFirstChapter=false",
+              url: 'reading?chapter_name=' + chapter_name + "&chapterId=" + chapter_id + "&bookId=" + book_id + "&end_chapter_id=" + end_chapter_id + "&start_chapter_id=" + this.data.start_chapter_id + "&isCurrentChapter=" + isCurrentChapter + "&isFirstChapter=false"+"&buttons_type=" + this.data.next_buttons_type + "&chapter_index=" + (parseInt(this.data.chapter_index)+1),
             })
           }
         }
@@ -516,7 +553,7 @@ Page({
           download_success: false
         })
         // console.log("保存失败")
-        if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+        if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny" || err.errMsg === 'saveImageToPhotosAlbum:fail authorize no response') {
           // 微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
           wx.showModal({
             title: '提示',
@@ -600,21 +637,9 @@ Page({
             //设置一个缓存 在发现页更改 这里负责设置 判断当天是否阅读完成即可
             //这里的状态只是告诉用户今天读完了 但打卡需要用button
             if (wx.getStorageSync('is_today_sign_book_finished') != true) {
-              // this.setData({
-              //   isShowDialog: true
-              // })
-              // setTimeout(() => {
-              //   this.setData({
-              //     isShowDialog: false
-              //   })
-              // }, 2500)
               wx.setStorageSync('is_today_sign_book_finished', true)
             }
           } else {
-            wx.showLoading({
-              title: '正在打卡...',
-              duration: 1000
-            })
             //进行非领红包的打卡
             console.log(series_id)
             console.log(this.data.book_id)
@@ -639,7 +664,7 @@ Page({
                   })
                   console.log("打卡就行 返回成功信息弹窗 不需要分享")
                   wx.showToast({
-                    title: '打卡成功',
+                    title: '本章已阅读',
                     icon: 'success'
                   })
                   //设置当天阅读完成

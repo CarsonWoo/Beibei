@@ -28,8 +28,7 @@
   </image>
   <image src="https://file.ourbeibei.com/l_e/common/Challenge12.png" mode="widthFix" class='challengeimage'>
   </image>
-  <image wx:if='{{platform == "ios"}}'
-src="https://file.ourbeibei.com/l_e/common/Challenge13_ios.png" mode="widthFix" class='challengeimage'>
+  <image wx:if='{{platform == "ios"}}' src="https://file.ourbeibei.com/l_e/common/Challenge13_ios.png" mode="widthFix" class='challengeimage'>
   </image>
   <image wx:else src="https://file.ourbeibei.com/l_e/common/Challenge13.png" mode="widthFix" class='challengeimage'>
   </image>
@@ -39,21 +38,42 @@ src="https://file.ourbeibei.com/l_e/common/Challenge13_ios.png" mode="widthFix" 
   </view>
   <text class='text-invate' catchtap='ToIntvitionRank'>邀请排行榜</text>
   <text class='text-mark'>最终解释权归背呗背单词所有</text>
-  <image wx:if='{{platform == "ios"}}' class='image-start-challenge' src='/images/Challenge_sign_up.png' catchtap='showSignDialog'mode ='widthFix'></image>
-  <image wx:else class='image-start-challenge' src='/images/Challenge_sign_up.png' catchtap='SignUpChallenge'mode ='widthFix'></image>
+  <image wx:if='{{platform == "ios"}}' class='image-start-challenge' src='/images/Challenge_sign_up.png' catchtap='showSignDialog' mode='widthFix'></image>
+  <image wx:else class='image-start-challenge' src='/images/Challenge_sign_up.png' catchtap='SignUpChallenge' mode='widthFix'></image>
 </view>
 
-  <view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
-
-    <view class='dialog-container'>
-      <image class='img-introduction' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/Challenge_introduction.png' mode='widthFix'></image>
-      <text class='button-cancel' catchtap='cancelDialog'>确定</text>
-
-      <!-- 旧的引导途径 -->
-      <!-- <image class='first-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_1.png' mode='widthFix'></image>
-      <image class='fill-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_2.png' mode='widthFix' style='margin-top:-40rpx'></image>
-      <image class='fill-img' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/dialog_img_3.png' mode='widthFix'></image>
-      <view class='cancel-button' catchtap='cancelDialog'>确定</view> -->
-
-    </view>
+<!--旧的引导途经-->
+<!-- <view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
+  <view class='dialog-container'>
+    <image class='img-introduction' src='https://file.ourbeibei.com/l_e/static/mini_program_icons/Challenge_introduction.png' mode='widthFix'></image>
+    <text class='button-cancel' catchtap='cancelDialog'>确定</text>
   </view>
+</view> -->
+
+<view class='mask' wx:if='{{show_sign_dialog == true}}' catchtouchmove='stopPageScroll'>
+    <view class='dialog-container'>
+      <view class="lead-container">
+        <view class="label-container">
+          <view class="first-label">1</view>
+          <view class="second-label">2</view>
+          <view class="third-label">3</view>
+        </view>
+        <view class="img-container">
+          <view class="rect-text" style="margin-top:38rpx;width:373rpx;">微信搜索背呗背单词</view>
+          <image class="lead-img1" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page1.png"></image>
+          <image class="lead-img2" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page2.png"></image>
+
+          <view class="rect-text" style="margin-top:59rpx;width:289rpx;position:relative;">点击关注公众号
+          <image src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_arrow1.png" class="arrow-img1"></image>
+          </view>
+
+          <image class="lead-img3" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_page3.png"></image>
+          <view class="rect-text" style="margin-top:43rpx;margin-left:61rpx;width:408rpx;position:relative;">点击【学习】报名活动
+            <image class="arrow-img2" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_lead_arrow2.png"></image>
+          </view>
+        </view>
+      </view>
+      
+      </view>
+      <text class='button-cancel' catchtap='cancelDialog'>确定</text>
+</view>

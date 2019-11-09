@@ -6,11 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    img_urls: ['https://file.ourbeibei.com/l_e/static/images/bg_cet_1.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_2.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_3.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_4.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_5.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_6.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_7.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_8.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_9.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_10.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_11.png'],
+    img_urls: ['https://file.ourbeibei.com/l_e/static/images/bg_cet_1.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_2.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_3.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_4.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_5.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_6.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_7.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_8.png', 'https://file.ourbeibei.com/l_e/static/images/bg_cet_9.png', ],
     vidx: 0,
     isShowDialog: false,
     translateAnimation: '',
-    isHidden: true
+    isHidden: true,
+    platform:'',
   },
 
   /**
@@ -19,6 +20,17 @@ Page({
   onLoad: function(options) {
     var token = wx.getStorageSync('token')
     let inviter = options.inviter
+    //将开发工具也视为ios端方便测试
+    let platform = wx.getSystemInfoSync().platform
+    if(platform=='ios'||platform=='devtools'){
+      this.setData({
+        platform:'ios'
+      })
+    }else{
+      this.setData({
+        platform: 'android'
+      })
+    }
     if (inviter != null && inviter != undefined) {
       this.setData({
         inviter: inviter
@@ -131,7 +143,7 @@ Page({
 
   onOriginPay: function(e) {
     let platform = wx.getSystemInfoSync().platform
-    if (platform == 'ios') {
+    if (platform == 'ios'||platform=='devtools') {
       this.setData({
         show_sign_dialog: true
       })
@@ -185,9 +197,8 @@ Page({
   },
 
   onAssistPay: function(e) {
-
     let platform = wx.getSystemInfoSync().platform
-    if (platform == 'ios') {
+    if (platform == 'ios'||platform=='devtools') {
       this.setData({
         show_sign_dialog: true
       })
@@ -285,6 +296,14 @@ Page({
         url: '../../../tabBar/home/home',
       })
     }
+  },
+
+  onLeadBtnTap(){
+    if (this.data.platform == 'ios') {
+      this.setData({
+        show_sign_dialog: true
+      })
+    } 
   },
 
   stopPageScroll: function(e) {

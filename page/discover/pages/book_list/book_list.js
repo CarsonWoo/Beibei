@@ -8,7 +8,7 @@ Page({
   data: {
     // book_list: [1, 2, 3, 4],
     swiperIndex: 0,
-    // chapter_list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    chapter_list: [],
   },
 
   /**
@@ -136,6 +136,9 @@ Page({
   },
 
   changeChapterList: function(chapter_list) {
+    this.setData({
+      chapter_list:chapter_list
+    })
     let is_reading = 0
     let is_finished = 1
     let end_chapter = chapter_list[chapter_list.length - 1].id
@@ -178,15 +181,39 @@ Page({
   },
 
   onChapterTap: function(e) {
+    wx.setStorageSync("chapter_list", this.data.chapter_list)
+    var chapter_list = this.data.chapter_list
     console.log(e)
     var chapter = e.currentTarget.dataset.chapter
     var chapter_id = e.currentTarget.dataset.chapter_id
     var isCurrentChapter = e.currentTarget.dataset.iscurrentchapter
     var isFirstChapter = e.currentTarget.dataset.isfirstchapter
     var book_id = this.data.book_list[this.data.swiperIndex][0].book_id
+    var chapter_index = e.currentTarget.dataset.chapter_index
+    console.log(e.currentTarget.dataset.chapter_index)
+    var buttons_type = 0 // 0代表不显示，1代表只有下一章,2代表只有上一章，3代表上一章+下一章
+    if(chapter_index==0&&chapter_list[1].is_able>0){
+      buttons_type = 1
+    }
+    if (chapter_index == 0 && chapter_list[1].is_able == 0){
+      buttons_type = 0
+    }
+
+    if (chapter_index < chapter_list.length - 1 && chapter_index>0 && chapter_list[chapter_index+1].is_able>0){
+      buttons_type = 3
+    }
+
+    if (chapter_index < chapter_list.length - 1 && chapter_index > 0 && chapter_list[chapter_index + 1].is_able == 0) {
+      buttons_type = 2
+    }
+
+    if(chapter_index == chapter_list.length-1){
+      buttons_type = 2
+    }
+
 
     wx.navigateTo({
-      url: '../book/reading/reading?chapter_name=' + chapter + "&chapterId=" + chapter_id + "&bookId=" + book_id + "&end_chapter_id=" + this.data.end_chapter + "&start_chapter_id=" + this.data.book_list[this.data.swiperIndex][0].id + "&isCurrentChapter=" + isCurrentChapter + "&isFirstChapter=" + isFirstChapter,
+      url: '../book/reading/reading?chapter_name=' + chapter + "&chapterId=" + chapter_id + "&bookId=" + book_id + "&end_chapter_id=" + this.data.end_chapter + "&start_chapter_id=" + this.data.book_list[this.data.swiperIndex][0].id + "&isCurrentChapter=" + isCurrentChapter + "&isFirstChapter=" + isFirstChapter + "&buttons_type=" + buttons_type +"&chapter_index="+chapter_index,
     })
   },
 

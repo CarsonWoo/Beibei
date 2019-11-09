@@ -1,27 +1,82 @@
 <view class='container'>
-  <scroll-view scroll-y="true"  style="height:{{scrollviewheight}}rpx;">
-  <image class='header-image' mode='widthFix' src='{{pic}}'></image>
-  <view style='margin-left:24rpx;margin-top:55rpx;margin-bottom:55rpx;'>
-    <text class='title'>{{title}}</text>
+  <scroll-view scroll-y="true" style="height:{{scrollviewheight}}rpx;">
+    <view class="empty-content" wx:if='{{isShowBanner}}'></view>
+    <image class='header-image' mode='widthFix' src='{{pic}}'></image>
+    <view style='margin-left:24rpx;margin-top:55rpx;margin-bottom:55rpx;'>
+      <text class='title'>{{title}}</text>
+    </view>
+    <view class='author-container'>
+      <image src='{{author_portrait}}'></image>
+      <text>{{author_username}}</text>
+    </view>
+    <view class='content-container'>
+      <block wx:for="{{order}}" wx:key='key'>
+        <rich-text wx:if="{{item.type == '0'}}" nodes="{{item.paragraph}}"></rich-text>
+        <image wx:else mode='widthFix' src='{{item.pic}}'></image>
+      </block>
+    </view>
+
+    <text class="label-text">热门推荐</text>
+    <swiper style="height:460rpx;margin-top:42rpx;" previous-margin='23rpx' next-margin='224rpx' bindchange="onSwiperChange" circular="{{swiperCircular}}" current="{{swiperCurrent}}">
+      <block wx:for='{{articleList}}' wx:key='key'>
+        <swiper-item>
+          <form report-submit='true' bindsubmit="onPostChance">
+            <button form-type="submit" bindtap='onHotArticleTap' data-article_id="{{item.id}}" data-article_index='{{index}}'>
+              <view class="feed-item-container" >
+                <image class="feed-item-pic" src="{{item.pic}}"></image>
+                <view class="feed-item-footer">
+                  <text class="item-label">{{'#'+item.kind}}</text>
+                  <text class="item-desc">{{item.title}}</text>
+                  <view class="item-author-container">
+                    <image src="{{item.author_portrait}}"></image>
+                    <text>{{item.author_username}}</text>
+                  </view>
+                </view>
+              </view>
+            </button>
+          </form>
+        </swiper-item>
+      </block>
+    </swiper>
+
+    <ad unit-id="adunit-a8e6b7e4a651af7b" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
+
+  </scroll-view>
+
+  <form report-submit='true' bindsubmit="onPostChance">
+    <button form-type="submit">
+      <view class="top-container" wx:if='{{isShowBanner}}'>
+        <image class="top-banner" src="{{bannerPic}}" bindtap="onBannerImgTap"></image>
+        <view class="close-container" bindtap="onBannerCloseTap">
+          <image class="top-banner-close" src="/images/ic_close.png"></image>
+        </view>
+      </view>
+    </button>
+  </form>
+
+  <view class="bottom-container">
+    <form report-submit='true' bindsubmit="onPostChance">
+      <button form-type="submit" bindtap="on999ToastBtnTap">
+        <view class="toast999-container" wx:if='{{isShowBottomToastButton}}'>
+          <text>背单词</text>
+          <view class="toast-999">
+            <text>999+</text>
+          </view>
+        </view>
+      </button>
+    </form>
+    <form report-submit='true' bindsubmit="onPostChance">
+      <button form-type="submit" bindtap="onLikeTap">
+        <view class="like-container">
+          <image src="{{isLike?ic_like_check:ic_like_normal}}" animation="{{favourAnimation}}"></image>
+          <text>{{likeNumber}}</text>
+        </view>
+      </button>
+    </form>
+    <form report-submit='true' bindsubmit="onPostChance">
+      <button class="btn-share" open-type="share" form-type="submit">
+        <image src="{{btn_share}}" class="btn-share"></image>
+      </button>
+    </form>
   </view>
-  <view class='author-container'>
-    <image src='{{author_portrait}}'></image>
-    <text>{{author_username}}</text>
-  </view>
-  <view class='content-container'>
-    <block wx:for="{{order}}">
-      <rich-text wx:if="{{item.type == '0'}}" nodes="{{item.paragraph}}"></rich-text>
-      <image wx:else mode='widthFix' src='{{item.pic}}'></image>
-    </block>
-  </view>
-   <ad unit-id="adunit-a8e6b7e4a651af7b" style="margin-top: 40rpx; border-radius: 8px; box-shadow: 0 3px 1px #e6e6e6"></ad>
-  <view class='button-container' bindtap='onLikeTap' animation="{{animation}}">
-    <text>赞</text>
-    <!-- <text style='font-size:22rpx'>{{likes}}</text> -->
-  </view>
-    </scroll-view>
 </view>
-
-
-
-

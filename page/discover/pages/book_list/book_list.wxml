@@ -19,9 +19,9 @@
   </view>
   <view class='chapter-container'>
     <block wx:for="{{book_list[swiperIndex]}}">
-      <view class='chapter {{index % 3 == 0 ? "first" : ""}} {{item.is_able >= 1 ? "readable" : "unreadable"}}' style='opacity: {{item.is_able == 2 ? "1" : "0.5"}}' catchtap='{{item.is_able == 2  ? "onChapterTap": ""}}' data-chapter='第{{item.chapter_order}}章' data-chapter_id='{{item.id}}' data-iscurrentchapter='{{(item.is_able == 2 && (book_list[swiperIndex][index + 1].is_able == 0 || book_list[swiperIndex][index + 1].is_able == 1)) || book_list[swiperIndex][book_list[swiperIndex].length - 1].is_able == 2}}' data-isfirstchapter='{{index == 0}}'>
+      <view class='chapter {{index % 3 == 0 ? "first" : ""}} {{item.is_able >= 1 ? "readable" : "unreadable"}}' style='opacity: {{item.is_able == 0 ? "0.5" : "1"}}' catchtap='{{item.is_able == 0 ?  "": "onChapterTap"}}' data-chapter='第{{item.chapter_order}}章' data-chapter_id='{{item.id}}' data-iscurrentchapter='{{(item.is_able == 2 && (book_list[swiperIndex][index + 1].is_able == 0 || book_list[swiperIndex][index + 1].is_able == 1)) || book_list[swiperIndex][book_list[swiperIndex].length - 1].is_able == 2}}' data-isfirstchapter='{{index == 0}}' data-chapter_index='{{index}}'>
         第{{item.chapter_order}}章
-        <view class='{{item.is_able == 1 ? "readed-label" : "readable-label"}}' wx:if="{{item.is_able > 0}}">{{item.is_able == 1 ? "已更" : "可读"}}</view>
+        <view class='{{item.is_able == 1 ? "readable-label" : "readed-label"}}' wx:if="{{item.is_able > 0}}">{{item.is_able == 1 ? "可读" : "已读"}}</view>
       </view>
     </block>
   </view>

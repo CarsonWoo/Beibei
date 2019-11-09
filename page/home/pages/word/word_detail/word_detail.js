@@ -387,6 +387,7 @@ Page({
         success: (res) => {
           videoInfo[i]['subtitles'] = res.data.data
           this.data.video_info = videoInfo
+          console.log(videoInfo)
         },
         fail: (res) => {
 
@@ -715,7 +716,10 @@ Page({
   onUnload: function () {
     if (this.data.isFromWordList == false) {
       var pages = getCurrentPages()
+      //console.log("all pages"+JSON.stringify(pages))
       var beforePage = pages[pages.length - 2]
+      //console.log(beforePage)
+      //console.log("before page" + JSON.stringify(beforePage))
       if (!this.data.isPassClick) {
         if (this.data.wrongCount > 0) {
           beforePage.onCurrentToLast()

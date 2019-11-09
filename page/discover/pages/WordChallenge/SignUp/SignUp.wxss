@@ -293,8 +293,8 @@
   bottom:0rpx;
 }
 
-/* ios报名 */
-.mask {
+
+/* .mask {
   width: 100%;
   height: 100%;
   background-color: rgba(30, 30, 30, 0.9);
@@ -312,7 +312,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* display: block; */
   width: 100%;
   height: 100%;
 }
@@ -327,29 +326,137 @@
   font-size: 45rpx;
   font-family:Arial, Helvetica, sans-serif;
   color: #f6faf9;
+} */
+
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 30, 30, 0.9);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-
-
-/* 旧的引导途径 */
-.fill-img {
-  width: 600rpx;
+.dialog-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.first-img {
-  width: 160rpx;
-  /* height: 180rpx; */
-  margin-left: 300rpx;
+.lead-container{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 120rpx;
 }
-
-.cancel-button {
-  width: 200rpx;
-  font-size: 26rpx;
-  height: 45rpx;
-  border: solid 1rpx white;
-  border-radius: 20rpx;
+.label-container{
+  margin-left: 87rpx;
+  display: flex;
+  flex-direction: column;
+}
+.first-label{
+  width: 38rpx;
+	height: 38rpx;
+  border-radius: 22rpx;
+	border: solid 2rpx #ffffff;
   text-align: center;
-  line-height: 45rpx;
-  color: white;
-  margin-top: 30rpx;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 42rpx;
 }
+.second-label{
+  width: 38rpx;
+  height: 38rpx;
+  border-radius: 22rpx;
+	border: solid 2rpx #ffffff;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 280rpx;
+}
+.third-label{
+  width: 38rpx;
+  height: 38rpx;
+  border-radius: 22rpx;
+	border: solid 2rpx #ffffff;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 338rpx;
+}
+.img-container{
+  margin-left: 24rpx;
+  display: flex;
+  flex-direction: column;
+}
+.rect-text{
+	background-image: linear-gradient(90deg, 
+		#f2ff85 0%, 
+		#3781fc 100%), 
+	linear-gradient(
+		#ff5d5d, 
+		#ff5d5d);
+	background-blend-mode: normal, 
+		normal;
+	border-radius: 25rpx;
+  text-align: center;
+  color: #2b2e49;
+  font-size: 36rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0rpx;
+  z-index: 9999;
+}
+.lead-img1{
+  width: 434rpx;
+	height: 226rpx;
+	background-color: #ffffff;
+	border-radius: 10rpx;
+  margin-top: 23rpx;
+}
+.lead-img2{
+  margin-top: 35rpx;
+  width: 434rpx;
+	height: 226rpx;
+  background-color: #ffffff;
+	border-radius: 10rpx;
+}
+
+.lead-img3{
+  margin-top: 35rpx;
+  width: 434rpx;
+	height: 228rpx;
+  background-color: #ffffff;
+	border-radius: 10rpx;
+}
+.arrow-img1{
+  position: absolute;
+  width: 112rpx;
+	height: 152rpx;
+  top:-136rpx;
+  left: 49rpx;
+}
+.arrow-img2{
+  position: absolute;
+  top:-130rpx;
+  left: 79rpx;
+  width: 111rpx;
+	height: 152rpx;
+}
+
+
+.button-cancel{
+  position: absolute;
+  bottom: 46rpx;
+  font-weight: 600;
+  font-size: 40rpx;
+  font-family:Arial, Helvetica, sans-serif;
+  color: #f6faf9;
+}
+

@@ -10,6 +10,10 @@
       <open-data type="userAvatarUrl" class='open-data-class' mode='aspectFit'></open-data>
     <view class='user-nickname'>
       <open-data type="userNickName" lang="zh_CN"></open-data>
+      
+    </view>
+    <view class="id-container">
+    <text>ID: {{userId}}</text>
     </view>
     <!-- <button open-type="contact">进入客服会话</button> -->
     <view class='user-info'>

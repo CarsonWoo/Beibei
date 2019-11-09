@@ -58,12 +58,17 @@ App({
     userInfo: null,
     appid: 'wx915c7b2ebc140ee6',
     token: null,
+    union_id:null,
+
+    //判断是否为从其他页面返回首页，初始为打开小程序进入首页“false”
+    isBackHome:false,
+    userId:null,
    
     HOST: 'https://www.ourbeibei.com',
     FTP_ICON_HOST: 'https://file.ourbeibei.com/l_e/static/mini_program_icons/',
     code: null,
     // 测试服务器 开发时用此
-    // HOST: 'http://47.102.152.102:8080',
+    //HOST: 'http://47.102.152.102:8080',
 
     //-----1.1----------
     //群聊邀请者的id

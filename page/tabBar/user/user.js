@@ -11,6 +11,7 @@ Page({
     isShowDialog: false,
     longpress: false,
     have_plan: [],
+    plan_words_num:'20',
     uploadTest: 0,
     value: [2, 2]
   },
@@ -28,6 +29,9 @@ Page({
   onLoad: function(options) {
     wx.showTabBar({})
     var userInfo = app.globalData.userInfo
+    this.setData({
+      userId:app.globalData.userId
+    })
     if (userInfo != undefined && userInfo != null) {
       this.setData({
         user_portrait:userInfo.avatarUrl,
@@ -101,6 +105,48 @@ Page({
           this.setData({
             have_plan: planData.have_plan,
             selectedPlan: planData.selected_plan,
+            plan_words_num:planData.selected_plan_words_number
+          })
+          var picks = []
+          switch(this.data.plan_words_num){
+            case '10':
+              picks = [0,0]
+              break
+            case '15':
+              picks = [1,1]
+              break
+            case '20':
+              picks = [2,2]
+              break
+            case '25':
+              picks = [3,3]
+              break
+            case '30':
+              picks = [4,4]
+              break
+            case '35':
+              picks = [5,5]
+              break
+            case '40':
+              picks = [6,6]
+              break
+            case '45':
+              picks = [7,7]
+              break
+            case '50':
+              picks = [8,8]
+              break
+            case '55':
+              picks = [9,9]
+             break
+            case '60':
+              picks = [10, 10]
+             break
+            default:
+              picks = [2,2]
+          }
+          this.setData({
+            value:picks
           })
         } else {
           if (res.data.status == 400 && res.data.msg == '身份认证错误！') {
@@ -638,7 +684,7 @@ Page({
   onHideChooser: function (event) {
     this.setData({
       isShowChooser: false,
-      value: [2, 2]
+     // value: [2, 2]
     })
   },
 
@@ -666,7 +712,7 @@ Page({
           // beforePage.loadData(token)
           this.setData({
             isShowChooser: false,
-            value: [2, 2]
+            // value: [2, 2]
           })
         } else {
           wx.showModal({

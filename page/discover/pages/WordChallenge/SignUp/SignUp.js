@@ -168,7 +168,7 @@ Page({
 
     console.log('platform' + platform)
 
-    if(platform == 'ios'){
+    if (platform == 'ios' || platform =='devtools'){
       this.setData({
         platform: 'ios'
       })

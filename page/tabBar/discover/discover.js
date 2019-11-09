@@ -1,4 +1,5 @@
 // pages/discover/discover.js
+var WXBizDataCrypt = require('../../../utils/cryptojs/RdWXBizDataCrypt.js')
 const app = getApp()
 Page({
 
@@ -6,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //判断是否能用获取用户信息接口
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     indicatorDots: false,
     vertical: false,
     autoplay: false,
@@ -26,6 +29,9 @@ Page({
     // isPacked: true,
     // showRedPacket: true,
     // isShowDialog: true
+
+    //约会活动的展示开关
+    isShowDatingView:false,
 
     showLikeToast: false,
     setLikeTimer:'', //关于偷偷喜欢你和超级曝光toast展示的两个定时器
@@ -197,6 +203,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    if (app.globalData.userInfo == null || app.globalData.union_id == null || app.globalData.union_id == 'no'){
+      this.showAuthState()
+    }
     this.loadData()
     console.log(options)
     // this.setData({
@@ -272,6 +281,7 @@ Page({
           var data = res.data.data
           var list = data.daily_pic
           var is_reading = data.is_reading
+          console.log("阅读活动状态"+is_reading)
           if (is_reading != undefined) {
             let storage = wx.getStorageSync('is_reading')
             if (is_reading != storage) {
@@ -335,6 +345,7 @@ Page({
             })
           }
           if (data.is_reading == 3 && data.user_id != undefined) {
+            console.log("助力中")
             wx.setStorageSync('book_user_id', data.user_id)
           } else {
             wx.removeStorageSync('book_user_id')
@@ -376,6 +387,9 @@ Page({
             //is_today_finished要先判断是否是当天 （若是当天 不更新缓存 old_chapter_id与book_id仍是当天第一次loadData时放入 判断readBookInfo.chapter_id和readBookInfo.book_id对应是否相等 不等为true 否则为false；若非当天则更新old_chapter_id和book_id 并其值false ）
           })
           if (data.clock_day != undefined) {
+            this.setData({
+              clock_day:data.clock_day
+            })
             if (wx.getStorageSync('book_read_day') != data.clock_day) {
               wx.setStorageSync('book_read_day', data.clock_day)
             }
@@ -431,18 +445,18 @@ Page({
           // ------------------------------------ 运营0.3-top-------------------------------------
 
           // 获取顶部label的高度 在这里拿因为onShow就需要用在canvas中
-          var query = wx.createSelectorQuery()
-          query.select('#partnership_label').boundingClientRect()
-          query.selectViewport().scrollOffset()
-          query.exec((res) => {
-            console.log(res[0].top)
-            this.setData({
-              label_origin_height: res[0].top
+          //如果约会活动开启才进行处理
+          if(this.data.isShowDatingView){
+            var query = wx.createSelectorQuery()
+            query.select('#partnership_label').boundingClientRect()
+            query.selectViewport().scrollOffset()
+            query.exec((res) => {
+              console.log(res[0].top)
+              this.setData({
+                label_origin_height: res[0].top
+              })
             })
-          })
-
-          // 具体信息
-          this.loadLoveInfo()
+          }
 
         } else if (res.data.status == 400 && res.data.msg == '身份认证错误！') {
           this.getToken()
@@ -556,22 +570,6 @@ Page({
             // this.globalData.token = token
           }
         })
-      }
-    })
-  },
-
-  loadLoveInfo: function() {
-    wx.request({
-      url: app.globalData.HOST + '/operation/foundPageShowDatingCare.do',
-      method: 'POST',
-      header: {
-        'token': app.globalData.token
-      },
-      success: (res) => {
-        console.log(res)
-      },
-      fail: (er) => {
-        console.log("fail response = " + er)
       }
     })
   },
@@ -923,7 +921,7 @@ Page({
           download_success: false
         })
         // console.log("保存失败")
-        if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+        if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny" || err.errMsg === 'saveImageToPhotosAlbum:fail authorize no response') {
           // 微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
           wx.showModal({
             title: '提示',
@@ -1109,10 +1107,12 @@ Page({
     if ( /* this.data.is_help_pay != undefined && this.data.is_help_pay == true &&  */ this.data.is_reading == 3) {
       let user_id = wx.getStorageSync('book_user_id')
       let series_id = wx.getStorageSync('book_series_id')
+      console.log("前往助力页")
       wx.navigateTo({
         url: '../../discover/pages/book/book_sign_assist?user_id=' + user_id + '&series_id=' + series_id,
       })
     } else {
+      console.log("不前往助力页")
       if (this.data.is_reserved != undefined && this.data.is_reserved == true) {
         wx.navigateTo({
           url: '../../discover/pages/book/book_sign_up?enrollment=' + this.data.enrollment + "&is_reserved=true",
@@ -1286,7 +1286,12 @@ Page({
             isFirstTime: data.firstTime === 1?true:false,
             isTodayFirstTimeTapLiekOrSuperLike: data.todayFirstTime === '1' ? true : false,
             userInfoStatus: data.userStatus,
+            isShowDatingView: data.IsShowedDatingCard===1?true:false,
           });
+          console.log(data.IsShowedDatingCard)
+          if(!self.data.isShowDatingView){
+            return
+          }
 
           console.log("所有卡片列表：" + JSON.stringify(selfData.dating_card_list))
           console.log("普通卡片列表：" + JSON.stringify(selfData.common_card_list))
@@ -2909,6 +2914,190 @@ Page({
         aniamtion:500
       })
     }).exec();
+  },
+
+
+  //以下为使用弹窗引导用户获取unionId的相关代码
+  showAuthState() {
+    var union_id = app.globalData.union_id
+    if (union_id == 'no') {
+      wx.getSetting({
+        success: (res) => {
+          if (res.authSetting['scope.userInfo']) {
+            //已授权
+            this.getUnionId()
+
+          } else {
+            console.log('scope disable')
+            this.fadeInDialog()
+          }
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+
+    } else {
+      console.log("has union_id")
+      wx.getSetting({
+        success: (res) => {
+          if (res.authSetting['scope.userInfo']) {
+            //已授权
+            wx.getUserInfo({
+              withCredentials: true,
+              success: (res) => {
+                // console.log(res)
+                app.globalData.userInfo = res.userInfo
+              }
+            })
+          } else {
+            console.log('scope disable')
+            this.fadeInDialog()
+          }
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+    }
+  },
+  fadeInDialog: function (e) {
+    this.setData({
+      showScope: true,
+    })
+
+    var anim = wx.createAnimation({
+      duration: 0,
+      timingFunction: 'step-start'
+    })
+
+    anim.scale(0.5, 0.5).step()
+    this.setData({
+      scopeAnimation: anim.export()
+    })
+
+    anim = wx.createAnimation({
+      duration: 400,
+      timingFunction: 'ease'
+    })
+
+    anim.scale(1, 1).step()
+    this.setData({
+      scopeAnimation: anim.export()
+    })
+  },
+
+  bindGetUserInfo: function (e) {
+    console.log(e)
+    if (e.detail.userInfo) {
+      //用户按了允许
+      this.getUnionId()
+
+      var anim = wx.createAnimation({
+        duration: 200,
+        timingFunction: 'ease'
+      })
+      anim.opacity(0.5).scale(0.5, 0.5).step()
+      this.setData({
+        scopeAnimation: anim.export()
+      })
+      setTimeout(() => {
+        this.setData({
+          showScope: false
+        })
+        wx.showTabBar({
+
+        })
+        this.onLoad()
+      }, 400)
+
+    } else {
+      //用户按了拒绝
+    }
+  },
+  getUnionId: function () {
+    console.log('scope enable')
+    wx.login({
+      success: (res) => {
+        let code = res.code
+        wx.request({
+          url: app.globalData.HOST + '/user/wxReturnSessionKey.do',
+          method: 'GET',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            'code': code
+          },
+          success: (res) => {
+            if (res.data.status == 200) {
+              console.log(res.data.data)
+              let sessionKey = res.data.data
+              var pc = new WXBizDataCrypt('wx915c7b2ebc140ee6', sessionKey)
+              wx.getUserInfo({
+                withCredentials: true,
+                success: (res) => {
+                  console.log(res)
+                  let userInfo = res.userInfo
+                  app.globalData.userInfo = userInfo
+                  let union_id = pc.decryptData(res.encryptedData, res.iv).unionId
+                  console.log('union_id = ' + union_id)
+                  let portrait = res.userInfo.avatarUrl
+                  let username = res.userInfo.nickName
+                  this.uploadUserInfo(username, portrait, union_id)
+                }
+              })
+            } else {
+              console.log(res)
+            }
+          },
+          fail: (res) => {
+            console.log('fail')
+          }
+        })
+      }
+    })
+  },
+  uploadUserInfo: function (username, portrait, union_id) {
+    let HOST = app.globalData.HOST
+    let token = app.globalData.token
+    console.log('uploading user info...')
+    console.log('username = ' + username)
+    console.log('portrait = ' + portrait)
+    console.log('union_id = ' + union_id)
+    wx.request({
+      url: HOST + '/various/setUserUnionId.do',
+      method: 'POST',
+      header: {
+        'token': token,
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        'username': username,
+        'portrait': portrait,
+        'unionid': union_id
+      },
+      success: (res) => {
+        if (res.data.status == 200) {
+          console.log('上传userinfo成功')
+        } else if (res.data.status == 400 && res.data.msg == '身份信息错误！') {
+          this.getToken()
+        } else {
+          console.log('上传userinfo失败\n' + res)
+          wx.showToast({
+            title: '身份信息上传有误...',
+            icon: 'none'
+          })
+        }
+      },
+      fail: (res) => {
+        console.log('访问upload userinfo失败')
+        wx.showToast({
+          title: '身份信息上传有误...请检查网络状态',
+          icon: 'none'
+        })
+      }
+    })
   },
 
 

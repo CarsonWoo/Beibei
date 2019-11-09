@@ -1,3 +1,9 @@
 {
-  "navigationBarBackgroundColor": "#e0fff9"
+  "navigationBarTitleText": "历史打卡记录",
+  "navigationBarBackgroundColor": "#363943",
+  "navigationBarTextStyle": "white",
+  "usingComponents":{
+    "my-toast": "/utils/components/toast/dating-card-toast"
+  }
+  
 }

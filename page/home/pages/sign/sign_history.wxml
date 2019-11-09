@@ -1,15 +1,12 @@
 <view class='container'>
-  <view class='title'>
-    <image src='/images/bg_sign.png'></image>
-    <text wx:if="{{word_challenge_status != 2}}">诺~这是你的打卡记录~</text>
-    <text wx:if="{{word_challenge_status == 2}}">你已经完成挑战{{challenge_insist_day}}天啦~</text>
-  </view>
 
   <swiper previous-margin='80rpx' next-margin='80rpx' current='11' bindchange='onSwiperChange'>
     <block wx:for='{{calendar_list}}' wx:for-item="monthList" wx:for-index="idx">
       <swiper-item>
         <view class='calendar-container {{swiperIndex == idx ? "active" : "quiet"}}'>
+          <image class="{{sign_m.getMonthIndex(monthList.month)<10 ? 'img_num_bg':'img_num_bg2'}}" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_back_{{sign_m.getMonthIndex(monthList.month)}}.png"></image>
           <view class='calendar-month-year'>{{monthList.month}} {{monthList.year}}</view>
+          <view class="gray-line"></view>
           <view class='calendar-week-container'>
             <text>MON</text>
             <text>TUE</text>
@@ -60,18 +57,161 @@
   <!-- <button class='button' catchtap='onFeedScroll' catchtap='shareTopyq'>分享我的学习成就</button>
   <cover-image src='/images/fish_plan.png' class='my-cover-image'></cover-image> -->
 
-  <view class='bottom-button-container'>
-    <button class='button-feeds' catchtap='onFeedScroll'>阅读学习干货
-    <image class='image-to-feeds' src='/images/to_feeds.png'></image>
-    </button>
-    <!-- <button class='button-share-pyq' catchtap='shareTopyq'>分享到朋友圈
-    <image class='image-share-pyq' src='/images/pyq.png'></image>
-    </button> -->
+  <!-- <view class="sign-button-container" bindtap="onSignPopTap">
+    <image src="{{ic_share}}"></image>
+    <text>记录努力点滴</text>
+  </view> -->
+
+  <view class="bottom-container" wx:if='{{isShowFootBanner}}'>
+    <image class="bottom-banner" src="{{bannerInfo.foot_pic}}" bindtap="onFootBannerTap"></image>
+    <view class="close-container" bindtap="onFootBannerCloseTap">
+      <image class="bottom-banner-close" src="/images/ic_close.png"></image>
+    </view>
   </view>
+
+  <form report-submit='true' bindsubmit="onPostChance" >
+    <button class="sign-button-container" open-type='share' form-type='submit'>
+      <image src="/images/ic_share_sign.png"></image>
+      <text>记录努力点滴</text>
+    </button>
+</form>
+
+
+
+  <view class="cards-container">
+    <view class="third-level-card-container"></view>
+    <view class="second-level-card-container"></view>
+    <view class="first-level-card-container">
+      <view class="hot-container">
+        <text class="title">{{feedInfo.title}}</text>
+        <view class="author-container">
+          <image src="{{feedInfo.author_portrait}}"></image>
+          <text>{{feedInfo.author_username}}</text>
+        </view>
+        <view class="img-container">
+          <image mode='widthFix' class="content" src="{{feedInfo.paragraph}}"></image>
+        </view>
+        <text class="origin-label" bindtap="onOriginFeedTap">查看原文</text>
+      </view>
+    </view>
+  </view>
+
+  <text class="label-text">热门推荐</text>
+  <swiper style="height:460rpx;margin-top:42rpx;" previous-margin='29rpx' next-margin='218rpx' bindchange="onFeedSwiperChange" circular="{{swiperCircular}}">
+    <block wx:for='{{articleList}}' wx:key='key'>
+      <swiper-item>
+        <view class="feed-item-container" bindtap='onHotArticleTap' data-article_id="{{item.id}}">
+          <image class="feed-item-pic" src="{{item.pic}}"></image>
+          <view class="feed-item-footer">
+            <text class="item-label">{{'#'+item.kind}}</text>
+            <text class="item-desc">{{item.title}}</text>
+            <view class="item-author-container">
+              <image src="{{item.author_portrait}}"></image>
+              <text>{{item.author_username}}</text>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
 
 </view>
 
 <!-- 生成朋友圈分享图片 -->
 <view class="canvas-box">
-  <canvas canvas-id="myCanvas" style="width:100%;height:{{screenHeight}}px;"></canvas>
+  <canvas canvas-id="myCanvas" style="width:100%;height:{{(1334/750)*screenWidth}}px;"></canvas>
 </view>
+
+<!--分享卡片弹窗 -->
+<view wx:if='{{isShowSharePop}}' catchtouchmove='stopPageScroll'>
+  <view class="pop-mask" bindtap="onSignPopTap"></view>
+  <view class="card-container">
+    <image class="bg-card-img" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/img_sign_card_{{sign_card_num}}.jpg"></image>
+    <view class="card-content">
+      <text class="time-text" style="margin-top:38rpx;margin-left:37rpx;">{{date_string}}</text>
+      <text class="study-time-num" style="margin-top:58rpx;margin-right:300rpx;">{{userStudyInfo.learned_time}}</text>
+      <text class="word-num-text" style="margin-right:170rpx;">{{userStudyInfo.learned}}</text>
+      <text class="day-num-text" style="margin-right:50rpx;">{{insist_day_num}}</text>
+    </view>
+  </view>
+  <image class="btn-share" src="{{btn_share_study}}" bindtap="drawImg"></image>
+  <image class="getbook-container" src="{{bannerInfo.middle_pic}}" bindtap="onGetBookTap" wx:if="{{bannerInfo.middle_control}}"></image>
+(
+</view>
+
+<my-toast id="my-toast"> </my-toast>
+
+<!--引导联系老师弹窗-->
+<view wx:if='{{isShowLeadContactPop}}' catchtouchmove='stopPageScroll'>
+  <view class="pop-mask" bindtap="hideLeadContactPop"></view>
+  <view class="lead-contact-container">
+    <view class="text1">已复制老师微信号</view>
+    <view class="text2">快速联系老师了解详情吧!</view>
+    <image src="{{img_lead_contact}}"></image>
+  </view>
+</view>
+
+<!--提示图片已下载弹窗-->
+<block wx:if='{{isShowDownSuccessPop}}'>
+  <view class='mask-container' catchtouchmove='stopPageScroll' bindtap="hideAuthDialog">
+    <view class='scope-image-container' animation="{{scopeAnimation}}">
+      <image class="background-img" src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_scope.png'></image>
+      <view style="margin-top:520rpx;" class="scope-rich-container">
+        <view style="color:#383844;">已保存学习卡片</view>
+        <image style="margin-left:6rpx;width:36rpx;height:36rpx;" src="https://file.ourbeibei.com/l_e/static/mini_program_icons/ic_tick.png"></image>
+      </view>
+      <view class='scope-text' style=''>“ 坚持也需要方法,把成果卡片 ”</view>
+      <view class='scope-text'>分享寻求监督,离成功坚持</view>
+      <view class='scope-text'>更进一步!</view>
+      <button class='scope-button' bindtap="fadeInDialog">朕知道了</button>
+    </view>
+  </view>
+</block>
+
+<wxs module="sign_m">
+  var getMonthIndex = function(month) {
+    var monthIndex = 0;
+    switch (month) {
+      case 'January':
+        monthIndex = 1;
+        break;
+      case 'February':
+        monthIndex = 2;
+        break;
+      case 'March':
+        monthIndex = 3;
+        break;
+      case 'April':
+        monthIndex = 4;
+        break;
+      case 'May':
+        monthIndex = 5;
+        break;
+      case 'June':
+        monthIndex = 6;
+        break;
+      case 'July':
+        monthIndex = 7;
+        break;
+      case 'August':
+        monthIndex = 8;
+        break;
+      case 'September':
+        monthIndex = 9;
+        break;
+      case 'October':
+        monthIndex = 10;
+        break;
+      case 'November':
+        monthIndex = 11;
+        break;
+      case 'December':
+        monthIndex = 12;
+        break;
+    }
+    return monthIndex;
+  }
+
+  module.exports.getMonthIndex = getMonthIndex;
+</wxs>

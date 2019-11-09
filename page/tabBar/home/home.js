@@ -54,6 +54,9 @@ Page({
     screenHeight: 0,
     // background_image: '/images/Invitation_card.png',
 
+    //用户是否参加了本期单词挑战,没有则隐藏单词挑战入口
+    isAttendWordChallenge: false,
+
   },
 
 
@@ -61,7 +64,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
     var token = app.globalData.token
     var HOST = app.globalData.HOST
     app.globalData.onload_options = options
@@ -76,16 +78,6 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
-    if (token) {
-      this.loadData(token)
-    } else {
-      this.getToken()
-    }
-    if (options.hold_on == 200) {
-      this.setData({
-        hold_on: true,
-      })
-    }
 
     let action = options.action
     let feed_id = options.feed_id
@@ -105,6 +97,22 @@ Page({
         feed_location: feed_location
       })
     }
+
+
+    if (token) {
+      this.loadData(token)
+    } else {
+      this.getToken()
+    }
+    if (options.hold_on == 200 && options.hold_on != undefined) {
+      this.setData({
+        hold_on: true,
+      })
+    }
+
+
+
+
 
     //----------------------------------------1.1-top--------------------------------
     //-------------------------------------------------------------------------------
@@ -253,16 +261,27 @@ Page({
   },
 
   onPlanTap: function(event) {
-    wx.navigateTo({
-      url: '../../user/pages/plan/plan',
-    })
+    console.log(app.globalData.userInfo)
+    if (app.globalData.userInfo == null || app.globalData.union_id == null || app.globalData.union_id == 'no') {
+      this.showAuthState()
+    } else {
+      wx.navigateTo({
+        url: '../../user/pages/plan/plan',
+      })
+    }
   },
 
   onStartTap: function(event) {
     console.log(event)
-    wx.navigateTo({
-      url: '../../home/pages/word/word?level=' + this.data.level,
-    })
+    console.log(app.globalData.userInfo)
+    if (app.globalData.userInfo == null || app.globalData.union_id == null || app.globalData.union_id == 'no') {
+      this.showAuthState()
+    } else {
+      wx.navigateTo({
+        url: '../../home/pages/word/word?level=' + this.data.level,
+      })
+    }
+
   },
 
   onJoinTap: function() {
@@ -284,6 +303,7 @@ Page({
    */
   onReady: function() {
 
+
   },
 
   /**
@@ -296,6 +316,12 @@ Page({
     this.setData({
       storage: wx.getStorageSync('currentPointer')
     })
+
+    if (app.globalData.isBackHome) {
+      console.log("isBackHome")
+      this.refreshFeedData()
+    }
+
   },
 
   onFeedsClick: function(event) {
@@ -305,15 +331,16 @@ Page({
     })
   },
 
-  onFeedsTap: function () {
+  onFeedsTap: function() {
     var feed_id = this.data.feed_id
     var feed_location = this.data.feed_location
     wx.navigateTo({
-      url: '../../home/pages/feed/feed?id=' + feed_id + '&location=' + feed_location,
+      url: '../../home/pages/feed/feed?id=' + feed_id + '&location=' + feed_location + '&share_tap=' + '1'
     })
   },
 
   loadData: function(token) {
+    let self = this;
     //添加访问发现页并记录is_reading状态
     wx.request({
       url: app.globalData.HOST + "/various/found_page.do",
@@ -329,6 +356,9 @@ Page({
           }
           if (res.data.data.is_reserved != undefined && res.data.data.is_reserved != null) {
             wx.setStorageSync('is_reserved', res.data.data.is_reserved)
+          }
+          if (res.data.data.is_help_pay != undefined && res.data.data.is_help_pay != null){
+            wx.setStorageSync('is_help_pay', res.data.data.is_help_pay)
           }
         } else {
           console.log(res);
@@ -371,51 +401,23 @@ Page({
           let need_advertising = homeData.need_advertising
           let whether_clock_in = homeData.whether_clock_in
 
+          if (word_challenge_status == 1 || word_challenge_status == 2) {
+            self.setData({
+              isAttendWordChallenge: true
+            })
+          }
+
           if (whether_challenge_success == 1) {
             challenge_red_packet = homeData.challenge_red_packet
           }
           if (whether_invite_challenge_success == 1) {
             invite_challenge_red_packet = homeData.invite_challenge_red_packet
           }
-          if (homeData.unionid == 'no') {
-            console.log('no union id')
-            wx.getSetting({
-              success: (res) => {
-                if (res.authSetting['scope.userInfo']) {
-                  //已授权
-                  this.getUnionId()
 
-                } else {
-                  console.log('scope disable')
-                  this.fadeInDialog()
-                }
-              },
-              fail: (res) => {
-                console.log(res)
-              }
-            })
+          app.globalData.union_id = homeData.unionid
 
-          } else {
-            wx.getSetting({
-              success: (res) => {
-                if (res.authSetting['scope.userInfo']) {
-                  //已授权
-                  wx.getUserInfo({
-                    withCredentials: true,
-                    success: (res) => {
-                      // console.log(res)
-                      app.globalData.userInfo = res.userInfo
-                    }
-                  })
-                } else {
-                  console.log('scope disable')
-                  // this.fadeInDialog()
-                }
-              },
-              fail: (res) => {
-                console.log(res)
-              }
-            })
+          if(app.globalData.union_id!=null&&app.globalData.union_id!='no'){
+            this.showAuthState()
           }
 
           this.setData({
@@ -433,8 +435,7 @@ Page({
           }
           if (need_advertising == 1) {
             app.globalData.isneedvideoAd = true
-          }
-          else if (need_advertising == 0) {
+          } else if (need_advertising == 0) {
             app.globalData.isneedvideoAd = false
           }
 
@@ -550,17 +551,17 @@ Page({
 
           }
 
-          for (let i = 0; i < feeds.length; i++) {
-            if (feeds[i].likes < 10) {
-              feeds[i].likes = 10 + parseInt(Math.random() * 5);
-            } else if (feeds[i].likes < 20) {
-              feeds[i].likes = 20 + parseInt(Math.random() * 10)
-            } else if (feeds[i].likes < 50) {
-              feeds[i].likes = 50 + parseInt(Math.random() * 20)
-            } else if (feeds[i] < 100) {
-              feeds[i].likes = 100 + parseInt(Math.random() * 30)
-            }
-          }
+          // for (let i = 0; i < feeds.length; i++) {
+          //   if (feeds[i].likes < 10) {
+          //     feeds[i].likes = 10 + parseInt(Math.random() * 5);
+          //   } else if (feeds[i].likes < 20) {
+          //     feeds[i].likes = 20 + parseInt(Math.random() * 10)
+          //   } else if (feeds[i].likes < 50) {
+          //     feeds[i].likes = 50 + parseInt(Math.random() * 20)
+          //   } else if (feeds[i] < 100) {
+          //     feeds[i].likes = 100 + parseInt(Math.random() * 30)
+          //   }
+          // }
 
           var portraits = homeData.head_user_portrait
           let whether_template = parseInt(homeData.whether_template)
@@ -589,7 +590,7 @@ Page({
 
           if (level == 1 && whether_clock_in == 1) {
             this.setData({
-              level:4
+              level: 4
             })
           }
 
@@ -641,15 +642,24 @@ Page({
             var options = app.globalData.onload_options
             var medallion_flag = options.flag;
             var use_medallion_id = options.use_medallion_id;
+            var isToPlan = true
             //点击助力链接进来的用户加2s延迟来显示助力成功的提示
-            if (medallion_flag != undefined && use_medallion_id!=undefined){
-              var that = this
-              setTimeout(function () {
-                that.onPlanTap()
-              }, 2000);
+            if (this.data.action == 'onFeedsTap') {
+              this.onFeedsTap()
+              isToPlan = false
             }
-            else{
-              this.onPlanTap()
+            if (app.globalData.union_id == 'no') {
+              isToPlan = false
+            }
+            if (isToPlan) {
+              if (medallion_flag != undefined && use_medallion_id != undefined) {
+                var that = this
+                setTimeout(function() {
+                  that.onPlanTap()
+                }, 2000);
+              } else {
+                this.onPlanTap()
+              }
             }
           }
         } else {
@@ -683,6 +693,7 @@ Page({
           var share_user_id = data.data.user_id
           // console.log("用户邀请信息"+share_msg)
           console.log("用户本人ID" + share_user_id)
+          app.globalData.userId = share_user_id
           this.setData({
             share_msg: share_msg,
             share_user_id: share_user_id
@@ -705,7 +716,7 @@ Page({
     var options = app.globalData.onload_options
     console.log("分享、邀请、模板消息参数:" + options)
     //别人的挑战邀请参数(群聊))
-    if (options.InviterUserId) {
+    if (options.InviterUserId != undefined) {
       var InviterUserId = options.InviterUserId
       app.globalData.InviterUserId = InviterUserId
       console.log("拿到在群聊挑战分享者的UserId:" + InviterUserId)
@@ -758,7 +769,7 @@ Page({
     }
 
     //别人的挑战邀请参数（朋友圈）
-    if (options.scene) {
+    if (options.scene == true && options.scene != undefined) {
       var PyqInviteUserId = decodeURIComponent(options.scene)
       app.globalData.PyqInviteUserId = PyqInviteUserId
       console.log("拿到在朋友圈挑战分享者的UserId:" + PyqInviteUserId)
@@ -910,7 +921,7 @@ Page({
     if (use_medallion_id != undefined && medallion_flag != undefined && word_challenge_contestants_id != undefined) {
       //免死金牌助力
       wx.request({
-        url: app.globalData.HOST  + '/various/medallion_help.do',
+        url: app.globalData.HOST + '/various/medallion_help.do',
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded',
@@ -928,8 +939,7 @@ Page({
               isShowMask: true
             })
             console.log("助力成功")
-          }
-          else{
+          } else {
             console.log("助力已完成")
             wx.showToast({
               title: '助力已完成',
@@ -1065,7 +1075,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    //不确定时退出小程序时改状态是否会缓存，所以此处可以变回默认false
+    app.globalData.isBackHome = false
   },
 
   /**
@@ -2024,17 +2035,17 @@ Page({
             var data = res.data.data
             console.log("加载更多feeds数据：")
             console.log(data)
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].likes < 10) {
-                data[i].likes = 10 + parseInt(Math.random() * 5)
-              } else if (data[i].likes < 20) {
-                data[i].likes = 20 + parseInt(Math.random() * 10)
-              } else if (data[i].likes < 50) {
-                data[i].likes = 50 + parseInt(Math.random() * 20)
-              } else if (data[i] < 100) {
-                data[i].likes = 100 + parseInt(Math.random() * 30)
-              }
-            }
+            // for (let i = 0; i < data.length; i++) {
+            //   if (data[i].likes < 10) {
+            //     data[i].likes = 10 + parseInt(Math.random() * 5)
+            //   } else if (data[i].likes < 20) {
+            //     data[i].likes = 20 + parseInt(Math.random() * 10)
+            //   } else if (data[i].likes < 50) {
+            //     data[i].likes = 50 + parseInt(Math.random() * 20)
+            //   } else if (data[i] < 100) {
+            //     data[i].likes = 100 + parseInt(Math.random() * 30)
+            //   }
+            // }
             var new_feeds = this.data.feeds.concat(data)
             this.setData({
               feeds: new_feeds,
@@ -2053,7 +2064,10 @@ Page({
 
   //1.2
   onBookTap: function(e) {
-
+    if (app.globalData.userInfo == null || app.globalData.union_id == null || app.globalData.union_id == 'no') {
+      this.showAuthState()
+      return
+    }  
     var is_reading = wx.getStorageSync('is_reading')
     if (is_reading == 0) {
       if (wx.getStorageSync('is_reserved') == 'yes') {
@@ -2204,6 +2218,7 @@ Page({
         'unionid': union_id
       },
       success: (res) => {
+        console.log(res)
         if (res.data.status == 200) {
           console.log('上传userinfo成功')
         } else if (res.data.status == 400 && res.data.msg == '身份信息错误！') {
@@ -2283,12 +2298,20 @@ Page({
   },
 
   onCetTap: function(e) {
+    if (app.globalData.userInfo == null || app.globalData.union_id == null || app.globalData.union_id == 'no') {
+      this.showAuthState()
+      return
+    }
     wx.navigateTo({
       url: '../../discover/pages/CET/CET_sign_up',
     })
   },
 
   onGameTap: function(e) {
+    if (app.globalData.userInfo == null || app.globalData.union_id == null || app.globalData.union_id == 'no') {
+      this.showAuthState()
+      return
+    }
     this.setData({
       isShowDialog: true,
       alert_type: 1
@@ -2299,5 +2322,80 @@ Page({
         alert_type: ''
       })
     }, 1500)
-  }
+  },
+  refreshFeedData() {
+    let self = this;
+    //加载首页数据
+    wx.request({
+      url: app.globalData.HOST + "/home/home_page_info.do",
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'token': app.globalData.token
+      },
+      success: (res) => {
+        var data = res.data
+        if (data.status == 200) {
+          let homeData = data.data
+          console.log("刷新首页数据：")
+          console.log(homeData)
+          var feeds = homeData.feeds
+          self.setData({
+            feeds: feeds
+          })
+        }
+      }
+    })
+  },
+
+  showAuthState() {
+    var union_id = app.globalData.union_id
+    if (union_id == 'no') {
+      wx.getSetting({
+        success: (res) => {
+          if (res.authSetting['scope.userInfo']) {
+            //已授权
+            this.getUnionId()
+
+          } else {
+            console.log('scope disable')
+            this.fadeInDialog()
+          }
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+
+    } else {
+      console.log("has union_id")
+      wx.getSetting({
+        success: (res) => {
+          if (res.authSetting['scope.userInfo']) {
+            //已授权
+            wx.getUserInfo({
+              withCredentials: true,
+              success: (res) => {
+                // console.log(res)
+                app.globalData.userInfo = res.userInfo
+              }
+            })
+          } else {
+            console.log('scope disable')
+            this.fadeInDialog()
+          }
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+    }
+  },
+  hideAuthDialog(){
+    this.setData({
+      showScope:false
+    })
+    wx.showTabBar({
+    })
+  },
 })

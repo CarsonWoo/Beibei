@@ -56,6 +56,7 @@
   <image class='image-download' src='/images/download_fish.png' catchtap='saveImg'></image>
 
   <view class='tips-text'>添加产品经理小楠，直接一对一交流互动哟~</view>
+  <view class="tips-big-text">紧急联系电话：15037053610</view>
 
   <button class='submit-button-container' style='color:white' bindtap='onSubmitTap'>
     提交

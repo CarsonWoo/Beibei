@@ -10,14 +10,6 @@
   background: rgba(0, 0, 0, .9);
   display: block;
 }
-
-.pop-show .pop-container {
-  transform: translateY(0);
-}
-
-.pop-show .pop-mask {
-  display: block;
-}
 .pop-container{
   display: flex;
   flex-direction: column;

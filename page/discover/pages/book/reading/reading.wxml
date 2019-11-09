@@ -50,10 +50,10 @@
     <!-- 从我的书单进入 -->
     <block wx:else>
       <!-- 本书的第一章 -->
-      <view class='double-button-container' wx:if='{{isCurrentChapter == "true" && isFirstChapter == "true"}}'></view>
+      <view class='double-button-container' wx:if='{{buttons_type == 0}}'></view>
       <block wx:else>
-        <view class='next-button' wx:if="{{isCurrentChapter == 'true' || end_chapter_id == chapter_id}}" catchtap='changeReading' data-type='former'>上一章</view>
-        <view class='next-button' wx:elif="{{isFirstChapter == 'true'}}" catchtap='changeReading' data-type='latter'>下一章</view>
+        <view class='next-button' wx:if="{{buttons_type==2}}" catchtap='changeReading' data-type='former'>上一章</view>
+        <view class='next-button' wx:elif="{{buttons_type==1}}" catchtap='changeReading' data-type='latter'>下一章</view>
         <view class='double-button-container' wx:else>
           <view class='next-button' style='margin-left:15rpx;margin-right:15rpx' catchtap='changeReading' data-type='former'>上一章</view>
           <view class='next-button' style='margin-left:15rpx;margin-right:15rpx' catchtap='changeReading' data-type='latter'>下一章</view>

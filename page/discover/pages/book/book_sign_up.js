@@ -15,6 +15,7 @@ Page({
     ],
     //分开是为了使其能在上面作图
     reading_info_pic_15: 'https://file.ourbeibei.com/l_e/static/images/reading_info_pic_15.png',
+    is_helping:false,//助力状态中
   },
 
   /**
@@ -30,10 +31,13 @@ Page({
 
     let platform = wx.getSystemInfoSync().platform
 
-    this.setData({
-      platform: platform
-      // platform: 'ios'
-    })
+    if (platform == 'ios') {
+      this.setData({
+        platform:'ios'
+      })
+    }
+
+    wx.getStorageSync("is_reading")
 
     this.loadImg()
 
@@ -110,7 +114,7 @@ Page({
             st = '暂无'
           }
 
-          let signType = data.type != undefined ? data.signType : ''
+          let signType = data.type != undefined ? data.type : ''
           this.setData({
             // series: data.series,
             st: st,

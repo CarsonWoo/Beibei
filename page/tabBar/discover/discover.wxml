@@ -3,9 +3,9 @@
   <!-- <view class='daily-card-container'>
   </view> -->
   <view class='book-list' wx:if="{{is_reading == 2}}">
-    <view style='position:absolute;left:20rpx;display:flex;align-items:true' wx:if="{{is_reading == 2}}">
-      <text class='book-list-text'>Day</text>
-      <text style='font-size:42rpx;color:white;margin-left:5rpx'>{{begin_day}}</text>
+    <view style='position:absolute;left:25rpx;display:flex;align-items:true' wx:if="{{is_reading == 2}}">
+      <image src="/images/ic_clock.png" class="image-clock"></image>
+      <text style="margin-left:10rpx;font-size:28rpx;color:#fff;">打卡天数: {{clock_day}}</text>
     </view>
     <view style='position:absolute;right:40rpx;display:flex;flex-direction:row;align-items:center' catchtap='onBookListTap' wx:if="{{readBookInfo != undefined}}">
       <image src='/images/ic_book_list.png'></image>
@@ -61,6 +61,10 @@
       <view class='progress-container' catchtap='showBookInfo'>
         <image src='{{readBookInfo.book_pic != null ? readBookInfo.book_pic : ""}}'></image>
         <view class='title-chapter-container'>
+          <view class="begin-day-container">
+            <text style="font-size: 24rpx;color: #363943;opacity: 0.3;">Day</text>
+            <text style="margin-left:4rpx;font-size: 42rpx;color: #363943;opacity: 0.3;">{{begin_day}}</text>
+          </view>
           <text class='title'>{{readBookInfo.book_name != null ? readBookInfo.book_name : need_to_read_book.book_name}}</text>
           <text class='chapter'>Chapter {{readBookInfo.chapter_order != null ? readBookInfo.chapter_order : '1'}}</text>
         </view>
@@ -72,12 +76,13 @@
           </view>
         </view>
       </view>
-      <!-- <view class='reading-sign-tips' wx:if='{{!(readBookInfo.book_id == need_to_read_book.book_id && readBookInfo.chapter_id == need_to_read_book.chapter_id)}}'>阅读{{need_to_read_book.book_name}}到第{{need_to_read_book.chapter_order}}章即可领取今日红包</view> -->
+      <view class='reading-sign-tips' wx:if='{{!(readBookInfo.book_id == need_to_read_book.book_id && readBookInfo.chapter_id == need_to_read_book.chapter_id)}}'>阅读《{{need_to_read_book.book_name}}》到第{{need_to_read_book.chapter_order}}章即可完成今日打卡哦~</view>
 
       <button class='normal-button solid' wx:if="{{level == 0 && !is_today_book_finished && !is_today_sign_book_finished}}" catchtap='onStartReading' data-level='0'>开始阅读</button>
       <button class='normal-button solid' wx:elif="{{level == 0 && is_today_sign_book_finished}}" catchtap='showPicture'>
         <image src='/images/ic_mini_red_packet.png'></image>
-        <text>分享返学费</text> </button>
+        <text>分享返学费</text> 
+      </button>
       <view class='double-button-container' wx:elif="{{level == 0 && is_today_book_finished && !(readBookInfo.book_id == need_to_read_book.book_id && readBookInfo.chapter_id == need_to_read_book.chapter_id)}}">
         <view class='mid-button fill' data-level='2' catchtap='onStartReading'>再次阅读</view>
         <view class='mid-button solid' catchtap='onStartReading' data-level='0'>阅读下一章</view>
@@ -95,7 +100,7 @@
   </block>
 
   <!-- 关于运营0.3的基础内容写在partnership里面 以免混淆 -->
-  <view class='partnership' wx:if='{{!isInLove}}'>
+  <view class='partnership' wx:if='{{!isInLove&&isShowDatingView}}' >
     <!-- 标题栏 -->
     <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
       <block>
@@ -302,7 +307,7 @@
 
   </view>
   <!-- 这是匹配成功后的页面 -->
-  <view class='partnership' wx:elif="{{isInLove}}">
+  <view class='partnership' wx:elif="{{isInLove&&isShowDatingView}}">
     <view class='partnership-label {{label_should_fixed ? "label-fixed" : ""}}' id='partnership_label'>
       <block>
         <view style='width:100%;height:{{label_origin_height}};display:flex;justify-content:center;align-items:center;padding-right:{{label_should_fixed ? "10%" : "0"}};z-index:9999;'>
@@ -537,3 +542,19 @@
     <image class='btn-next-icon' src='{{ic_next}}'></image>
   </view>
 </view>  
+
+<!-- 1.2 运营活动 引导用户授权弹窗 -->
+<block wx:if='{{showScope == true}}'>
+  <cover-view class='mask-container' catchtouchmove='stopPageScroll'>
+    <cover-view class='scope-image-container' animation="{{scopeAnimation}}">
+      <cover-image src='https://file.ourbeibei.com/l_e/static/mini_program_icons/bg_scope.png'></cover-image>
+      <cover-view class='scope-text' style='margin-top:560rpx'>欢迎使用背呗背单词</cover-view>
+      <cover-view class='scope-text'>授权信息开始发现之旅</cover-view>
+      <cover-view class='scope-text'>背呗与你一起学习</cover-view>
+      <button open-type='getUserInfo' class='scope-button' bindgetuserinfo='bindGetUserInfo' wx:if='{{canIUse}}'>去授权</button>
+      <cover-view wx:else class='error-scope'>
+        请更新微信版本
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</block>

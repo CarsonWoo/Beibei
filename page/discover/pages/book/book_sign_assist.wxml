@@ -18,5 +18,5 @@
     </view>
   </view>
   <button class='button-container' open-type='share'>邀请好友助力</button>
-  <text class='underline' catchtap='onPayOrigin'>支付40元跳过此环节</text>
+  <text class='underline' catchtap='onPayOrigin'>支付100元跳过此环节</text>
 </view>

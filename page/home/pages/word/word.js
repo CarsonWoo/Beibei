@@ -12,21 +12,25 @@ Page({
     currentPointer: 0,
     realPointer: 0,
     wrongCount: 0,
-    word_list_num:0,
-    posted_list_num:0,
+    word_list_num: 0,
+    posted_list_num: 0,
     pass_list: [],
     old_list: [],
     new_list: [],
     word_list: [],
     post_list: [],
+    more_pic_list:[],//当单词数低于20个时候会多10张图片
+    pic_list:[],//合并后的总数组
+
     requestClear: false,
-    hasupload:false,
-  }, 
+    hasupload: false,
+  },
   loadData: function() {
     // wx.showToast({
     //   title: '加载中',
     //   icon: 'loading'
     // })
+    let that = this
     wx.showLoading({
       title: '加载中...',
     })
@@ -47,6 +51,12 @@ Page({
           var data = res.data.data
           var new_list = data.new_list
           var old_list = data.old_list
+          if (data.morepics!=undefined){
+            // console.log("have more pic")
+            that.setData({
+              more_pic_list:data.morepics
+            })
+          }
           // 添加word_type参数
           for (var i = 0; i < new_list.length; i++) {
             var word = {}
@@ -62,7 +72,7 @@ Page({
           console.log(old_list)
           // 单词列表小数四的情况,目前还不清楚什么原因会导致这种情况
           // 已找到主要原因：当词库背完时会出现该情况
-          if (new_list.length + old_list.length + this.data.post_list.length < 4 && new_list.length + old_list.length + this.data.post_list.length > 0){
+          if (new_list.length + old_list.length + this.data.post_list.length < 4 && new_list.length + old_list.length + this.data.post_list.length > 0) {
             console.log("单词列表小数四：")
             console.log(new_list)
             console.log(old_list)
@@ -78,7 +88,9 @@ Page({
             var list = []
             post_new_list = post_new_list.concat(old_list)
             for (let i in post_new_list) {
-              var s = '{"id":' + post_new_list[i]['id'] + ',"level":' + post_new_list[i]['level'] + ',"word":"' + post_new_list[i]['word'] + '","meaning":"' + post_new_list[i]['meaning'] + '"' + ',"word_type":"' + post_new_list[i]['word_type'] +  '"}'
+              var str_meaning = post_new_list[i]['meaning']
+              post_new_list[i]['meaning'] = str_meaning.replace(/[\r\n]/g, "");
+              var s = '{"id":' + post_new_list[i]['id'] + ',"level":' + post_new_list[i]['level'] + ',"word":"' + post_new_list[i]['word'] + '","meaning":"' + post_new_list[i]['meaning'] + '"' + ',"word_type":"' + post_new_list[i]['word_type'] + '"}'
               list.push(s)
             }
             var listStr = list.join(',')
@@ -102,14 +114,13 @@ Page({
                   console.log("单词数小于四，上传并返回首页")
                   wx.reLaunch({
                     url: '../../../tabBar/home/home',
-                    success: function () {
+                    success: function() {
                       that.setData({
                         hasupload: true
                       })
                     }
                   })
-                }
-                else {
+                } else {
                   that.setData({
                     hasupload: false
                   })
@@ -120,19 +131,17 @@ Page({
                 console.log(res)
               }
             })
-          }
-          else if (new_list.length + old_list.length + this.data.post_list.length == 0 )
-          {
+          } else if (new_list.length + old_list.length + this.data.post_list.length == 0) {
             console.log("单词数为零")
             wx.showToast({
               title: '您的计划已经完成，请更换计划',
-              mask: true,//是否显示透明蒙层,防止触摸穿透，默认：false  
-              icon: 'none', 
-              success: function () {
-                setTimeout(function () {
+              mask: true, //是否显示透明蒙层,防止触摸穿透，默认：false  
+              icon: 'none',
+              success: function() {
+                setTimeout(function() {
                   wx.reLaunch({
                     url: '../../../tabBar/user/user',
-                    success: function () {
+                    success: function() {
                       that.setData({
                         hasupload: true
                       })
@@ -145,29 +154,28 @@ Page({
                 }, 2200)
               }
             })
-          }
-          else {
-          for (let j = 0; j < old_list.length; j++) {
-            old_list[j]['sentence'] = this.parseSentence(old_list[j].word, old_list[j].sentence)
-            // console.log(old_list[j].sentence)
-          }
-          for (let i = 0; i < new_list.length; i++) {
-            new_list[i]['level'] = 0
-            new_list[i]['sentence'] = this.parseSentence(new_list[i].word, new_list[i].sentence)
-          }
-          var word_list = []
-          word_list = word_list.concat(old_list)
-          word_list = word_list.concat(new_list)
-          var word_list_num = word_list.length
-          this.setData({
-            word_list_num: word_list_num,
-            word_list: word_list,
-            pass_list: [],
-            new_list: new_list,
-            old_list: old_list
-          }, () => {
-            this.initialize()
-          })
+          } else {
+            for (let j = 0; j < old_list.length; j++) {
+              old_list[j]['sentence'] = this.parseSentence(old_list[j].word, old_list[j].sentence)
+              // console.log(old_list[j].sentence)
+            }
+            for (let i = 0; i < new_list.length; i++) {
+              new_list[i]['level'] = 0
+              new_list[i]['sentence'] = this.parseSentence(new_list[i].word, new_list[i].sentence)
+            }
+            var word_list = []
+            word_list = word_list.concat(old_list)
+            word_list = word_list.concat(new_list)
+            var word_list_num = word_list.length
+            this.setData({
+              word_list_num: word_list_num,
+              word_list: word_list,
+              pass_list: [],
+              new_list: new_list,
+              old_list: old_list
+            }, () => {
+              this.initialize()
+            })
           }
         } else {
           wx.showModal({
@@ -181,8 +189,7 @@ Page({
         console.log(res)
         wx.hideLoading()
       },
-      complete: () => {
-      }
+      complete: () => {}
     })
   },
 
@@ -277,7 +284,7 @@ Page({
         if (target.split("——").length == 2) {
           end = "——" + target.split("——")[1] + end
           target = target.split("——")[0]
-        } 
+        }
       }
 
       if (split.length > 2) {
@@ -308,7 +315,7 @@ Page({
     var day = now.getDate();
     var new_time = year + '-' + month + '-' + day;
     console.log(new_time)
-    if (wx.getStorageSync('time')){
+    if (wx.getStorageSync('time')) {
       var old_time = wx.getStorageSync('time')
       if (old_time != new_time) {
         console.log(old_time)
@@ -322,9 +329,8 @@ Page({
         wx.removeStorageSync('realPointer')
         wx.setStorageSync('time', new_time)
       }
-    }
-    else{
-        wx.setStorageSync('time', new_time)
+    } else {
+      wx.setStorageSync('time', new_time)
     }
     var new_list = wx.getStorageSync('new_list')
     var old_list = wx.getStorageSync('old_list')
@@ -333,6 +339,12 @@ Page({
     var post_list = wx.getStorageSync('post_list')
     var currentPointer = wx.getStorageSync('currentPointer')
     var realPointer = wx.getStorageSync('realPointer')
+    var more_pic_list = wx.getStorageSync('more_pic_list')
+    if (more_pic_list!=undefined){
+      this.setData({
+        more_pic_list: more_pic_list
+      })
+    }
 
     // word_list = word_list.concat(this.data.old_list)
     // word_list = word_list.concat(this.data.new_list)
@@ -357,7 +369,7 @@ Page({
         old_list: old_list,
         word_list: word_list,
         pass_list: pass_list,
-        post_list:post_list,
+        post_list: post_list,
         currentPointer: currentPointer,
         realPointer: realPointer,
         progress_text: progress_text
@@ -369,8 +381,11 @@ Page({
 
   initialize: function() {
 
+   //totalsize 更换为 old + new*2
     var totalSize = this.data.old_list.length + this.data.new_list.length * 3
     var word_list = this.data.word_list
+    console.log("current"+this.data.currentPointer)
+    console.log("real" + this.data.realPointer)
     console.log(word_list)
     this.setData({
       totalSize: totalSize,
@@ -391,7 +406,7 @@ Page({
       progress_text = '正在复习旧单词'
     } else if (this.data.currentPointer < this.data.old_list.length + this.data.new_list.length) {
       progress_text = '正在学习新单词'
-    } else{
+    } else {
       progress_text = '正在复习新单词'
     }
     // console.log(this.data.word_list)
@@ -410,13 +425,49 @@ Page({
       correctAnswer = word_list[this.data.realPointer].meaning
     }
     // console.log(correctAnswer)
+
     var list = []
+    var pic_list = []
+    var have_more_pic = false
+    if (JSON.stringify(this.data.more_pic_list) != '""' && JSON.stringify(this.data.more_pic_list) != "[]")    {
+      have_more_pic = true
+      // console.log(JSON.stringify(this.data.more_pic_list))
+      console.log("have more pic")
+      //当more_pic_list有数据时
+      var more_pic_list = this.data.more_pic_list
+      for (var i = 0; i < more_pic_list.length; i++) {
+        pic_list.push(more_pic_list[i].pic)
+      }
+      for (var i = 0; i < word_list.length; i++) {
+        pic_list.push(word_list[i].pic)
+      }
+    }  
+
     // console.log(word_list)
     while (list.length < 3) {
+
       //向下取整
       var rNum = Math.floor(Math.random() * word_list.length)
       // console.log(rNum)
       if (wordType == 'TYPE_GRAPH') {
+        if (have_more_pic){  
+          rNum = Math.floor(Math.random() * pic_list.length)
+          if (correctAnswer == pic_list[rNum]) {
+            continue
+          }
+          var isAdded = false
+          for (let index in list) {
+            if (list[index] == pic_list[rNum]) {
+              isAdded = true
+              break
+            }
+          }
+          if (!isAdded) {
+            list.push(pic_list[rNum])
+          }
+          continue
+        }
+       
         if (correctAnswer == word_list[rNum].pic) {
           continue
         }
@@ -453,7 +504,7 @@ Page({
     // console.log("tmplist")
     // console.log(tmpList)
     // console.log(correctAnswer)
-    
+
     var finalList = []
     finalList = finalList.concat(tmpList)
     finalList = finalList.concat(correctAnswer)
@@ -503,7 +554,7 @@ Page({
     if (id == this.data.correctAnswer) {
 
       audio.src = '/voice/correct.mp3'
-
+      audio.play()
       if (this.data.currentPointer < this.data.totalSize) {
 
         setTimeout(this.onGraphSuccess, 100)
@@ -517,14 +568,19 @@ Page({
       }
     } else {
       audio.src = '/voice/wrong.mp3',
-        this.onGraphFail()
+        audio.play()
+      this.onGraphFail()
     }
-    audio.play()
+
   },
 
   setAnimation: function() {
-    this.animation.scale3d(1.5, 1.5, 1.5).step({duration:300})
-    this.animation.scale3d(1, 1, 1).step({duration: 300})
+    this.animation.scale3d(1.5, 1.5, 1.5).step({
+      duration: 200
+    })
+    this.animation.scale3d(1, 1, 1).step({
+      duration: 200
+    })
 
     this.setData({
       animationData: this.animation.export()
@@ -544,12 +600,10 @@ Page({
         wx.navigateTo({
           url: 'word_detail/word_detail?wrongCount=' + this.data.wrongCount + "&word_id=" + this.data.word_list[this.data.realPointer].id + '&word=' + this.data.word_list[this.data.realPointer].word + '&symbol=' + this.data.word_list[this.data.realPointer].phonetic_symbol_us + '&paraphrase=' + this.data.word_list[this.data.realPointer].paraphrase + '&meaning=' + this.data.word_list[this.data.realPointer].meaning + '&pic=' + this.data.word_list[this.data.realPointer].pic,
         })
-      } 
-      else {
+      } else {
         this.toRefresh()
       }
-    } 
-    else {
+    } else {
       if (this.data.wrongCount > 1) {
         //旧单词复习
         //复习时错2次才会跳转并打回原形
@@ -723,7 +777,7 @@ Page({
         }
         this.grounpPostWork(obj)
         this.toRefresh()
-        
+
       }
     } else {
       //旧单词复习
@@ -743,7 +797,7 @@ Page({
         })
         this.grounpPostWork(obj)
         this.toRefresh()
-        
+
       }
     }
   },
@@ -830,8 +884,8 @@ Page({
   },
 
 
-//pass按钮函数节流，每1.7s最多执行一次
-  onPassTap: util.throttle(function (event) {
+  //pass按钮函数节流，每1.7s最多执行一次
+  onPassTap: util.throttle(function(event) {
     // console.log((new Date()).getSeconds())
     this.onPostChance(event)
     var obj = this.data.word_list[this.data.realPointer]
@@ -1023,7 +1077,7 @@ Page({
     }
   }, 800),
 
-  grounpPostWork:function(word){
+  grounpPostWork: function(word) {
     var post_list = this.data.post_list
     if (post_list.indexOf(word) == -1 && word != undefined) {
       post_list.push(word)
@@ -1035,95 +1089,96 @@ Page({
     console.log(this.data.word_list)
     console.log("post_list:")
     console.log(this.data.post_list)
-      if (this.data.post_list.length >= 5) {
-        var post_list = this.data.post_list
-        //去重
-        var new_post_list = [];
-        for (var i = 0; i < post_list.length; i++) {
-          for (var j = i + 1; j < post_list.length; j++) {
-            if (post_list[i].id == post_list[j].id) {
-              ++i;
-            }
+    if (this.data.post_list.length >= 5) {
+      var post_list = this.data.post_list
+      //去重
+      var new_post_list = [];
+      for (var i = 0; i < post_list.length; i++) {
+        for (var j = i + 1; j < post_list.length; j++) {
+          if (post_list[i].id == post_list[j].id) {
+            ++i;
           }
-          new_post_list.push(post_list[i]);
         }
+        new_post_list.push(post_list[i]);
+      }
+      this.setData({
+        post_list: new_post_list,
+      })
+      console.log("deduplication_post_list:")
+      console.log(new_post_list)
+      if (new_post_list.length >= 5) {
+        var list = []
+        for (let i in new_post_list) {
+          var str_meaning = new_post_list[i]['meaning']
+          new_post_list[i]['meaning'] = str_meaning.replace(/[\r\n]/g, "");
+          var s = '{"id":' + new_post_list[i]['id'] + ',"level":' + new_post_list[i]['level'] + ',"word":"' + new_post_list[i]['word'] + '","meaning":"' + new_post_list[i]['meaning'] + '"' + ',"word_type":"' + new_post_list[i]['word_type'] + '"}'
+          list.push(s)
+          console.log(s)
+        }
+        var listStr = list.join(',')
+        listStr = '[' + listStr + ']'
+        console.log(listStr)
+        //清空post_list
         this.setData({
-          post_list: new_post_list,
+          post_list: []
         })
-        console.log("deduplication_post_list:")
-        console.log(new_post_list)
-          if (new_post_list.length >= 5) {
-            var list = []
-            for (let i in new_post_list) {
-              var s = '{"id":' + new_post_list[i]['id'] + ',"level":' + new_post_list[i]['level'] + ',"word":"' + new_post_list[i]['word'] + '","meaning":"' + new_post_list[i]['meaning'] + '"' + ',"word_type":"' + new_post_list[i]['word_type'] + '"}'
-              list.push(s)
-              console.log(s)
+        var time_start = (new Date()).valueOf()
+        wx.request({
+          url: app.globalData.HOST + '/home/liquidation_word.do',
+          method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'token': app.globalData.token,
+            'version': 'version1'
+          },
+          data: {
+            word_list: listStr
+          },
+          success: (res) => {
+            console.log(res.data)
+            if (res.data.status == 200) {
+              console.log("上传成功")
+              var time_end = (new Date()).valueOf()
+              console.log("上传耗时：")
+              var time = time_end - time_start
+              console.log(time)
+              var posted_list_num = this.data.posted_list_num + new_post_list.length
+              console.log("word_list_num:")
+              console.log(this.data.word_list_num)
+              console.log("posted_list_num:")
+              console.log(posted_list_num)
+              this.setData({
+                posted_list_num: posted_list_num
+              })
+            } else {
+              console.log(res.data.msg)
+              console.log("上传失败(移至下一组上传)：")
+              var post_list = this.data.post_list.concat(new_post_list)
+              this.setData({
+                post_list: post_list
+              })
             }
-            var listStr = list.join(',')
-            listStr = '[' + listStr + ']'
-            console.log("开始上传")
-            //清空post_list
+          },
+          fail: (res) => {
+            console.log(res)
+            console.log("网络请求失败(移至下一组上传)：")
+            var post_list = this.data.post_list.concat(new_post_list)
             this.setData({
-              post_list: []
-            })
-            var time_start = (new Date()).valueOf()
-            wx.request({
-              url: app.globalData.HOST + '/home/liquidation_word.do',
-              method: 'POST',
-              header: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'token': app.globalData.token,
-                'version': 'version1'
-              },
-              data: {
-                word_list: listStr
-              },
-              success: (res) => {
-                console.log(res.data)
-                if (res.data.status == 200) {
-                  console.log("上传成功")
-                  var time_end = (new Date()).valueOf()
-                  console.log("上传耗时：")
-                  var time = time_end - time_start
-                  console.log(time)
-                  var posted_list_num = this.data.posted_list_num + new_post_list.length
-                  console.log("word_list_num:")
-                  console.log(this.data.word_list_num)
-                  console.log("posted_list_num:")
-                  console.log(posted_list_num)
-                  this.setData({
-                    posted_list_num:posted_list_num
-                  })
-                }
-                else {
-                  console.log(res.data.msg)
-                  console.log("上传失败(移至下一组上传)：")
-                  var post_list = this.data.post_list.concat(new_post_list)
-                  this.setData({
-                    post_list: post_list
-                  })
-                }
-              },
-              fail: (res) => {
-                console.log(res)
-                console.log("网络请求失败(移至下一组上传)：")
-                var post_list = this.data.post_list.concat(new_post_list)
-                this.setData({
-                  post_list: post_list
-                })
-              }
+              post_list: post_list
             })
           }
+        })
       }
+    }
   },
 
 
-//上传最后一组并打卡
+  //上传最后一组并打卡
   doPostWork: function() {
-    
+
     let that = this
     var post_list = this.data.post_list
-    if(post_list.length == 0){
+    if (post_list.length == 0) {
       console.log("上传完成，清除缓存，跳转至打卡")
       this.data.requestClear = true
       if (wx.getStorageSync('new_list') || wx.getStorageSync('old_list') || wx.getStorageSync('pass_list')) {
@@ -1141,7 +1196,7 @@ Page({
         beforePage.loadData(app.globalData.token)
         wx.redirectTo({
           url: '../sign/sign',
-          success: function () {
+          success: function() {
             that.setData({
               hasupload: true
             })
@@ -1151,197 +1206,195 @@ Page({
         console.log("返回首页")
         wx.reLaunch({
           url: '../../../tabBar/home/home',
-          success: function () {
+          success: function() {
             that.setData({
               hasupload: true
             })
           }
         })
       }
-    }
-    else{
-    //去重
-    var new_post_list = [];
-    for (var i = 0; i < post_list.length; i++) {
-      for (var j = i + 1; j < post_list.length; j++) {
-        if (post_list[i].id == post_list[j].id) {
-          ++i;
-        }
-      }
-      new_post_list.push(post_list[i]);
-    }
-    this.setData({
-      post_list: new_post_list
-    })
-    console.log("post_list:")
-    console.log(post_list)
-    console.log("new_post_list:")
-    console.log(new_post_list)
-
-    // wx.showToast({
-    //   title: '上传中',
-    //   icon: 'loading',
-    //   duration: 30000
-    // })
-    wx.showLoading({
-      title: '上传中...',
-    })
-    let that = this
-    if (!this.data.hasupload) {
-      that.setData({
-        hasupload: true
-      }, 
-      () => {
-        var list = []
-        for (let i in new_post_list) {
-          var s = '{"id":' + new_post_list[i]['id'] + ',"level":' + new_post_list[i]['level'] + ',"word":"' + new_post_list[i]['word'] + '","meaning":"' + new_post_list[i]['meaning'] + '"' + ',"word_type":"' + new_post_list[i]['word_type'] + '"}'
-          list.push(s)
-        }
-        var listStr = list.join(',')
-        listStr = '[' + listStr + ']'
-        console.log("上传最后一组，单词个数：")
-        console.log(list.length)
-        console.log(listStr)
-        var time_start = (new Date()).valueOf()
-        wx.request({
-          url: app.globalData.HOST + '/home/liquidation_word.do',
-          method: 'POST',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'token': app.globalData.token,
-            'version':'version1'
-          },
-          data: {
-            word_list: listStr
-          },
-          success: (res) => {
-            console.log(res.data)
-            if (res.data.status == 200) {
-              console.log("最后一组上传成功")
-              var time_end = (new Date()).valueOf()
-              console.log("上传耗时：")
-              var time = time_end - time_start
-              console.log(time)
-            var posted_list_num = this.data.word_list_num + list.length
-            if (posted_list_num >= this.data.word_list_num) {
-              console.log("上传完成，清除缓存跳转至打卡")
-              if (parseInt(this.data.baseLevel) < 2) {
-                console.log("跳转到打卡")
-                var beforePage = getCurrentPages()[0]
-                beforePage.loadData(app.globalData.token)
-                this.data.requestClear = true
-                if (wx.getStorageSync('new_list') || wx.getStorageSync('old_list') || wx.getStorageSync('pass_list')) {
-                  wx.removeStorageSync('new_list')
-                  wx.removeStorageSync('old_list')
-                  wx.removeStorageSync('word_list')
-                  wx.removeStorageSync('pass_list')
-                  wx.removeStorageSync('post_list')
-                  wx.removeStorageSync('currentPointer')
-                  wx.removeStorageSync('realPointer')
-                }
-                wx.redirectTo({
-                  url: '../sign/sign',
-                  success: function () {
-                    that.setData({
-                      hasupload: true
-                    })
-                  }
-                })
-              } else {
-                console.log("已打卡，返回首页")
-                wx.reLaunch({
-                  url: '../../../tabBar/home/home',
-                  success: function () {
-                    that.setData({
-                      hasupload: true
-                    })
-                  }
-                })
-              }
-            }
-            else{
-              console.log("还有单词未完成上传，返回首页")
-              wx.reLaunch({
-                url: '../../../tabBar/home/home?hold_on=200',
-                success: function () {
-                  that.setData({
-                    hasupload: true
-                  })
-                }
-              })
-            }
-            }
-            else {
-              that.setData({
-                hasupload: false
-              })
-              console.log("上传失败")
-            }
-          },
-          fail: (res) => {
-            console.log(res)
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-        // //不等返回信息直接跳打卡
-        // var posted_list_num = this.data.word_list_num + list.length
-        // if (posted_list_num >= this.data.word_list_num) {
-        //   console.log("上传完成，跳转至打卡")
-        //   if (parseInt(this.data.baseLevel) < 2) {
-        //     console.log("跳转到打卡")
-        //     var beforePage = getCurrentPages()[0]
-        //     beforePage.loadData(app.globalData.token)
-        //     wx.redirectTo({
-        //       url: '../sign/sign',
-        //       success: function () {
-        //         that.setData({
-        //           hasupload: true
-        //         })
-        //       }
-        //     })
-        //   } else {
-        //     console.log("已打卡，返回首页")
-        //     wx.reLaunch({
-        //       url: '../../../tabBar/home/home',
-        //       success: function () {
-        //         that.setData({
-        //           hasupload: true
-        //         })
-        //       }
-        //     })
-        //   }
-        // }
-        // else {
-        //   console.log("还有单词未完成上传，返回首页")
-        //   wx.reLaunch({
-        //     url: '../../../tabBar/home/home?hold_on=200',
-        //     success: function () {
-        //       that.setData({
-        //         hasupload: true
-        //       })
-        //     }
-        //   })
-        // }
-
-        this.data.requestClear = true
-        if (wx.getStorageSync('new_list') || wx.getStorageSync('old_list') || wx.getStorageSync('pass_list'))
-        {
-          console.log("清除缓存")
-          wx.removeStorageSync('new_list')
-          wx.removeStorageSync('old_list')
-          wx.removeStorageSync('word_list')
-          wx.removeStorageSync('pass_list')
-          wx.removeStorageSync('post_list')
-          wx.removeStorageSync('currentPointer')
-          wx.removeStorageSync('realPointer')
-        }
-      })
     } else {
-      return
-    }
+      //去重
+      var new_post_list = [];
+      for (var i = 0; i < post_list.length; i++) {
+        for (var j = i + 1; j < post_list.length; j++) {
+          if (post_list[i].id == post_list[j].id) {
+            ++i;
+          }
+        }
+        new_post_list.push(post_list[i]);
+      }
+      this.setData({
+        post_list: new_post_list
+      })
+      console.log("post_list:")
+      console.log(post_list)
+      console.log("new_post_list:")
+      console.log(new_post_list)
+
+      // wx.showToast({
+      //   title: '上传中',
+      //   icon: 'loading',
+      //   duration: 30000
+      // })
+      wx.showLoading({
+        title: '上传中...',
+      })
+      let that = this
+      if (!this.data.hasupload) {
+        that.setData({
+            hasupload: true
+          },
+          () => {
+            var list = []
+            for (let i in new_post_list) {
+              var str_meaning = new_post_list[i]['meaning']
+              new_post_list[i]['meaning'] = str_meaning.replace(/[\r\n]/g, "");
+              var s = '{"id":' + new_post_list[i]['id'] + ',"level":' + new_post_list[i]['level'] + ',"word":"' + new_post_list[i]['word'] + '","meaning":"' + new_post_list[i]['meaning'] + '"' + ',"word_type":"' + new_post_list[i]['word_type'] + '"}'
+              list.push(s)
+            }
+            var listStr = list.join(',')
+            listStr = '[' + listStr + ']'
+            console.log("上传最后一组，单词个数：")
+            console.log(list.length)
+            console.log(listStr)
+            var time_start = (new Date()).valueOf()
+            wx.request({
+              url: app.globalData.HOST + '/home/liquidation_word.do',
+              method: 'POST',
+              header: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'token': app.globalData.token,
+                'version': 'version1'
+              },
+              data: {
+                word_list: listStr
+              },
+              success: (res) => {
+                console.log(res.data)
+                if (res.data.status == 200) {
+                  console.log("最后一组上传成功")
+                  var time_end = (new Date()).valueOf()
+                  console.log("上传耗时：")
+                  var time = time_end - time_start
+                  console.log(time)
+                  var posted_list_num = this.data.word_list_num + list.length
+                  if (posted_list_num >= this.data.word_list_num) {
+                    console.log("上传完成，清除缓存跳转至打卡")
+                    if (parseInt(this.data.baseLevel) < 2) {
+                      console.log("跳转到打卡")
+                      var beforePage = getCurrentPages()[0]
+                      beforePage.loadData(app.globalData.token)
+                      this.data.requestClear = true
+                      if (wx.getStorageSync('new_list') || wx.getStorageSync('old_list') || wx.getStorageSync('pass_list')) {
+                        wx.removeStorageSync('new_list')
+                        wx.removeStorageSync('old_list')
+                        wx.removeStorageSync('word_list')
+                        wx.removeStorageSync('pass_list')
+                        wx.removeStorageSync('post_list')
+                        wx.removeStorageSync('currentPointer')
+                        wx.removeStorageSync('realPointer')
+                      }
+                      wx.redirectTo({
+                        url: '../sign/sign',
+                        success: function() {
+                          that.setData({
+                            hasupload: true
+                          })
+                        }
+                      })
+                    } else {
+                      console.log("已打卡，返回首页")
+                      wx.reLaunch({
+                        url: '../../../tabBar/home/home',
+                        success: function() {
+                          that.setData({
+                            hasupload: true
+                          })
+                        }
+                      })
+                    }
+                  } else {
+                    console.log("还有单词未完成上传，返回首页")
+                    wx.reLaunch({
+                      url: '../../../tabBar/home/home?hold_on=200',
+                      success: function() {
+                        that.setData({
+                          hasupload: true
+                        })
+                      }
+                    })
+                  }
+                } else {
+                  that.setData({
+                    hasupload: false
+                  })
+                  console.log("上传失败")
+                }
+              },
+              fail: (res) => {
+                console.log(res)
+              },
+              complete: () => {
+                wx.hideLoading()
+              }
+            })
+
+            // //不等返回信息直接跳打卡
+            // var posted_list_num = this.data.word_list_num + list.length
+            // if (posted_list_num >= this.data.word_list_num) {
+            //   console.log("上传完成，跳转至打卡")
+            //   if (parseInt(this.data.baseLevel) < 2) {
+            //     console.log("跳转到打卡")
+            //     var beforePage = getCurrentPages()[0]
+            //     beforePage.loadData(app.globalData.token)
+            //     wx.redirectTo({
+            //       url: '../sign/sign',
+            //       success: function () {
+            //         that.setData({
+            //           hasupload: true
+            //         })
+            //       }
+            //     })
+            //   } else {
+            //     console.log("已打卡，返回首页")
+            //     wx.reLaunch({
+            //       url: '../../../tabBar/home/home',
+            //       success: function () {
+            //         that.setData({
+            //           hasupload: true
+            //         })
+            //       }
+            //     })
+            //   }
+            // }
+            // else {
+            //   console.log("还有单词未完成上传，返回首页")
+            //   wx.reLaunch({
+            //     url: '../../../tabBar/home/home?hold_on=200',
+            //     success: function () {
+            //       that.setData({
+            //         hasupload: true
+            //       })
+            //     }
+            //   })
+            // }
+
+            this.data.requestClear = true
+            if (wx.getStorageSync('new_list') || wx.getStorageSync('old_list') || wx.getStorageSync('pass_list')) {
+              console.log("清除缓存")
+              wx.removeStorageSync('new_list')
+              wx.removeStorageSync('old_list')
+              wx.removeStorageSync('word_list')
+              wx.removeStorageSync('pass_list')
+              wx.removeStorageSync('post_list')
+              wx.removeStorageSync('currentPointer')
+              wx.removeStorageSync('realPointer')
+            }
+          })
+      } else {
+        return
+      }
     }
   },
 
@@ -1373,8 +1426,10 @@ Page({
   },
 
 
-  onPostChance: function (event) {
-    // console.log(event.detail.formId)
+  onPostChance: function(event) {
+    if(event==undefined||event==null||event.detail.formId==undefined||event.detail.formId==null){
+      return
+    }
     let form_id = event.detail.formId
     var token = app.globalData.token
     var HOST = app.globalData.HOST
@@ -1407,7 +1462,7 @@ Page({
     // console.log(b)
     this.audioCtx = wx.createAudioContext("audio")
     var animation = wx.createAnimation({
-      duration: 600,
+      duration: 300,
       timingFunction: 'ease',
     })
 
@@ -1442,6 +1497,9 @@ Page({
         wx.setStorageSync('post_list', this.data.post_list)
         wx.setStorageSync('currentPointer', this.data.currentPointer)
         wx.setStorageSync('realPointer', this.data.realPointer)
+        if (JSON.stringify(this.data.more_pic_list) != '""' && JSON.stringify(this.data.more_pic_list) != '[]'){
+          wx.setStorageSync('more_pic_list', this.data.more_pic_list)
+        }
       } else {
         if (wx.getStorageSync('word_list') != undefined) {
           wx.removeStorageSync('word_list')
@@ -1452,6 +1510,9 @@ Page({
           wx.removeStorageSync('currentPointer')
           wx.removeStorageSync('realPointer')
         }
+        if (wx.getStorageSync('more_pic_list') != undefined){
+          wx.removeStorageSync('more_pic_list')
+        }
       }
     }
     if (this.audioCtx) {
@@ -1459,9 +1520,9 @@ Page({
     }
   },
   /**
-  * 用户点击右上角分享
-  */
-  onShareAppMessage: function () {
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
 
     var share_imgs = app.globalData.share_imgs
     var share_texts = app.globalData.share_texts
