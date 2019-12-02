@@ -1,6 +1,50 @@
 //app.js
 const ald = require('./utils/ald-stat.js')
 App({
+  onHide:function(){
+    console.log("小程序进入后台")
+    if(!this.globalData.appIsShow){
+      this.setStudyStorage(this.studyData)
+    }
+  },
+
+  onShow:function(){
+    console.log("小程序进入前台")
+    this.globalData.appIsShow = true
+  },
+
+  setStudyStorage(studyData){
+    console.log("clear is "+studyData.requestClear)
+    if (!studyData.requestClear) {
+      if (studyData.word_list.length > 0 || studyData.pass_list.length > 0) {
+        console.log("in")
+        wx.setStorageSync('word_list', studyData.word_list)
+        wx.setStorageSync('new_list', studyData.new_list)
+        wx.setStorageSync('old_list', studyData.old_list)
+        wx.setStorageSync('pass_list', studyData.pass_list)
+        wx.setStorageSync('post_list', studyData.post_list)
+        wx.setStorageSync('currentPointer', studyData.currentPointer)
+        wx.setStorageSync('realPointer', studyData.realPointer)
+        if (JSON.stringify(studyData.more_pic_list) != '""' && JSON.stringify(studyData.more_pic_list) != '[]') {
+          wx.setStorageSync('more_pic_list', studyData.more_pic_list)
+        }
+      }
+    }else{
+      if (wx.getStorageSync('currentPointer') != undefined) {
+        wx.removeStorageSync('word_list', studyData.word_list)
+        wx.removeStorageSync('new_list', studyData.new_list)
+        wx.removeStorageSync('old_list', studyData.old_list)
+        wx.removeStorageSync('pass_list', studyData.pass_list)
+        wx.removeStorageSync('post_list', studyData.post_list)
+        wx.removeStorageSync('currentPointer', studyData.currentPointer)
+        wx.removeStorageSync('realPointer', studyData.realPointer)
+      }
+      if (wx.getStorageSync('more_pic_list') != undefined) {
+        wx.removeStorageSync('more_pic_list')
+      }
+    }
+  },
+
   onLaunch: function (options) {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -63,12 +107,13 @@ App({
     //判断是否为从其他页面返回首页，初始为打开小程序进入首页“false”
     isBackHome:false,
     userId:null,
+    appIsShow:true,
    
-    HOST: 'https://www.ourbeibei.com',
+    //HOST: 'https://www.ourbeibei.com',
     FTP_ICON_HOST: 'https://file.ourbeibei.com/l_e/static/mini_program_icons/',
     code: null,
     // 测试服务器 开发时用此
-    //HOST: 'http://47.102.152.102:8080',
+    HOST: 'http://47.102.152.102:8080',
 
     //-----1.1----------
     //群聊邀请者的id
@@ -165,6 +210,19 @@ App({
       // "我能想到最浪漫的事",
       ),
       cropPhotoSrc:'',
-  }
+  },
+
+  //用于用户隐藏小程序时保存学习进度
+  studyData: {
+    requestClear:null,
+    word_list:null,
+    new_list:null,
+    old_list:null,
+    pass_list:null,
+    post_list:null,
+    currentPointer:null,
+    realPointer:null,
+    more_pic_list:null,
+  },
 
 })

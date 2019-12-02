@@ -28,6 +28,7 @@ Page({
     swiperCurrent:0,
     isTapLikeBtn:false,
     isCollectFormId:true,
+    from_sign_page:false, //是否为打卡页查看原文跳转
   },
  
 
@@ -155,6 +156,8 @@ Page({
     var next_index = options.next_index
     var is_end = options.is_end
     var is_hot = options.is_hot
+    var from_sign_page = options.from_sign_page
+    console.log(from_sign_page)
     this.setData({
       id: id
     })
@@ -176,6 +179,11 @@ Page({
           isCollectFormId:true
         })
       }
+    }
+    if(from_sign_page!=null && from_sign_page!=undefined){
+      this.setData({
+        from_sign_page:from_sign_page
+      })
     }
     
     var that = this
@@ -234,6 +242,11 @@ Page({
             bannerPic:data.banner===1?data.banner_pic:'',
             bannerUrl:data.banner===1?'/'+data.banner_href:'',
           })
+          if(this.data.from_sign_page){
+            this.setData({
+              isShowBanner:false
+            })
+          }
           console.log(this.data.articleList)
           if(JSON.stringify(this.data.articleList)=="[]"){
             console.log("hhh")

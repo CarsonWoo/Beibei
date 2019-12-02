@@ -912,7 +912,7 @@ Page({
     var feed_id = this.data.feedInfo.id
     if (feed_id != null && feed_id != undefined) {
       wx.navigateTo({
-        url: '/page/home/pages/feed/feed?id=' + feed_id,
+        url: '/page/home/pages/feed/feed?id=' + feed_id + '&from_sign_page=true',
       })
     }
   },

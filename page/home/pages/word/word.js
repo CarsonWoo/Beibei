@@ -355,12 +355,16 @@ Page({
     } else {
       console.log("get data from storage")
       let progress_text = ''
+      let wordType = ''
       if (currentPointer < old_list.length) {
         progress_text = '正在复习旧单词'
+        wordType = 'TYPE_TEXT'
       } else if (currentPointer < old_list.length + new_list.length) {
         progress_text = '正在学习新单词'
+        wordType = 'TYPE_GRAPH'
       } else {
         progress_text = '正在复习新单词'
+        wordType = 'TYPE_TEXT'
       }
       var word_list_num = new_list.length + old_list.length
       this.setData({
@@ -372,7 +376,8 @@ Page({
         post_list: post_list,
         currentPointer: currentPointer,
         realPointer: realPointer,
-        progress_text: progress_text
+        progress_text: progress_text,
+        wordType: wordType,
       }, () => {
         this.initialize()
       })
@@ -382,7 +387,7 @@ Page({
   initialize: function() {
 
    //totalsize 更换为 old + new*2
-    var totalSize = this.data.old_list.length + this.data.new_list.length * 3
+    var totalSize = this.data.old_list.length + this.data.new_list.length * 2
     var word_list = this.data.word_list
     console.log("current"+this.data.currentPointer)
     console.log("real" + this.data.realPointer)
@@ -398,21 +403,29 @@ Page({
   },
 
   refreshList: function(word_list, wordType) {
+    //复习旧单词只用复习释义
+    console.log(word_list)
+    console.log(wordType)
     let progress_text = ''
     this.setData({
       animationData: ''
     })
     if (this.data.currentPointer < this.data.old_list.length) {
       progress_text = '正在复习旧单词'
+      wordType = 'TYPE_TEXT'
+      
     } else if (this.data.currentPointer < this.data.old_list.length + this.data.new_list.length) {
       progress_text = '正在学习新单词'
+      wordType = 'TYPE_GRAPH'
     } else {
       progress_text = '正在复习新单词'
+      wordType = 'TYPE_TEXT'
     }
     // console.log(this.data.word_list)
     this.onSoundClick()
     this.setData({
-      animationData: ''
+      animationData: '',
+      wordType:wordType
     })
     if (word_list.length < 4) {
       console.log("length is minier than 4")
@@ -623,7 +636,6 @@ Page({
   },
 
   onGraphFail: function() {
-
     var level = this.data.word_list[this.data.realPointer].level
 
     var wrongCount = this.data.wrongCount
@@ -659,6 +671,7 @@ Page({
     console.log("toRefresh")
     var currentPointer = this.data.currentPointer
     var realPointer = this.data.realPointer
+    console.log(this.data.word_list)
     if (this.data.word_list[realPointer].level < 2) {
       var word_list = this.data.word_list
       var obj = word_list[this.data.realPointer]
@@ -668,9 +681,10 @@ Page({
         word_list: word_list
       })
     }
+    //旧单词复习
     if (currentPointer < this.data.old_list.length) {
       this.setData({
-        wordType: 'TYPE_GRAPH'
+        wordType: 'TYPE_TEXT'
       })
     }
     realPointer++
@@ -682,9 +696,11 @@ Page({
       realPointer -= this.data.new_list.length
     }
 
-    if (currentPointer == this.data.totalSize - this.data.new_list.length * 2) {
+    if (currentPointer == this.data.totalSize - this.data.new_list.length) {
+         //判断知道已经进入复习释义
       this.setData({
-        showReviewToast: true
+        showReviewToast: true,
+        wordType: 'TYPE_TEXT',
       })
       setTimeout(() => {
         this.setData({
@@ -693,10 +709,10 @@ Page({
       }, 1000)
     }
 
-    if (currentPointer == this.data.totalSize - this.data.new_list.length) {
-      //判断知道已经进入复习释义
+    if (currentPointer == this.data.totalSize - this.data.new_list.length*2) {
+      //新单词学习阶段
       this.setData({
-        wordType: 'TYPE_TEXT',
+        wordType: 'TYPE_GRAPH',
       })
     }
 
@@ -726,7 +742,7 @@ Page({
   },
 
   onSelectTextItem: function(event) {
-    // console.log("onTextTap")
+    console.log("onTextTap")
     var audio = wx.createInnerAudioContext()
     var id = event.currentTarget.id
     this.setData({
@@ -756,6 +772,7 @@ Page({
   },
 
   onTextSuccess: function() {
+    console.log("TextSuccess")
     var obj = this.data.word_list[this.data.realPointer]
     if (obj.level <= 2) {
       //新单词释义复习或者旧单词释义选择题
@@ -792,7 +809,7 @@ Page({
         obj.level = obj.level + 1
         word_list[this.data.realPointer] = obj
         this.setData({
-          wordType: 'TYPE_GRAPH',
+          wordType: 'TYPE_TEXT',
           word_list: word_list
         })
         this.grounpPostWork(obj)
@@ -838,8 +855,8 @@ Page({
       new_list.push(obj)
       word_list.splice(this.data.realPointer, 1)
       word_list.push(obj)
-      //总长会变更
-      var totalSize = this.data.totalSize + 2
+      //总长会变更,测试点
+      var totalSize = this.data.totalSize + 1
       this.setData({
         old_list: old_list,
         new_list: new_list,
@@ -850,7 +867,7 @@ Page({
         word: word_list[this.data.realPointer].word,
         targetSentence: word_list[this.data.realPointer].sentence,
         word_symbol: word_list[this.data.realPointer].phonetic_symbol_us,
-        wordType: 'TYPE_GRAPH',
+        wordType: 'TYPE_TEXT',
         selectPos: 0,
         tips_text: ''
       })
@@ -1190,6 +1207,7 @@ Page({
         wx.removeStorageSync('currentPointer')
         wx.removeStorageSync('realPointer')
       }
+      
       if (parseInt(this.data.baseLevel) < 2) {
         console.log("跳转到打卡")
         var beforePage = getCurrentPages()[0]
@@ -1294,6 +1312,9 @@ Page({
                         wx.removeStorageSync('post_list')
                         wx.removeStorageSync('currentPointer')
                         wx.removeStorageSync('realPointer')
+                      }
+                      if (wx.getStorageSync('more_pic_list') != undefined) {
+                        wx.removeStorageSync('more_pic_list')
                       }
                       wx.redirectTo({
                         url: '../sign/sign',
@@ -1480,14 +1501,28 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-
+    console.log("页面隐藏")
+    app.globalData.appIsShow = false
+    app.studyData.requestClear = this.data.requestClear
+    app.studyData.word_list = this.data.word_list
+    app.studyData.new_list = this.data.new_list
+    app.studyData.old_list = this.data.old_list
+    app.studyData.pass_list = this.data.pass_list
+    app.studyData.post_list = this.data.post_list
+    app.studyData.currentPointer = this.data.currentPointer
+    app.studyData.realPointer = this.data.realPointer
+    app.studyData.more_pic_list = this.data.more_pic_list
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
+    //退出背单词页时保存进度
+    console.log("页面消亡 是否需要clear缓存：" + this.data.requestClear)
+    app.studyData.requestClear = this.data.requestClear
     if (!this.data.requestClear) {
+      console.log("设置缓存")
       if (this.data.word_list.length > 0 || this.data.pass_list.length > 0) {
         console.log("in")
         wx.setStorageSync('word_list', this.data.word_list)
@@ -1497,10 +1532,11 @@ Page({
         wx.setStorageSync('post_list', this.data.post_list)
         wx.setStorageSync('currentPointer', this.data.currentPointer)
         wx.setStorageSync('realPointer', this.data.realPointer)
-        if (JSON.stringify(this.data.more_pic_list) != '""' && JSON.stringify(this.data.more_pic_list) != '[]'){
+        if (JSON.stringify(this.data.more_pic_list) != '""' && JSON.stringify(this.data.more_pic_list) != '[]') {
           wx.setStorageSync('more_pic_list', this.data.more_pic_list)
         }
       } else {
+        console.log("移除缓存")
         if (wx.getStorageSync('word_list') != undefined) {
           wx.removeStorageSync('word_list')
           wx.removeStorageSync('new_list')
@@ -1510,7 +1546,7 @@ Page({
           wx.removeStorageSync('currentPointer')
           wx.removeStorageSync('realPointer')
         }
-        if (wx.getStorageSync('more_pic_list') != undefined){
+        if (wx.getStorageSync('more_pic_list') != undefined) {
           wx.removeStorageSync('more_pic_list')
         }
       }
@@ -1534,7 +1570,6 @@ Page({
       title: share_text,
       path: 'page/tabBar/home/home',
       imageUrl: share_img,
-
     }
 
   }
