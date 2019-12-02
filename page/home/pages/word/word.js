@@ -188,6 +188,24 @@ Page({
       fail: (res) => {
         console.log(res)
         wx.hideLoading()
+        if (res.errMsg == 'request:fail request protocol error') {
+          var now = new Date();
+          var year = now.getFullYear();
+          var month = now.getMonth() + 1;
+          var day = now.getDate();
+          var new_time = year + '-' + month + '-' + day;
+          // 满足协议请求错误 尝试重新请求策略 并做频控处理
+          let times = wx.getStorageSync('recite_error_retry_times')
+          if (times && times == new_time) {
+            // 有这个值 & 同一天发现这个错误 & 并且已经尝试过重新请求
+            // 那么就不请求了 直接console多一层通知开发
+            console.log("已尝试重新请求 仍然失败")
+          } else {
+            // 这是用户(当天)第一次发现这个错误的请求失败 进行重试
+            wx.setStorageSync("recite_error_retry_times", new_time)
+            this.loadData()
+          }
+        }
       },
       complete: () => {}
     })
